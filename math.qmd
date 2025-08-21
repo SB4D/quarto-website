@@ -1,0 +1,99 @@
+---
+title: "Math/Research"
+---
+
+Welcome to the math section! This page is mainly written for other mathematicians. 
+If you're looking for layman's accounts on mathematics, check if my [blog](blog.html#category=Math) has something for you.
+
+## Research Interests
+
+My field of research is **low dimensional topology** with a focus on **3- and 4-dimensional manifolds** and applications of **gauge theoretic invariants**. I'm particularly interested in the interplay of topology, geometry, analysis, and algebra in relation to intersection forms of smooth 4-manifolds. 
+
+I also enjoy thinking about purely structural features of the aforementioned gauge theoretic invariants. I've been exploring this from the perspective of **equivariant stable homotopy theory** which I've found to be a fascinating (but also confusing) subject in its own right. 
+
+If you think of mathematics as a folder tree, here's roughly where to locate me and my contributions:
+```text
+Mathemactics
+└── Pure Mathematics
+    └── Geometry & Topology
+        └── Topology of Manifolds
+            └── Low Dimensional Topology
+                └── 3- and 4-dimensional Manifolds
+                    ├── Topological 4-manifolds
+                    │   └── Freedman's Work
+                    ├── Smooth 4-Manifolds
+                    │   ├── Diagrammatic Descriptions
+                    │   └── Donaldson's Theorem and its Generalizations
+                    └── Applications of Gauge Theory
+                        ├── Heegaard-Floer Theory
+                        │   └── Correction Terms and their Applications
+                        └── Seiberg-Witten Theory
+                            ├── Froyshov Invariants and their generalizations
+                            └── Seiberg-Witten-Floer Homotopy types
+```
+
+### Ongoing Projects
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### Generalized Froyshov Invariants
+
+This a most joint work with [Tyrone Cutler](https://mathoverflow.net/users/54788/tyrone). We've been developing a unified framework to study Froyshov-type invariants derived from the Seiberg-Witten-Floer homotopyes of rational homology 3-spheres and equivariant cohomology theories. We highlight the roles of Euler classes and orientations of $G$-representations where $G$ is either the circle group $\TT=U(1)$ or its normalizer $Pin(2)$ in $SU(2)$. 
+Along the way, we give proofs of various folklore statements about the use of incomplete universes for the groups.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### Seiberg-Witten-Floer Homotopy Types for General 3-Manifolds
+
+This a long-term project joint with [Thomas Kragh](https://www.uu.se/en/contact-and-organisation/staff?query=N12-1587) and [Alice Hedenlund](https://www.ntnu.edu/employees/alice.hedenlund). Seiberg-Witten-Floer (SWF) homotopy types are supposed to refine monopole Floer homology. This is reasonably well understood for rational homology 3-spheres by the work of Manolescu and Lidman-Manolecu. Moreover, Khandhawit-Lin-Sasahira and Sasahira-Stoffregen have constructed SWF homotopy types for more general 3-manifolds, but the relation to monopole Floer homology is only conjectural. Another loose end is the functoriality with respect to 4-dimensional cobordisms. We set out to construct SWF homotopy types for general closed 3-manifolds which allow a clean framwork to discuss cobordism maps and folding-unfolding phenomena related to local coefficients in monopole Floer homology. The key is a suitable notion of twisted parameterized equivariant homotopy types which we are developing.
+:::
+
+
+## Publications
+
+### Books
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### The Disk Embedding Theorem (joint with Boldizsar Kalmar, Min-Hoon Kim, Mark Powell and Arunima Ray)
+
+A detailed account on Freedman's work on the 4-dimensional version of the Poincaré conjecture and its applications to the theory of topological 4-manifolds. 
+:::
+
+### Articles
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### The monopole h-invariants from a topological perspective (Preprint)
+
+**Abstract:** 
+We study the monopole h-invariants of 3-manifolds from a topological perspective based on Lidman and Manolescu's description of monopole Floer homology in terms of Seiberg-Witten-Floer homotopy types. We investigate the possible dependence on the choice of coefficients and give proofs of several properties of the h-invariants which are well known to experts, but hard to track down in the literature.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### Heegaard Floer correction terms, with a twist (joint with Marco Golla)
+
+**Abstract:** 
+We use Heegaard Floer homology with twisted coefficients to define numerical invariants for arbitrary closed 3-manifolds equipped torsion spin structures, generalising the correction terms (or $d$-invariants) defined by Ozsváth and Szabó for integer homology 3-spheres and, more generally, for 3-manifolds with standard $\mathrm{HF}^\infty$. Our twisted correction terms share many properties with their untwisted analogues. In particular, they provide restrictions on the topology of 4-manifolds bounding a given 3-manifold.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### Classification of boundary Lefschetz fibrations over the disc (joint with Gil Cavalcanti and Ralph Klaasse)
+
+**Abstract:** 
+We show that a four-manifold admits a boundary Lefschetz fibration over the disc if and only if it is diffeomorphic to $S^1 \times S^3\# n \overline{\mathbb{C} P^2}$, $\# m\mathbb{C} P^2 \#n\overline{\mathbb{C} P^2}$ or $\# m (S^2 \times S^2)$. Given the relation between boundary Lefschetz fibrations and stable generalized complex structures, we conclude that the manifolds $S^1 \times S^3\# n \overline{\mathbb{C} P^2}$, $\#(2m+1)\mathbb{C} P^2 \#n\overline{\mathbb{C} P^2}$ and $\# (2m+1) S^2 \times S^2$ admit stable structures whose type change locus has a single component and are the only four-manifolds whose stable structure arise from boundary Lefschetz fibrations over the disc.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### Elimination of cusps in dimension 4 and its applications (joint with Kenta Hayano)
+
+**Abstract:** 
+Several new combinatorial descriptions of closed 4-manifolds have recently been introduced in the study of smooth maps from 4-manifolds to surfaces. These descriptions consist of simple closed curves in a closed, orientable surface and these curves appear as so called vanishing sets of corresponding maps. In the present paper we focus on homotopies canceling pairs of cusps so called cusp merges. We first discuss the classification problem of such homotopies, showing that there is a one-to-one correspondence between the set of homotopy classes of cusp merges canceling a given pair of cusps and the set of homotopy classes of suitably decorated curves between the cusps. Using our classification, we further give a complete description of the behavior of vanishing sets under cusp merges in terms of mapping class groups of surfaces. As an application, we discuss the uniqueness of surface diagrams, which are combinatorial descriptions of 4-manifolds due to Williams, and give new examples of surface diagrams related with Lefschetz fibrations and Heegaard diagrams.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" icon=false}
+#### On 4-Manifolds, Folds and Cusps
+
+**Abstract:** 
+We study simple wrinkled fibrations, a variation of the simplified purely wrinkled fibrations introduced by Williams, and their combinatorial description in terms of surface diagrams. We show that simple wrinkled fibrations induce handle decompositions on their total spaces which are very similar to those obtained from Lefschetz fibrations. The handle decompositions turn out to be closely related to surface diagrams and we use this relationship to interpret some cut-and-paste operations on 4-manifolds in terms of surface diagrams. This, in turn, allows us classify all closed 4-manifolds which admit simple wrinkled fibrations of genus one, the lowest possible fiber genus.
+:::
+
+
+## Teaching

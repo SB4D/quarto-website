@@ -1,0 +1,257 @@
+---
+title: Curriculum Vitae
+format: html
+---
+
+## Summary
+
+* Mathematician (Ph.D.) with 5+ years of unversity level research and teaching
+* Skilled in Python, SQL and cloud technologies
+* Passionate about math, coding, data and deep learning
+* Knowledgable about digital signal processing, acoustics, and music
+
+
+## Research & Work Experience
+
+```{=html}
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">Assistant Professor</span>
+        <span class="titleinfo">(Akademischer Rat auf Zeit)</span>
+        <span class="date">2017 — 2024</span>
+        <p class="subtitle">Bielefeld University — Bielefeld, Germany</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Planned and taught over 20 courses with consistenly positive student feedback</li>
+<li>Supervised and evaluated four M.Sc. and three B.Sc. theses</li>
+<li>Several scientific publications, including a popular monograph ("The Disk Embedding Theorem", Behrens et al, OUP 2021)</li>
+<li>Research projects on the geometry and topology of 3- and 4-dimensional manifolds, focussing on applications of Seiberg-Witten theory</li>
+<li>International and national research collaborations</li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">Postdoctoral Researcher</span>
+        <span class="titleinfo"></span>
+        <span class="date">2015 — 2017</span>
+        <p class="subtitle">Utrecht University — Utrecht, Netherlands</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Research and teaching in mathematics</li>
+<li>Published several research articles</li>
+<li>Co-supervised B.Sc. thesis</li>
+<li>Attended international conferences</li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">ERC Postdoctoral Fellow</span>
+        <span class="titleinfo"></span>
+        <span class="date">2013 — 2015</span>
+        <p class="subtitle">Alfréd Rényi Institute of Mathamtics — Budapest, Hungary</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Research in mathematics</li>
+<li>Published several papers</li>
+<li>Attended international conferences</li>
+</ul>
+</div>
+</details>
+</div>
+```
+
+## Education
+
+```{=html}
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">Ph.D. in Mathematics</span>
+        <span class="titleinfo">(Dr. rer. nat.)</span>
+        <span class="date">05/2014</span>
+        <p class="subtitle">University of Bonn — Bonn, Germany</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Thesis: Surface Diagrams of Smooth 4-Manifolds (supervised by Prof. Dr. Peter Teichner)</li>
+<li>graduated magna cum laude</li>
+<li>IMPRS Fellow at the Max-Planck-Institute for Mathematics</li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">M.S. in Mathematics</span>
+        <span class="titleinfo">(Dipl. Math.)</span>
+        <span class="date">09/2009</span>
+        <p class="subtitle">University of Bonn — Bonn, Germany</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Thesis: The L²-Stokes theorem on certain incomplete manifolds (supervised by Prof. Dr. Matthias Lesch)</li>
+<li>Mathematical specialization: Analysis on manifolds, stochastic analysis, algebraic geometry, topology</li>
+<li>Christian-Kuhlemann-Foundation Award for outstanding undergraduate achievements (at Leibniz University Hannover)</li>
+</ul>
+</div>
+</details>
+</div>
+```
+
+## Certificates
+
+```{=html}
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">AI and Machine Learning Essentials with Python Specialization</span>
+        <span class="titleinfo"></span>
+        <span class="date">06/2025</span>
+        <p class="subtitle">University of Pennsylvania / Coursera</p>
+    </summary>
+<div class="details">
+<ul>
+<li><b>Certificate URLs:</b><ul>
+<li><a href="https://coursera.org/share/819fd71e45aa0aafd3a14bcf7120d6f5">View Certificate</a></li>
+<li><a href="https://www.coursera.org/specializations/ai-machinelearning-essentials">View Course Details</a></li>
+</ul></li>
+<li><b>Subjects Covered: </b><ul>
+<li>Search algorithms (informed, uninformed, A*)</li>
+<li>Basic statiscics (probability distributions, central limit theorem, confidence intervals)</li>
+<li>Machine learning algorithms (regression, SVMs)</li>
+<li>Deep learning (neural networks)</li>
+</ul></li>
+<li><b>Technologies Used: </b><ul>
+<li>Python</li>
+<li>scikit-learn</li>
+<li>PyTorch</li>
+</ul></li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">IBM Data Science Professional Certificate</span>
+        <span class="titleinfo"></span>
+        <span class="date">05/2025</span>
+        <p class="subtitle">IBM / Coursera</p>
+    </summary>
+<div class="details">
+<ul>
+<li><b>Certificate URLs:</b><ul>
+<li><a href="https://coursera.org/share/5221f279e2938850bb785aabe01f6324">View Certificate</a></li>
+<li><a href="https://www.coursera.org/specializations/ibm-data-science">View Course Details</a></li>
+</ul></li>
+<li><b>Subjects Covered: </b><ul>
+<li>Data science methodology (from business requirements to model deployment)</li>
+<li>Data collection and preparation</li>
+<li>Data analyis and modelling</li>
+<li>Model evaluation and deployment</li>
+<li>Machine learning algorithms (prediction, classification, clustering)</li>
+<li>Data visualization (plots, dashboards, presentations)</li>
+</ul></li>
+<li><b>Technologies Used: </b><ul>
+<li>Python</li>
+<li>SQL</li>
+<li>pandas</li>
+<li>scikit-learn</li>
+<li>matplotlib</li>
+<li>seaborn</li>
+<li>Plotly Dash</li>
+<li>BeautifulSoup (webscraping)</li>
+<li>REST APIs</li>
+</ul></li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">Google Cybersecurity Professional Certificate</span>
+        <span class="titleinfo"></span>
+        <span class="date">04/2025</span>
+        <p class="subtitle">Google / Coursera</p>
+    </summary>
+<div class="details">
+<ul>
+<li><b>Certificate URLs:</b><ul>
+<li><a href="https://coursera.org/share/8eef3d6c8d47e3a60cc8c8150037f13a">View Certificate</a></li>
+<li><a href="https://www.coursera.org/specializations/google-cybersecurity">View Course Details</a></li>
+</ul></li>
+<li><b>Subjects Covered: </b><ul>
+<li>NIST frameworks</li>
+<li>OWASP security principles</li>
+<li>Network models (TCP/IP, OSI)</li>
+<li>Network procotols (TCP, UDP, HTTP(S))</li>
+<li>Network monitoring</li>
+<li>Log analysis</li>
+<li>Threat detection</li>
+<li>Incident response</li>
+<li>Identity and access management</li>
+<li>Encryption</li>
+<li>Authentication</li>
+<li>Authorization</li>
+<li>Cloud security basics</li>
+</ul></li>
+<li><b>Technologies Used: </b><ul>
+<li>Linux</li>
+<li>Python</li>
+<li>SQL</li>
+<li>Wireshark</li>
+<li>tcpdump</li>
+</ul></li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">Python 3 Programming Specialization</span>
+        <span class="titleinfo"></span>
+        <span class="date">02/2025</span>
+        <p class="subtitle">University of Michigan / Coursera</p>
+    </summary>
+<div class="details">
+<ul>
+<li><b>Certificate URLs:</b><ul>
+<li><a href="https://coursera.org/share/1e923a9ac1b9e21b855116f1112ca76c">View Certificate</a></li>
+<li><a href="https://www.coursera.org/specializations/python-3-programming">View Course Details</a></li>
+</ul></li>
+<li><b>Subjects Covered: </b><ul>
+<li>Programming fundamentals</li>
+<li>Object oriented programming</li>
+<li>Data collection and processing</li>
+</ul></li>
+<li><b>Technologies Used: </b><ul>
+<li>Python</li>
+<li>JupyterLab</li>
+<li>HTTP protocol</li>
+<li>REST APIs</li>
+</ul></li>
+</ul>
+</div>
+</details>
+</div>
+```
+

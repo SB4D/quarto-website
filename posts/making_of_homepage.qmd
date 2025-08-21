@@ -1,0 +1,324 @@
+---
+title: "Made a website using Quarto"
+author: "Stefan Behrens"
+date: "8/15/2025"
+categories:
+  - Webdesign
+  - Quarto
+---
+
+
+Well, I made another website. You're looking at it right now. While I've fumbled around with the good old HTML/CSS/JavaScript combo before, I'll openly admit that I'm no expert in webdesign. This time around, I'm using Quarto. As you an see, I've also added a blog and I've registered my own domain name. If you're interested, let me walk you through how this thing came to be.
+
+### Previous Attempts at Web Design
+
+As I might have mentioned, I used to be a full time mathematician at various universities and research intistutes. Whenever I moved from one job to another, I set up a personal homepage (most recently [this one](https://www.math.uni-bielefeld.de/~sbehrens/)). But as a working mathematician, a flashy homepage is not your main priority. In fact, some esteemed professors seem to take pride in their super-simple-no-frills-plain-html pages that scream: *"I don't care! Because I don't need to care!"* Well, I always cared a little bit and tried to make mine look halfway decent. But I never pushed things very far. I wasn't very good at maintining my websites, either. Making edits was always painful - I just don't enjoy writing HTML - and this resulted in me only updating the content every once in a blue moon.
+
+### Enter Quarto
+
+Now that I want to be taken seriously as an IT person, I figured that I should try a little harder. So I set out to create another homepage. I wanted to have a portfolio homepage which not only looks halfway decent, but is also easy to maintain. In addition, I wanted to have a blogging feature that could easily integrate Jupyter Notebooks. After a couple of conversations with ChatGPT, I settled on [Quarto](https://quarto.org/) as a framework.
+
+
+## Making it Happen
+
+### Creating a Website with a Blog
+
+Setting up a website in Quarto is easy. 
+If you're also using VS Code, just install the Quarto software and the VS Code extension on your machine, and follow [these instructions](https://quarto.org/docs/websites/) from the Quarto documentation. 
+
+In a nutshel, a Quarto homepage appears to you as its author as a folder structure mostly consisting of plain text files with the extention `.qmd` which is short for "Quarto markdown". More on that later. In addition, there is an all-important file calle `_quarto.yml` which instructs the Quarto software how to render the `.qmd` files into HTML. Here's what this looks like for this website (at the time of writing):
+```{.yaml filename="_quarto.yml"}
+project:
+  type: website
+  preview:
+    port: 2025
+
+website:
+  title: "Stefan Behrens | Mathematician | Deep Learner"
+  navbar:
+    right:
+      - href: index.qmd
+        text: Home
+      - href: cv.qmd
+        text: CV
+      - href: math.qmd
+        text: Math/Research
+      - href: projects.qmd
+        text: Code/Projects
+      - href: blog.qmd
+        text: Blog
+  draft-mode: gone
+
+format:
+  html:
+    theme:
+      - flatly
+    css: styles.css
+    toc: true
+    max-width: 800px
+    highlight-style: tango
+    embed-resources: false
+    include-in-header: _tools/sb4dlatex.html
+```
+I'm not going to go into any detail, all I want to say is that this doesn't look too complicated.
+
+### Adding a blog
+
+Adding a blog is just as easy and is explained [here](https://quarto.org/docs/websites/website-blog.html). 
+You just have to create a subdirectory for blog posts, say `posts/`, and `.qmd` file containing something like this:
+```{.yaml filename="blog.qmd"}
+---
+listing:
+    contents: posts
+    sort: "date desc"
+    type: default
+    categories: true
+    sort-ui: false
+    filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+```
+That's it. These instructiosn (written in YAML again) tell Quarto everything it needs to know to render a blog page with posts correspondin to files in the `posts/` directory. These can be either `.qmd` files or Jupyter Notebooks. More on adding content later.
+
+### Styling with CSS
+
+As I mentioned, while Quarto pages are not written in HTML, they are ultimately rendered as HTML.
+As you can see, my `_quarto.yml` references a file `styles.css`. This used to style the rendered HTML pages, so that you can work your CSS magic on your homepage. In my case, this isn't much:
+```{.css filename="stylels.css"}
+/* css styles */
+
+/* Custom page background */
+body {
+  background-image: url("images/bg_main.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* CV stuff */
+.cv-entry { 
+  display: block;
+}
+  .cv-entry summary {
+    color: black;
+    cursor: pointer;
+  }
+  .cv-entry .title{
+    font-size: large;
+    font-weight: bold;
+  }
+  .cv-entry .titleinfo{
+    font-size: large;
+  }
+  .cv-entry .subtitle{
+    font-style: italic;
+    margin-top: 0.1em;
+  }
+  .cv-entry .date{
+    float: right;
+  }
+  .cv-entry .details {
+    background-color: #f3f7ff;
+    border-radius: 10px;
+    margin: 0.5em 0 0 1em;
+  }
+    .cv-entry details p {
+      margin: 0 0 0 1em;
+      padding: 0;
+    }
+```
+Essentially, I'm only adding a background image and a few custom styles for the CV page. But I'll get to that.
+
+
+### Adding Content
+
+Alright, enough about the structure. Let's talk content.
+
+#### Quarto Markdown
+
+One of the selling points for me was that I don't have to write pages in HTML. I much prefer writing `*this*` over writing `<b>that</b>`. Maybe it's related to the German keyboard layout, but I've alwasy found HTML extra awkward to type. As for the Quarto markdown syntax, it's bascially the same as the familiar markdown from GitHub and Jupyter Notebooks. It's cerainly less flexible that HTML, but it gets the job done for basic texts. It's also possible to use LaTeX, just as you would in Jupyter Notebooks.
+
+
+#### Using HMTL in Quarto pages
+
+If Quarto markdown is not flexible enough for you, the good news is that Quarto allows you to use HTML directly in the `.qmd` files. For the most part, you can just write it straight into the file. However, for more complicated constructs, you might have to wrap it into a *raw HTML code block* like this:
+`````html
+```{=html}
+<div class="cv-entry">
+<details>
+    <summary>
+        <span class="title">Great Job</span>
+        <span class="date">2024 — Present</span>
+        <p class="subtitle">Prestigious Company — Somewhere Fancy</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Awesome thing I did.</li>
+<li>More greatness.</li>
+</ul>
+</div>
+</details>
+</div>
+```
+`````
+Naively, I expected this to work without the triple backticks. But for some reason, Quarto didn't want to render this properly.
+The content wrapped in `<div class="cv-details">...</div>` was displayed verbatim.
+
+After a frustrating conversation with ChatGPT, I went the classical RTFM way and found [this](https://quarto.org/docs/authoring/markdown-basics.html#raw-content). Turns out you have to explicitly announce to quarto that raw HTML is coming.
+
+### Jupyter Notebooks and Blog Posts
+
+While choosing a blogging platform, my main requirement was that I can recycle my already existing Jupyter Notebooks as blog posts with as little hassle as possible. This is where Quarto really shines. [As explained here](https://quarto.org/docs/tools/jupyter-lab.html), you just have to make sure to that the first cell in your `.ipynb` file is "raw" and contains a suitable [YAML front matter](https://quarto.org/docs/tools/jupyter-lab.html#yaml-front-matter) such as:
+```yaml
+---
+title: "Made a new website using Quarto"
+author: "Stefan Behrens"
+date: "8/3/2025"
+categories:
+  - Webdesign
+  - Quarto
+  - CSS
+---
+```
+With this in place, just copy the `.ipynb` into your blog's posts folder and you're good to go. Occassionally, you might have to run the entire notebook and save it. 
+
+Alternatively, you can write blog posts as Quarto markdown `.qmd` files. They also need a YAML front matter as above.
+
+### Using LaTeX in Quarto
+
+As mentioned, Quarto markdown has native LaTeX support. By default, it uses MathJax but it's possible to use other rendering engines such as KaTeX. Since I've been using LaTeX for many years to write mathematical texts, I've gotten used to a couple of custom commands. Luckily, there are ways to use custom commands in Quarto pages. I've written more about this in [another post](latex_macros_in_quarto_pages.html). 
+
+
+## Getting it Online
+
+Right, now that the website has everything it needs, it's time to get it online. There are several ways to do so, both free and paid. After doing some research, I opted for the free option offered by GitHub. 
+
+### Hosting on GitHub Pages
+
+GitHub offers a service called Pages which can be used to host websites within a repository. At the time of writing, it is even available with the free plan, albeit with a caveat. It works roughly like this. Say you have a repository `my-repo` with a directory `repo_site/` containing data for a website. You can then instruct GitHub Pages to make that folder available under `https://username.github.io/my-repo`. However, there are some limitations:
+
+* As far as I can tell, the websites have to be static. Maybe you can play some tricks to get dynamic content going, but I don't know.
+* **Important:** If you're on GitHub's free plan, the repository must be public from here onward! 
+
+
+#### Method 1: Render Locally, Upload Everything
+
+Assuming that you have the Quarto engine running locally, the easiest way to the get your website published on GitHub Pages.
+
+* Create a GitHub account if you don't have one, yet.
+* Get everything ready locally:
+  * Add this to your `_quarto.yml`:
+  ```yaml
+  project:
+    # whatever you already had in this section
+    output-dir: docs
+  ```
+  * Make sure you have a `.gitignore` file containing the line `/.quarto/` 
+  * Render the project. The pages is now rendered to the subdirectory `docs/`. Delete the previous output directory (the default is `_site/`).
+  * Clean up your project folder. Remove everything you don't want anyone to see. 
+* Publish the project folder as a GitHub repository, e.g. `my-quarto-site`. 
+  * Again, if you're on the free plan, the repository needs to be public!
+* Activate GitHub Pages:
+  * Log into your GitHub Account, navigate to the website repository.
+  * Go the setting tab and navigate to the "Pages" register
+  * Make the following settings:
+    * Build and Deplyment / Source -> Deploy from a branch
+    * Build and Deplyment / Branch -> Choose branch (most likely `main`)
+    * Build and Deplyment / Branch -> Select folder `docs/` 
+    * Build and Deplyment / Branch -> Click "Save"
+* Check if your page is online:
+  * Navigate to `githubusername.github.io/my-quarto-site`. Your page should appear.
+
+#### Method 2: Upload Sources, Render Using GitHub Actions
+
+There's another way to do things that doesn't require you to render your Quarto site locally. 
+You can have it rendered on GitHub's servers instead. 
+However, the setup is a little more involved.
+Since I'm fine rendering locally, I haven't tried this, yet. 
+
+Anyway, here's what ChatGPT told me about the process. Again, I haven't tried it! 
+I'm posting it here partly to remind myself that I wanted to try his eventually.
+
+> Alright — here’s a ready-to-use **GitHub Actions workflow** that will build and deploy your Quarto site automatically to > GitHub Pages.
+> 
+> You just need to:
+> 
+> 1. Put this file in your repo at `.github/workflows/publish.yml`.
+> 2. Push it to GitHub.
+> 3. Enable Pages to serve from the `gh-pages` branch (instead of `/docs`).
+> 
+> ---
+> 
+> ##### **`.github/workflows/publish.yml`**
+> 
+> ```yaml
+> name: Publish Quarto site to GitHub Pages
+> 
+> on:
+>   push:
+>     branches: [main]  # Build on every push to main branch
+>   workflow_dispatch:   # Allow manual trigger from Actions tab
+> 
+> jobs:
+>   build-deploy:
+>     runs-on: ubuntu-latest
+> 
+>     permissions:
+>       contents: write   # Needed for pushing to gh-pages branch
+>       pages: write
+>       id-token: write
+> 
+>     steps:
+>       - name: Check out repository
+>         uses: actions/checkout@v4
+> 
+>       - name: Set up Quarto
+>         uses: quarto-dev/quarto-actions/setup@v2
+>         with:
+>           version: "latest"
+> 
+>       - name: Set up Pandoc (optional if Quarto needs it)
+>         uses: pandoc/actions/setup@v1
+> 
+>       - name: Install LaTeX (optional, only if you render PDFs)
+>         run: sudo apt-get install -y texlive-latex-base
+> 
+>       - name: Render Quarto project
+>         run: quarto render
+> 
+>       - name: Deploy to GitHub Pages
+>         uses: peaceiris/actions-gh-pages@v3
+>         with:
+>           github_token: ${{ secrets.GITHUB_TOKEN }}
+>           publish_dir: ./_site   # This is Quarto's default output dir
+> ```
+> 
+> ---
+> 
+> ##### **How to set it up**
+> 
+> 1. **Remove** `output-dir: docs` from `_quarto.yml` (so Quarto builds to `_site`).
+> 2. **Commit** this `publish.yml` workflow to `.github/workflows/`.
+> 3. In **GitHub → Settings → Pages**:
+> 
+>    * **Source** → Select `Deploy from a branch`.
+>    * **Branch** → `gh-pages` (created by the workflow after first run).
+> 4. Push your changes to `main`.
+> 5. Wait for the Actions workflow to finish — your site will appear at:
+> 
+>    ```
+>    https://<your-username>.github.io/<your-repo>/
+>    ```
+
+That's all for now. Once this is online, I'm planning to redirect this page to a domain which I've already registered. 
+I'll update this post.
+
+## To Be Continued...
+
+<!-- ## Using Your Own Domain -->
+
+<!-- ### Redirecting from GitHub Pages -->
+
+<!-- ### Registering a Domain Name -->
+

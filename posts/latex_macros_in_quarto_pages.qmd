@@ -1,0 +1,165 @@
+---
+title: "Custom LaTeX Commands in Quarto Pages"
+author: "Stefan Behrens"
+date: "8/9/2025"
+categories:
+  - Quarto
+  - LaTeX
+  - JavaScript
+---
+
+This is companion post to [this one](latex_in_jupyter_notebooks.html) where I wrote about using custom LaTeX commands in Jupyter notebooks.
+
+I'll briefly go into the backstory again. I've used LaTeX for over a decade as a mathematician and I've gotten used to a certain set of custom LaTeX commands that I assembled into a custom LaTeX package. Let's call it `mycommands.sty` for demonstrational purposes. Recently, I've been making more frequent use of Jupyter Notebooks and also Quarto - the latter mostly for this homepage/blog combo. Unfortunately, it doesn't seem to be possible at this point to load LaTeX packages in Jupyter or Quarto. So I was looking for ways to have my favorite commands available.
+
+Ideally, I wanted to have a solution that mimics the behavior of `\usepackage{mycommands}` in Quarto. Before I get into Quart and it's markup syntax, here's an excerpt from my custom LaTeX package:
+
+``` {.latex filename="mycommands.sty"}
+% Numbers
+\providecommand{\N}{\mathbb{N}} % natural numbers
+\providecommand{\Z}{\mathbb{Z}} % integers
+\providecommand{\Q}{\mathbb{Q}} % rational numbers
+\providecommand{\R}{\mathbb{R}} % real numbers
+\providecommand{\C}{\mathbb{C}} % complex numbers
+\providecommand{\HH}{\mathbb{H}} % quaternions
+
+% Math font styles
+\providecommand{\mbb}[1]{\mathbb{#1}}
+\providecommand{\mc}[1]{\mathcal{#1}}
+\providecommand{\mf}[1]{\mathfrak{#1}}
+
+% Math font decoration
+\providecommand{\bs}[1]{\boldsymbol{#1}}
+\providecommand{\wt}[1]{\widetilde{#1}}
+
+% Arrows
+\providecommand{\xra}[1]{\xrightarrow{#1}}
+
+% Useful things
+\providecommand{\inv}{^{-1}} % inverses
+\providecommand{\del}{\partial} % partial derivatives
+
+% Special notation
+\providecommand{\TT}{\mathbb{T}} % circle group
+```
+
+By the way, I'm using `\providecommand` instead of `\newcommand` to avoid conflicts.
+
+Like LaTeX, Quarto pages are plain text files and only the extension `.qmd` makes them recognizable as Quarto files. Quarto has its own markup syntax and, while LaTeX support is built in, the LaTeX code is generally not handled by a full LaTeX distribution. Instead it is rendered uning engines such as MathJax or KaTeX which only provide a limited set of commands. Luckily, it is possible to define custom commands in a Quarto page.
+
+## Simple LaTeX Macros in Quarto Files
+
+Say we want to have some fun with the quaternions and want to write them as $\mathbb{H}$. If the symbol only appears ones or twice, writing `\mathbb{H}` would arguably be the best solution. But it's used constantly, it would be much better to declare an abbreviation that's easier to type and also easier on the eyes. 
+
+In LaTeX I would a custom command `\newcommand{\HH}{\mathbb{H}}` so that I only have to type `\HH` to produce $\mathbb{H}$. In Quarto files, you can essentially do the same thing, you just have to wrap it in a math environment like this:
+
+\`\$`\newcommand{\HH}{\mathbb{H}}`\$\`
+
+$\newcommand{\HH}{H}$
+
+You can put this anywhere in your Quarto page, the only restriction is that the code needs to have an empty line above and below.
+
+As in LaTeX, it is good practice to declare all your custom commands in the beginning of the file before the main text. The cleanest way to do this in a Quarto file is to begin the file like this:
+
+``` quarto
+---
+author: Som Won
+title: LaTeX Custom Commands in Quarto Pages
+---
+:::{.hidden}
+$$
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\anothercommand}{\mathfrak{AnotherCommand}}
+$$
+:::
+```
+
+While the above solution is easy enough, it has some severe drawbacks.
+First, it only works on a per file basis, which is not very convenient. 
+Second, the `:::{.hidden} ... :::` wrapper is supposed to make sure nothing inside gets rendered. Well, it doesn't, really... 
+
+**Warning!** At first, I naively copied the original code from `mycommands.sty` into a `:::{.hidden} $$ ...$$  :::` wrapper.
+I put this code in a separate `.qmd` file and made sure the code get included in every page using Quarto's include features.  This worked fine for pages and blog posts, but for some reason the preview text on the blog home page contained this garbage:
+```{.raw}
+$ % Numbers % natural numbers % integers % rational numbers % real numbers % complex numbers % quaternions
+```
+Apparently, the problem is related to LaTeX-style comments in the `mycommands.sty` code. So I removed the comments, but the blog home page still contains `$` as an artefact (or `$$`, I forgot). 
+
+Bottom line, this method doesn't quite cut it for me. Luckily, I found a better way that I'll explain next.
+
+
+## Loading LaTeX Macros from a JavaScript `.js` file
+
+After trying a few things out, I settled on the following solution. The first thing to understand is that Quarto uses MathJax as a default rendering engine for LaTeX in websites. If you want, you can override this and use something like KaTeX instead (which is what VS Code uses for rendering LaTeX in Jupyter Notebooks). 
+
+With this understood, the main task is to tell MathJax and/or KaTeX (or what ever else you want to use) about your custom commands. Here's what I did for this website:
+
+* Include the LaTeX commands in a JavaScript file `/_tools/sb4dlatex.js` (code below).
+* Create a one-line HTML file `/_tools/sb4dlatex.html` referencing the script file (code below).
+* Add the following line to `_quarto.yml`:
+```yaml
+format:
+  html:
+    include-in-header: _tools/sb4dlatex.html
+```
+
+Now the promised code followed by further explanation. First, the HTML bit:
+``` {.html filename="/_tools/sb4dlatex.html"}
+<script src="/_tools/sb4dlatex.js"></script>
+```
+The line `include-in-header: _tools/sb4dlatex.html` in `_quarto.yml` makes sure that the line above gets included in every page header. Finally, the JavaScript bit:
+``` {.js filename="/_tools/sb4dlatex.js"}
+// Define custom LaTeX commands
+const custom_latex_commands = {
+    // Numbers
+    N: "\\mathbb{N}",  // natural numbers
+    Z: "\\mathbb{Z}",  // integers
+    Q: "\\mathbb{Q}",  // rational numbers
+    R: "\\mathbb{R}",  // real numbers
+    C: "\\mathbb{C}",  // complex numbers
+    HH: "\\mathbb{H}", // quaternions
+    // Math font styles
+    mbb: ["\\mathbb{#1}", 1],
+    mc: ["\\mathcal{#1}", 1],
+    mf: ["\\mathfrak{#1}", 1],
+    // Math font decoration
+    bs: ["\\boldsymbol{#1}", 1],
+    wt: ["\\widetilde{#1}", 1],
+    // Arrows
+    xra: ["\\xrightarrow{#1}", 1],
+    // Useful things
+    inv: "^{-1}", // inverses
+    del: "\\partial", // partial derivatives
+    // Special notation
+    TT: "\\mathbb{T}", // circle group
+};
+// Make custom LaTeX commands available for MathJax
+window.MathJax = {
+    tex: {
+        macros: custom_latex_commands
+    }
+};
+// Make custom LaTeX commands available for KaTeX
+window.katexMacros = custom_latex_commands;
+```
+
+Not too bad, right? While the syntax is not entirely self-explanatory, comparing it with the LaTeX code in `mycommands.sty` should give you an idea how it works. Let's look at two commands in detail.
+
+LaTex: 
+```latex
+\providecommand{\HH}{\mathbb{H}} % quaternions
+\providecommand{\mc}[1]{\mathcal{#1}}
+```
+JavaScript (in combination with KaTeX for brevity):
+```{.js}
+const latex_commands = {
+  HH: "\\mathbb{H}", // quaternions
+  mc: ["\\mathcal{#1}", 1],
+};
+window.katexMacros = latex_commands;
+```
+First, let's think about what's happening here. `\providecommand{\HH}{\mathbb{H}}` tells your LaTeX compiler to treat the string `\HH` as `\mathbb{H}`. Abstractly, we can think of these two strings as a key-value pair. Observe that `\providecommand{<key>}{<value>}` is called individually for every key-value pair. In contrast, the Javascript solution records *all* key-value pairs in a dictionary (aka JavaScript object) and then passes that dictionary to the LaTeX interpreter (using `window.katexMacros = latex_commands;` for KaTeX).
+
+Second, the syntactic differences are mainly the backslashes, the double quotes, and the handling of arguments for `\mc{<arg>}`. Note that the dictionary values (i.e. the LaTeX commands to be replaced) are written as strings in double quotes and the single backslash `\` needs to be escaped as `\\`. The dictioary keys (i.e. the designated LaTeX shortuts), however, are written in plain without quotes or backslashes. Lastly, the add-arguments syntax should be reasonably self-explanatory. The number of arguments needs to be specified, albeit in a slightly different place as in LaTeX, and the arguments are called as `#1`, `#2`, ... inside the LaTeX string.
+
+I'll leave it at that for the moment. You may rightfully ask: *"But what about optional arguments, possibly with default values?"* I'm aware of the omission. I'll get back to this later when I actually need such a construct. For now, I'll keep things simple.

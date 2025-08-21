@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: docs # for GitHub Pages
+  preview:
+    port: 2025
+
+website:
+  title: "Stefan Behrens | Mathematician | Deep Learner"
+  navbar:
+    right:
+      - href: index.qmd
+        text: Home
+      - href: cv.qmd
+        text: CV
+      - href: math.qmd
+        text: Math/Research
+      - href: projects.qmd
+        text: Code/Projects
+      - href: blog.qmd
+        text: Blog
+  draft-mode: gone
+  page-footer:
+    center: |
+      © 2025 Stefan Behrens | 
+      Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
+      Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
+
+format:
+  html:
+    theme:
+      - flatly
+      # light: flatly
+      # dark: darkly
+    css: styles.css
+    toc: true
+    max-width: 800px
+    # highlight-style: atom-one
+    highlight-style: tango
+    embed-resources: false
+    include-in-header: _tools/sb4dlatex.html
+
+# editor:
+#   render-on-save: true

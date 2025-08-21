@@ -1,0 +1,11 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/making_of_homepage.html",
+      "/posts/latex_macros_in_quarto_pages.html",
+      "/posts/latex_in_jupyter_notebooks.html",
+      "/posts/pyplot_figsize_default.html"
+    ]
+  }
+]

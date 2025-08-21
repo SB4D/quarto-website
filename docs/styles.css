@@ -1,0 +1,57 @@
+/* css styles */
+
+/* Custom page background */
+body {
+  background-image: url("images/bg_main.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Custom navbar background */
+/* .navbar {
+  background-image: url("images/watermark.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+} */
+
+
+/* CV stuff */
+
+.cv-entry { 
+  display: block;
+}
+  .cv-entry details p {
+    margin: 0 0 0 1em;
+    padding: 0;
+  }
+
+  .cv-entry summary {
+    color: black;
+    cursor: pointer;
+  }
+
+  .cv-entry .title{
+    font-size: large;
+    font-weight: bold;
+  }
+
+  .cv-entry .titleinfo{
+    font-size: large;
+  }
+
+  .cv-entry .subtitle{
+    font-style: italic;
+    margin-top: 0.1em;
+  }
+
+  .cv-entry .date{
+    float: right;
+  }
+  .cv-entry .details {
+    background-color: #f3f7ff;
+    border-radius: 10px;
+    margin: 0.5em 0 0 1em;
+    /* padding-top: 0.25em; */
+  }
