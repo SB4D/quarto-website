@@ -1,2 +1,3 @@
 # quarto-website
-Repository for hosting my website on GitHub Pages.
+
+This repository hosts my personal website. 
