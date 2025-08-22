@@ -2,6 +2,8 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/placeholders_in_text_files.html",
+      "/posts/relative_imports_hack.html",
       "/posts/making_of_homepage.html",
       "/posts/latex_macros_in_quarto_pages.html",
       "/posts/latex_in_jupyter_notebooks.html",

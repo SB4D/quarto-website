@@ -1,0 +1,55 @@
+---
+title: "That relative imports hack for Python scripts"
+author: "Stefan Behrens"
+date: "8/22/2025"
+categories:
+  - Python
+  - Little Tricks
+---
+
+I need to write this down so I don't forget it again. I've been struggling with "relative imports" in Python projects in VS Code. Here's the problem. 
+
+## The problem
+
+Say I'm working on a Python project in VS Code. The project is in early stages and my file/folder structure looks something like this:
+```
+project/
+    my_package/
+        __init__.py
+        my_module1.py
+        my_module2.py
+    experimental/
+        experiment1.py
+        experiment2.py
+    main.py
+```
+The idea is to put some of the code required for `main.py` into a custom package `my_package`. While working on the package, I might want to try a few things out. That's what the scripts in `experimental/` are for. I'm keeping them in a sub-folder so I can easily `.gitignore` them, and also to keep the main project folder clean. 
+
+Obviously, I want to import things `my_package` into the experimental scripts. Naively, I tried this:
+```{.python filename="experiment1.py (not working!)"}
+import ..my_package
+from ..my_package import my_module1
+```
+While typing this, VS Code does not complain about this and it feels like it *should* work. After all, `..` indicates passage to the parent directory, that is, the project directory where `my_package` lives. However, when I hit the "play button" in the VS Code tab for `experiment1.py`, I get this error in the terminal:
+```shell
+ImportError: attempted relative import with no known parent package
+```
+I'm not going to get into *why* this doesn't work. Instead I'll go straight to a quick and dirty solution.
+
+## A quick-and-dirty solution
+
+One solution is to manually instruct the Python interpreter where to look for packages and modules. In this case it needs to look in the project root directory while it runs the script in the `experimental/` folder. Here's a way to do this:
+```{.python filename="experiment1.py (working!)"}
+# Import the needed tools
+import sys
+from pathlib import Path
+# Add project root to `sys.path` and...
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+# ...and proceed as before without `..`
+import my_package
+from my_package import my_module1
+```
+I must have looked this up three to five times now. I'm still not sure if I'll be able to remember it next time. But at least I know where to look...
+
+And yes, I've read that this is *not* good practice and should *never* be used in production code. But it seems to be fine for my purely experimental purposes. 
