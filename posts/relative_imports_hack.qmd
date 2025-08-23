@@ -23,23 +23,23 @@ project/
         experiment2.py
     main.py
 ```
-The idea is to put some of the code required for `main.py` into a custom package `my_package`. While working on the package, I might want to try a few things out. That's what the scripts in `experimental/` are for. I'm keeping them in a sub-folder so I can easily `.gitignore` them, and also to keep the main project folder clean. 
+The idea is to put some of the code required for `main.py` into a custom package `my_package`. While working on the package, I might want to try a few things out. That's what the scripts in `experimental/` are there for. I'm keeping them in a sub-folder so I can easily `.gitignore` them, and also to keep the main project folder clean. 
 
-Obviously, I want to import things `my_package` into the experimental scripts. Naively, I tried this:
+Obviously, I want to import things from `my_package` into the experimental scripts. Naively, I tried this:
 ```{.python filename="experiment1.py (not working!)"}
 import ..my_package
 from ..my_package import my_module1
 ```
-While typing this, VS Code does not complain about this and it feels like it *should* work. After all, `..` indicates passage to the parent directory, that is, the project directory where `my_package` lives. However, when I hit the "play button" in the VS Code tab for `experiment1.py`, I get this error in the terminal:
-```shell
+While typing this, VS Code does not complain and it feels like it *should* work. After all, the double dorts `..` indicate passage to the parent directory, which is the project root directory in this case and where `my_package` lives. However, when I hit the "play button" in the VS Code tab for `experiment1.py`, say, I get this error in the terminal:
+```bash
 ImportError: attempted relative import with no known parent package
 ```
 I'm not going to get into *why* this doesn't work. Instead I'll go straight to a quick and dirty solution.
 
 ## A quick-and-dirty solution
 
-One solution is to manually instruct the Python interpreter where to look for packages and modules. In this case it needs to look in the project root directory while it runs the script in the `experimental/` folder. Here's a way to do this:
-```{.python filename="experiment1.py (working!)"}
+One solution is to manually instruct the Python interpreter where to look for packages and modules. In this case it needs to look in the project root directory while it's running the script in the `experimental/` folder. Here's a way to do this:
+```{.python .code-overflow-wrap filename="experiment1.py (working!)"}
 # Import the needed tools
 import sys
 from pathlib import Path
@@ -50,6 +50,6 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 import my_package
 from my_package import my_module1
 ```
-I must have looked this up three to five times now. I'm still not sure if I'll be able to remember it next time. But at least I know where to look...
+I must have looked this up three to five times now. I'm still not sure if I'll be able to remember it next time. But at least I know where to look now...
 
-And yes, I've read that this is *not* good practice and should *never* be used in production code. But it seems to be fine for my purely experimental purposes. 
+And yes, I've read that this is *not* good practice and should *never* be used in production code. But it seems to be fine for my experimental purposes. 
