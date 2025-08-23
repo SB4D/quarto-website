@@ -219,8 +219,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         experiment1.py
         experiment2.py
     main.py</code></pre>
-<p>The idea is to put some of the code required for <code>main.py</code> into a custom package <code>my_package</code>. While working on the package, I might want to try a few things out. That’s what the scripts in <code>experimental/</code> are for. I’m keeping them in a sub-folder so I can easily <code>.gitignore</code> them, and also to keep the main project folder clean.</p>
-<p>Obviously, I want to import things <code>my_package</code> into the experimental scripts. Naively, I tried this:</p>
+<p>The idea is to put some of the code required for <code>main.py</code> into a custom package <code>my_package</code>. While working on the package, I might want to try a few things out. That’s what the scripts in <code>experimental/</code> are there for. I’m keeping them in a sub-folder so I can easily <code>.gitignore</code> them, and also to keep the main project folder clean.</p>
+<p>Obviously, I want to import things from <code>my_package</code> into the experimental scripts. Naively, I tried this:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>experiment1.py (not working!)</strong></pre>
@@ -228,18 +228,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2" data-filename="experiment1.py (not working!)"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ..my_package</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ..my_package <span class="im">import</span> my_module1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>While typing this, VS Code does not complain about this and it feels like it <em>should</em> work. After all, <code>..</code> indicates passage to the parent directory, that is, the project directory where <code>my_package</code> lives. However, when I hit the “play button” in the VS Code tab for <code>experiment1.py</code>, I get this error in the terminal:</p>
-<pre class="shell"><code>ImportError: attempted relative import with no known parent package</code></pre>
+<p>While typing this, VS Code does not complain and it feels like it <em>should</em> work. After all, the double dorts <code>..</code> indicate passage to the parent directory, which is the project root directory in this case and where <code>my_package</code> lives. However, when I hit the “play button” in the VS Code tab for <code>experiment1.py</code>, say, I get this error in the terminal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ImportError:</span> attempted relative import with no known parent package</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>I’m not going to get into <em>why</em> this doesn’t work. Instead I’ll go straight to a quick and dirty solution.</p>
 </section>
 <section id="a-quick-and-dirty-solution" class="level2">
 <h2 class="anchored" data-anchor-id="a-quick-and-dirty-solution">A quick-and-dirty solution</h2>
-<p>One solution is to manually instruct the Python interpreter where to look for packages and modules. In this case it needs to look in the project root directory while it runs the script in the <code>experimental/</code> folder. Here’s a way to do this:</p>
+<p>One solution is to manually instruct the Python interpreter where to look for packages and modules. In this case it needs to look in the project root directory while it’s running the script in the <code>experimental/</code> folder. Here’s a way to do this:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>experiment1.py (working!)</strong></pre>
 </div>
-<div class="sourceCode" id="cb4" data-filename="experiment1.py (working!)"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the needed tools</span></span>
+<div class="sourceCode" id="cb4" data-filename="experiment1.py (working!)"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the needed tools</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add project root to `sys.path` and...</span></span>
@@ -249,8 +249,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> my_package</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> my_package <span class="im">import</span> my_module1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>I must have looked this up three to five times now. I’m still not sure if I’ll be able to remember it next time. But at least I know where to look…</p>
-<p>And yes, I’ve read that this is <em>not</em> good practice and should <em>never</em> be used in production code. But it seems to be fine for my purely experimental purposes.</p>
+<p>I must have looked this up three to five times now. I’m still not sure if I’ll be able to remember it next time. But at least I know where to look now…</p>
+<p>And yes, I’ve read that this is <em>not</em> good practice and should <em>never</em> be used in production code. But it seems to be fine for my experimental purposes.</p>
 
 
 </section>
