@@ -49,15 +49,16 @@ website:
 
 format:
   html:
+    toc: true
     theme:
       - flatly
       # light: flatly
       # dark: darkly
     css: styles.css
-    toc: true
     max-width: 800px
     # highlight-style: atom-one
     highlight-style: tango
+    link-external-newwindow: true
     embed-resources: false
     include-in-header: _tools/sb4dlatex.html
 
