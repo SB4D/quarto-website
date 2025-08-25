@@ -5,8 +5,15 @@ project:
     port: 2025
 
 website:
-  title: "Stefan Behrens | Mathematician | Deep Learner"
+  title: 
+    "Stefan Behrens | Mathematician | Deep Learner"
+  page-footer:
+    center: |
+      © 2025 Stefan Behrens | 
+      Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
+      Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
   navbar:
+    search: false
     right:
       - href: index.qmd
         text: Home
@@ -18,12 +25,27 @@ website:
         text: Code/Projects
       - href: blog.qmd
         text: Blog
+      - sidebar:links
+      - icon: github
+        href: https://github.com/SB4D
+      - icon: linkedin
+        href: www.linkedin.com/in/stefan-behrens-822967331
+  sidebar: 
+    - id: links
+      title: Links
+      style: docked
+      contents: 
+        # - text: LinkedIn
+        #   href: https://www.linkedin.com/in/stefan-behrens-822967331
+        # - text: GitHub
+        #   href: https://github.com/SB4D
+        - text: "**Google Scholar** — publications and citations"
+          href: https://scholar.google.com/citations?user=qXTl8PEAAAAJ
+        - text: "**zbMath** — publications, citations, and reviews"
+          href: https://zbmath.org/authors/behrens.stefan
+        - text: "**ar$\\chi$iv** — preprints"
+          href: https://arxiv.org/a/behrens_s_1.html
   draft-mode: gone
-  page-footer:
-    center: |
-      © 2025 Stefan Behrens | 
-      Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
-      Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
 
 format:
   html:
