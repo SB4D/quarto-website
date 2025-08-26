@@ -163,7 +163,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -478,6 +478,11 @@ On 4-Manifolds, Folds and Cusps
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
