@@ -176,15 +176,15 @@ window.Quarto = {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
         <li>
     <a class="dropdown-item" href="https://scholar.google.com/citations?user=qXTl8PEAAAAJ">
- <span class="dropdown-text"><strong>Google Scholar</strong> — Publications and citations</span></a>
+ <span class="dropdown-text"><strong>Google Scholar</strong> — publications and citations</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://zbmath.org/authors/behrens.stefan">
- <span class="dropdown-text"><strong>zbMath</strong> — Publications, citations, and reviews</span></a>
+ <span class="dropdown-text"><strong>zbMath</strong> — publications, citations, and reviews</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://arxiv.org/a/behrens_s_1.html">
- <span class="dropdown-text"><strong>ar<span class="math inline">\(\chi\)</span>iv</strong> — Preprints</span></a>
+ <span class="dropdown-text"><strong>ar<span class="math inline">\(\chi\)</span>iv</strong> — preprints</span></a>
   </li>  
     </ul>
   </li>
@@ -194,7 +194,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -525,6 +525,11 @@ Stefan Behrens
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
