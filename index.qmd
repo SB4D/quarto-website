@@ -11,12 +11,12 @@ If you're also interested in these things, you may have seen [my name on the cov
 You can find more about my research in the [math section](math.qmd).
 
 ### Computers
-Since I've left academia, I've been on a deep dive into [data science](https://en.wikipedia.org/wiki/Data_science), [machine learning](https://en.wikipedia.org/wiki/Machine_learning), and related areas of software development. I've been working on a few projects that I'll describe in more detail in the [projects section](projects.qmd).
+Since I've left academia, I've been on a deep dive into [data science](https://en.wikipedia.org/wiki/Data_science), [machine learning](https://en.wikipedia.org/wiki/Machine_learning), and related areas of software development. I've been working on a few projects and I will describe them in more detail in the [projects section](projects.qmd) and [blog](blog.qmd).
 
 ### Music
 Music has always been my hobby but lately it has also served as an inspiration for coding projects. 
 <!-- The computer aided analysis of music and audio signals is a reliable source of problems. -->
 I'm currently exploring various concepts of deep learning in the context of computer aided analysis of music and audio signals.
-I've also been getting more into [digital signal processing (DSP)](https://en.wikipedia.org/wiki/Digital_signal_processing) and [music information retrieval (MIR)](https://en.wikipedia.org/wiki/Music_information_retrieval) and this will be reflected in various posts in the [my blog](blog.qmd).
+I've also been getting more into [digital signal processing (DSP)](https://en.wikipedia.org/wiki/Digital_signal_processing) and [music information retrieval (MIR)](https://en.wikipedia.org/wiki/Music_information_retrieval) and this will be reflected in various posts in [my blog](blog.qmd).
 
 

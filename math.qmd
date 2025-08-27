@@ -13,13 +13,13 @@ I also enjoy thinking about purely structural features of the aforementioned gau
 
 If you think of mathematics as a folder tree, here's roughly where to locate me and my contributions:
 ```text
-Mathemactics
+Mathematics
 └── Pure Mathematics
     └── Geometry & Topology
         └── Topology of Manifolds
             └── Low Dimensional Topology
                 └── 3- and 4-dimensional Manifolds
-                    ├── Topological 4-manifolds
+                    ├── Topological 4-Manifolds
                     │   └── Freedman's Work
                     ├── Smooth 4-Manifolds
                     │   ├── Diagrammatic Descriptions
@@ -28,8 +28,8 @@ Mathemactics
                         ├── Heegaard-Floer Theory
                         │   └── Correction Terms and their Applications
                         └── Seiberg-Witten Theory
-                            ├── Froyshov Invariants and their generalizations
-                            └── Seiberg-Witten-Floer Homotopy types
+                            ├── Froyshov Invariants and their Generalizations
+                            └── Seiberg-Witten-Floer Homotopy Types
 ```
 
 ### Ongoing Projects
@@ -37,14 +37,14 @@ Mathemactics
 ::: {.callout-note appearance="simple" collapse="true" icon=false}
 #### Generalized Froyshov Invariants
 
-This a most joint work with [Tyrone Cutler](https://mathoverflow.net/users/54788/tyrone). We've been developing a unified framework to study Froyshov-type invariants derived from the Seiberg-Witten-Floer homotopyes of rational homology 3-spheres and equivariant cohomology theories. We highlight the roles of Euler classes and orientations of $G$-representations where $G$ is either the circle group $\TT=U(1)$ or its normalizer $Pin(2)$ in $SU(2)$. 
+This is mostly joint work with [Tyrone Cutler](https://mathoverflow.net/users/54788/tyrone). We've been developing a unified framework to study Froyshov-type invariants derived from the Seiberg-Witten-Floer homotopyes of rational homology 3-spheres and equivariant cohomology theories. We highlight the roles of Euler classes and orientations of $G$-representations where $G$ is either the circle group $\mathbb{T}=U(1)$ or its normalizer $Pin(2)$ in $SU(2)$. 
 Along the way, we give proofs of various folklore statements about the use of incomplete universes for the groups.
 :::
 
 ::: {.callout-note appearance="simple" collapse="true" icon=false}
 #### Seiberg-Witten-Floer Homotopy Types for General 3-Manifolds
 
-This a long-term project joint with [Thomas Kragh](https://www.uu.se/en/contact-and-organisation/staff?query=N12-1587) and [Alice Hedenlund](https://www.ntnu.edu/employees/alice.hedenlund). Seiberg-Witten-Floer (SWF) homotopy types are supposed to refine monopole Floer homology. This is reasonably well understood for rational homology 3-spheres by the work of Manolescu and Lidman-Manolecu. Moreover, Khandhawit-Lin-Sasahira and Sasahira-Stoffregen have constructed SWF homotopy types for more general 3-manifolds, but the relation to monopole Floer homology is only conjectural. Another loose end is the functoriality with respect to 4-dimensional cobordisms. We set out to construct SWF homotopy types for general closed 3-manifolds which allow a clean framwork to discuss cobordism maps and folding-unfolding phenomena related to local coefficients in monopole Floer homology. The key is a suitable notion of twisted parameterized equivariant homotopy types which we are developing.
+This is a long-term project joint with [Thomas Kragh](https://www.uu.se/en/contact-and-organisation/staff?query=N12-1587) and [Alice Hedenlund](https://www.ntnu.edu/employees/alice.hedenlund). Seiberg-Witten-Floer (SWF) homotopy types are supposed to refine monopole Floer homology. This is reasonably well understood for rational homology 3-spheres by the work of Manolescu and Lidman-Manolescu. Moreover, Khandhawit-Lin-Sasahira and Sasahira-Stoffregen have constructed SWF homotopy types for more general 3-manifolds, but the relation to monopole Floer homology is only conjectural. Another loose end is the functoriality with respect to 4-dimensional cobordisms. We set out to construct SWF homotopy types for general closed 3-manifolds which allow a clean framework to discuss cobordism maps and folding-unfolding phenomena related to local coefficients in monopole Floer homology. The key is a suitable notion of twisted parameterized equivariant homotopy types which we are developing.
 :::
 
 
@@ -86,7 +86,7 @@ We use Heegaard Floer homology with twisted coefficients to define numerical inv
 :::
 
 ::: {.callout-note appearance="simple" collapse="true" icon=false}
-#### Classification of boundary Lefschetz fibrations over the disc (joint with Gil Cavalcanti and Ralph Klaasse)
+#### Classification of boundary Lefschetz fibrations over the disc (joint with G. Cavalcanti and R. Klaasse)
 
 *("Geometry and Physics: A Festschrift in Honour of Nigel Hitchin, Volume II", Oxford University Press 2018)*
 [[DOI]](https://doi.org/10.1093/oso/9780198802020.003.0015)
@@ -97,14 +97,14 @@ We show that a four-manifold admits a boundary Lefschetz fibration over the disc
 :::
 
 ::: {.callout-note appearance="simple" collapse="true" icon=false}
-#### Elimination of cusps in dimension 4 and its applications (joint with Kenta Hayano)
+#### Elimination of cusps in dimension 4 and its applications (joint with K. Hayano)
 
 *(Proc. Lond. Math. Soc., Vol. 113 (2016), No. 5, 674-724)*
 [[DOI]](https://doi.org/10.1112/plms/pdw042)
 [[ar$\chi$iv]](http://arxiv.org/abs/1210.5948)
 
 **Abstract:** 
-Several new combinatorial descriptions of closed 4-manifolds have recently been introduced in the study of smooth maps from 4-manifolds to surfaces. These descriptions consist of simple closed curves in a closed, orientable surface and these curves appear as so called vanishing sets of corresponding maps. In the present paper we focus on homotopies canceling pairs of cusps so called cusp merges. We first discuss the classification problem of such homotopies, showing that there is a one-to-one correspondence between the set of homotopy classes of cusp merges canceling a given pair of cusps and the set of homotopy classes of suitably decorated curves between the cusps. Using our classification, we further give a complete description of the behavior of vanishing sets under cusp merges in terms of mapping class groups of surfaces. As an application, we discuss the uniqueness of surface diagrams, which are combinatorial descriptions of 4-manifolds due to Williams, and give new examples of surface diagrams related with Lefschetz fibrations and Heegaard diagrams.
+Several new combinatorial descriptions of closed 4-manifolds have recently been introduced in the study of smooth maps from 4-manifolds to surfaces. These descriptions consist of simple closed curves in a closed, orientable surface and these curves appear as so called vanishing sets of corresponding maps. In the present paper we focus on homotopies canceling pairs of cusps, so called cusp merges. We first discuss the classification problem of such homotopies, showing that there is a one-to-one correspondence between the set of homotopy classes of cusp merges canceling a given pair of cusps and the set of homotopy classes of suitably decorated curves between the cusps. Using our classification, we further give a complete description of the behavior of vanishing sets under cusp merges in terms of mapping class groups of surfaces. As an application, we discuss the uniqueness of surface diagrams, which are combinatorial descriptions of 4-manifolds due to Williams, and give new examples of surface diagrams related with Lefschetz fibrations and Heegaard diagrams.
 :::
 
 ::: {.callout-note appearance="simple" collapse="true" icon=false}
@@ -115,7 +115,7 @@ Several new combinatorial descriptions of closed 4-manifolds have recently been 
 [[ar$\chi$iv]](http://arxiv.org/abs/1205.5192)
 
 **Abstract:** 
-We study simple wrinkled fibrations, a variation of the simplified purely wrinkled fibrations introduced by Williams, and their combinatorial description in terms of surface diagrams. We show that simple wrinkled fibrations induce handle decompositions on their total spaces which are very similar to those obtained from Lefschetz fibrations. The handle decompositions turn out to be closely related to surface diagrams and we use this relationship to interpret some cut-and-paste operations on 4-manifolds in terms of surface diagrams. This, in turn, allows us classify all closed 4-manifolds which admit simple wrinkled fibrations of genus one, the lowest possible fiber genus.
+We study simple wrinkled fibrations, a variation of the simplified purely wrinkled fibrations introduced by Williams, and their combinatorial description in terms of surface diagrams. We show that simple wrinkled fibrations induce handle decompositions on their total spaces which are very similar to those obtained from Lefschetz fibrations. The handle decompositions turn out to be closely related to surface diagrams and we use this relationship to interpret some cut-and-paste operations on 4-manifolds in terms of surface diagrams. This, in turn, allows us to classify all closed 4-manifolds which admit simple wrinkled fibrations of genus one, the lowest possible fiber genus.
 :::
 
 

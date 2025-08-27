@@ -26,9 +26,9 @@ format: html
 <ul>
 <li>Planned and taught over 20 courses with consistenly positive student feedback</li>
 <li>Supervised and evaluated four M.Sc. and three B.Sc. theses</li>
-<li>Several scientific publications, including a popular monograph ("The Disk Embedding Theorem", Behrens et al, OUP 2021)</li>
-<li>Research projects on the geometry and topology of 3- and 4-dimensional manifolds, focussing on applications of Seiberg-Witten theory</li>
-<li>International and national research collaborations</li>
+<li>Publication of the popular monograph "The Disk Embedding Theorem",  Behrens et. al., OUP 2021</li>
+<li>Research projects and scientific publications on the geometry and topology of 3- and 4-dimensional manifolds, focussing on applications of Seiberg-Witten theory</li>
+<li>International and national collaborations</li>
 </ul>
 </div>
 </details>
@@ -86,7 +86,7 @@ format: html
 <div class="details">
 <ul>
 <li>Thesis: Surface Diagrams of Smooth 4-Manifolds (supervised by Prof. Dr. Peter Teichner)</li>
-<li>graduated magna cum laude</li>
+<li>Graduated magna cum laude</li>
 <li>IMPRS Fellow at the Max-Planck-Institute for Mathematics</li>
 </ul>
 </div>
@@ -96,7 +96,7 @@ format: html
 <div class="cv-entry">
 <details>
     <summary>
-        <span class="title">M.S. in Mathematics</span>
+        <span class="title">M.Sc. in Mathematics</span>
         <span class="titleinfo">(Dipl. Math.)</span>
         <span class="date">09/2009</span>
         <p class="subtitle">University of Bonn — Bonn, Germany</p>
@@ -131,7 +131,7 @@ format: html
 </ul></li>
 <li><b>Subjects Covered: </b><ul>
 <li>Search algorithms (informed, uninformed, A*)</li>
-<li>Basic statiscics (probability distributions, central limit theorem, confidence intervals)</li>
+<li>Basic statistics (probability distributions, central limit theorem, confidence intervals)</li>
 <li>Machine learning algorithms (regression, SVMs)</li>
 <li>Deep learning (neural networks)</li>
 </ul></li>
@@ -162,7 +162,7 @@ format: html
 <li><b>Subjects Covered: </b><ul>
 <li>Data science methodology (from business requirements to model deployment)</li>
 <li>Data collection and preparation</li>
-<li>Data analyis and modelling</li>
+<li>Data analysis and modelling</li>
 <li>Model evaluation and deployment</li>
 <li>Machine learning algorithms (prediction, classification, clustering)</li>
 <li>Data visualization (plots, dashboards, presentations)</li>
@@ -201,7 +201,7 @@ format: html
 <li>NIST frameworks</li>
 <li>OWASP security principles</li>
 <li>Network models (TCP/IP, OSI)</li>
-<li>Network procotols (TCP, UDP, HTTP(S))</li>
+<li>Network protocols (TCP, UDP, HTTP(S))</li>
 <li>Network monitoring</li>
 <li>Log analysis</li>
 <li>Threat detection</li>

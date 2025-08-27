@@ -12,6 +12,7 @@ website:
       © 2025 Stefan Behrens | 
       Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
       Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
+  site-url: https://www.sbehrens4d.com/
   navbar:
     search: false
     right:
@@ -49,6 +50,7 @@ website:
 
 format:
   html:
+    link-external-newwindow: true
     toc: true
     theme:
       - flatly
@@ -58,7 +60,6 @@ format:
     max-width: 800px
     # highlight-style: atom-one
     highlight-style: tango
-    link-external-newwindow: true
     embed-resources: false
     include-in-header: _tools/sb4dlatex.html
 

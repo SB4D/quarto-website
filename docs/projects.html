@@ -39,7 +39,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bdc738befd3c0f36cf0c70288a90831e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <script src="./_tools/sb4dlatex.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -84,7 +113,6 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Stefan Behrens | Mathematician | Deep Learner</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -109,6 +137,35 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://scholar.google.com/citations?user=qXTl8PEAAAAJ">
+ <span class="dropdown-text"><strong>Google Scholar</strong> — publications and citations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://zbmath.org/authors/behrens.stefan">
+ <span class="dropdown-text"><strong>zbMath</strong> — publications, citations, and reviews</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://arxiv.org/a/behrens_s_1.html">
+ <span class="dropdown-text"><strong>ar<span class="math inline">\(\chi\)</span>iv</strong> — preprints</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/SB4D"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -165,21 +222,21 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="how-did-i-do-a-midi-drum-practice-tool" class="level3">
 <h3 class="anchored" data-anchor-id="how-did-i-do-a-midi-drum-practice-tool">How did I do? — A MIDI Drum Practice Tool</h3>
-<p>While I’m not a drummer myself, I picked up finger drumming for sketching songs. This brought me to <a href="https://melodics.com/">Melodics</a>, which I’ve briefly used. While I liked its concept, it was too expensive and felt too much like a toy. I wanted a real practice tool that would allow me to evaluated my finger drum performances and help me to improve my sense of rhythm and timing accuracy. As a quick fix, I developed a <a href="https://github.com/SB4D/Reaper/blob/main/ReaScripts/MIDI/Compare%20notes%20in%20active%20take%20of%20selected%20MIDI%20item%20to%20specified%20grid.lua">rudimentary implementation</a> as an extension for <a href="https://www.reaper.fm/">REAPER</a> written in Lua using the <a href="https://www.reaper.fm/sdk/reascript/reascripthelp.html">ReaScript API</a>. The goal is to make this a self-contained web application using Python, FastAPI and a bit of JavaScript for the <a href="https://www.w3.org/TR/webmidi/">Web MIDI API</a>.</p>
+<p>While I’m not a drummer myself, I picked up finger drumming for sketching songs. This brought me to <a href="https://melodics.com/">Melodics</a>, which I’ve briefly used. While I liked its concept, it was too expensive and felt too much like a toy. I wanted a real practice tool that would allow me to evaluate my finger drum performances and help me to improve my sense of rhythm and timing accuracy. As a quick fix, I developed a <a href="https://github.com/SB4D/Reaper/blob/main/ReaScripts/MIDI/Compare%20notes%20in%20active%20take%20of%20selected%20MIDI%20item%20to%20specified%20grid.lua">rudimentary implementation</a> as an extension for <a href="https://www.reaper.fm/">REAPER</a> written in Lua using the <a href="https://www.reaper.fm/sdk/reascript/reascripthelp.html">ReaScript API</a>. The goal is to make this a self-contained web application using Python, FastAPI and a bit of JavaScript for the <a href="https://www.w3.org/TR/webmidi/">Web MIDI API</a>.</p>
 </section>
 <section id="python-and-latex-for-job-applications" class="level3">
 <h3 class="anchored" data-anchor-id="python-and-latex-for-job-applications">Python and LaTeX for Job Applications</h3>
-<p>Let’s face it, applying for jobs is not fun. Luckily, I’m pretty good at finding enjoyable aspects in non-fun tasks. In this case, I took quite some pleasure in designing my application material whilst honing my computer skills. I was looking for a solution that is visually appealing, especially on computer screens, and easy to use. The latter meant that I wanted to separate design aspects and content as much as possible. This requirement made <a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a> a naturla choice. As a bit of eye candy I had enviosioned a subtle watermark image fading into the page, with the added personal touch of transitioning from mathematics into code.</p>
+<p>Let’s face it, applying for jobs is not the most fun. Luckily, I’m pretty good at finding enjoyable aspects in almost everything. In this case, I took quite some pleasure in designing my application material whilst honing my computer skills. I was looking for a solution that is visually appealing, especially on computer screens, and easy to use. The latter meant that I wanted to separate design aspects and content as much as possible. This requirement made <a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a> a natural choice. As a bit of eye candy I had enviosioned a subtle watermark image fading into the page, with the added personal touch of transitioning from mathematics into code.</p>
 <ul>
 <li><strong>Watermark Design:</strong> To get the watermark exactly right, I wrote a Python library for image processing (based on PIL and NumPy) which offers blending and fading effects with fully customizable gradients.</li>
-<li><strong>LaTeX Template Design:</strong> I then designed LaTeX templates for cover letters and CVs with my watermark embeded.</li>
+<li><strong>LaTeX Template Design:</strong> I then designed LaTeX templates for cover letters and CVs with my watermark embedded.</li>
 <li><strong>Automatic Document Generation:</strong> Having created the CV template, I wrote a Python script that automatically generates a LaTeX CV from data stored in a YAML file.</li>
 </ul>
 <p>Now all I have to do is write cover letters in plain text, keep my CV data up to date in the suitably structured YAML file , and run the scripts. No more fussing around with annyoing table structures and formatting options in Word or LaTeX.</p>
 </section>
 <section id="sbehrens4d.com-this-website" class="level3">
 <h3 class="anchored" data-anchor-id="sbehrens4d.com-this-website">sbehrens4d.com — This Website</h3>
-<p>Lastly, there’s my website. I know, excatly what the world needed… Well, I felt like I needed one. In part, it’s meant to serve as an extension of my application material, so that potential employers can get a better idea of who I am and what I (can) do. The website is based on <a href="https://quarto.org/">Quarto</a>. I started with a template and added a few tweaks here and there. Two notable features:</p>
+<p>Lastly, there’s my website. I know, exactly what the world needed… Well, I felt like I needed one. In part, it’s meant to serve as an extension of my application material, so that potential employers can get a better idea of who I am and what I (can) do. The website is based on <a href="https://quarto.org/">Quarto</a>. I started with a template and added a few tweaks here and there. Two notable features:</p>
 <ul>
 <li>The background image is another application of my image processing library mentioned <a href="#python-and-latex-for-job-applications">above</a> and references the watermark in my application material.</li>
 <li>Similarly, the <a href="cv.html">CV page</a> is generated from the same YAML file used for my LaTeX CV.</li>
@@ -261,7 +318,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/www\.sbehrens4d\.com\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -275,6 +332,11 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
