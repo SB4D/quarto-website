@@ -38,10 +38,6 @@ website:
       title: Links
       style: docked
       contents: 
-        # - text: LinkedIn
-        #   href: https://www.linkedin.com/in/stefan-behrens-822967331
-        # - text: GitHub
-        #   href: https://github.com/SB4D
         - text: "**Google Scholar** — publications and citations"
           href: https://scholar.google.com/citations?user=qXTl8PEAAAAJ
           target: _blank
