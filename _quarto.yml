@@ -12,7 +12,7 @@ website:
       © 2025 Stefan Behrens | 
       Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
       Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
-  site-url: https://www.sbehrens4d.com/
+  site-url: https://www.sbehrens4d.com
   navbar:
     search: false
     right:
@@ -29,8 +29,10 @@ website:
       - sidebar:links
       - icon: github
         href: https://github.com/SB4D
+        target: _blank
       - icon: linkedin
         href: https://www.linkedin.com/in/stefan-behrens-822967331
+        target: _blank
   sidebar: 
     - id: links
       title: Links
@@ -42,10 +44,13 @@ website:
         #   href: https://github.com/SB4D
         - text: "**Google Scholar** — publications and citations"
           href: https://scholar.google.com/citations?user=qXTl8PEAAAAJ
+          target: _blank
         - text: "**zbMath** — publications, citations, and reviews"
           href: https://zbmath.org/authors/behrens.stefan
+          target: _blank
         - text: "**ar$\\chi$iv** — preprints"
           href: https://arxiv.org/a/behrens_s_1.html
+          target: _blank
   draft-mode: gone
 
 format:
