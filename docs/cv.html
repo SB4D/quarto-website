@@ -145,15 +145,15 @@ window.Quarto = {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
         <li>
     <a class="dropdown-item" href="https://scholar.google.com/citations?user=qXTl8PEAAAAJ">
- <span class="dropdown-text"><strong>Google Scholar</strong> - Publications and citations</span></a>
+ <span class="dropdown-text"><strong>Google Scholar</strong> — publications and citations</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://zbmath.org/authors/behrens.stefan">
- <span class="dropdown-text">Publications on zbMath</span></a>
+ <span class="dropdown-text"><strong>zbMath</strong> — publications, citations, and reviews</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="https://arxiv.org/a/behrens_s_1.html">
- <span class="dropdown-text">Preprints on ar<span class="math inline">\(\chi\)</span>iv.org</span></a>
+ <span class="dropdown-text"><strong>ar<span class="math inline">\(\chi\)</span>iv</strong> — preprints</span></a>
   </li>  
     </ul>
   </li>
@@ -163,7 +163,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/stefan-behrens-822967331"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -235,9 +235,9 @@ window.Quarto = {
 <ul>
 <li>Planned and taught over 20 courses with consistenly positive student feedback</li>
 <li>Supervised and evaluated four M.Sc. and three B.Sc. theses</li>
-<li>Several scientific publications, including a popular monograph ("The Disk Embedding Theorem", Behrens et al, OUP 2021)</li>
-<li>Research projects on the geometry and topology of 3- and 4-dimensional manifolds, focussing on applications of Seiberg-Witten theory</li>
-<li>International and national research collaborations</li>
+<li>Publication of the popular monograph "The Disk Embedding Theorem",  Behrens et. al., OUP 2021</li>
+<li>Research projects and scientific publications on the geometry and topology of 3- and 4-dimensional manifolds, focussing on applications of Seiberg-Witten theory</li>
+<li>International and national collaborations</li>
 </ul>
 </div>
 </details>
@@ -293,7 +293,7 @@ window.Quarto = {
 <div class="details">
 <ul>
 <li>Thesis: Surface Diagrams of Smooth 4-Manifolds (supervised by Prof. Dr. Peter Teichner)</li>
-<li>graduated magna cum laude</li>
+<li>Graduated magna cum laude</li>
 <li>IMPRS Fellow at the Max-Planck-Institute for Mathematics</li>
 </ul>
 </div>
@@ -303,7 +303,7 @@ window.Quarto = {
 <div class="cv-entry">
 <details>
     <summary>
-        <span class="title">M.S. in Mathematics</span>
+        <span class="title">M.Sc. in Mathematics</span>
         <span class="titleinfo">(Dipl. Math.)</span>
         <span class="date">09/2009</span>
         <p class="subtitle">University of Bonn — Bonn, Germany</p>
@@ -336,7 +336,7 @@ window.Quarto = {
 </ul></li>
 <li><b>Subjects Covered: </b><ul>
 <li>Search algorithms (informed, uninformed, A*)</li>
-<li>Basic statiscics (probability distributions, central limit theorem, confidence intervals)</li>
+<li>Basic statistics (probability distributions, central limit theorem, confidence intervals)</li>
 <li>Machine learning algorithms (regression, SVMs)</li>
 <li>Deep learning (neural networks)</li>
 </ul></li>
@@ -367,7 +367,7 @@ window.Quarto = {
 <li><b>Subjects Covered: </b><ul>
 <li>Data science methodology (from business requirements to model deployment)</li>
 <li>Data collection and preparation</li>
-<li>Data analyis and modelling</li>
+<li>Data analysis and modelling</li>
 <li>Model evaluation and deployment</li>
 <li>Machine learning algorithms (prediction, classification, clustering)</li>
 <li>Data visualization (plots, dashboards, presentations)</li>
@@ -406,7 +406,7 @@ window.Quarto = {
 <li>NIST frameworks</li>
 <li>OWASP security principles</li>
 <li>Network models (TCP/IP, OSI)</li>
-<li>Network procotols (TCP, UDP, HTTP(S))</li>
+<li>Network protocols (TCP, UDP, HTTP(S))</li>
 <li>Network monitoring</li>
 <li>Log analysis</li>
 <li>Threat detection</li>
@@ -549,6 +549,11 @@ window.Quarto = {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
