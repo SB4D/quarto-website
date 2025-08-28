@@ -278,5 +278,54 @@
     "title": "Loading “formattble” strings from plain text files",
     "section": "A LaTeX example",
     "text": "A LaTeX example\nTemplate strings are particularly useful when working with LaTeX code, which usually contains a lot of backslashes \\ and curly braces {...}. The curly braces are particularly annoying.\nHere’s a simple example, again, first with placeholders.\n\n# Import the `Template` class from the string library\nfrom string import Template\n\n# Load LaTeX file with placeholders and print\ntemplate = \"./templates/test_Template.tex\"\nwith open(template, \"r\") as file:\n    latex_template = file.read()\nprint(\"LaTeX with placeholders:\")\nprint(\"-\"*20)\nprint(latex_template)\n\nLaTeX with placeholders:\n--------------------\n\\documentclass{article}\n\n\\author{Author}\n\\title{Title}\n\\date{\\today}\n\n\\begin{document}\n\n\\section{$SECTION}\n\n$TEXT\n\n\\end{document}\n\n\nAnd now with content:\n\n# Create \"template string\"\nlatex_template = Template(latex_template)\n\n# Fill placeholders and print again\nprint(\"LaTeX after filling placeholders:\")\nprint(\"-\"*20)\nlatex = latex_template.substitute(\n    SECTION=\"Introduction\",\n    TEXT= \"This is some text.\"\n)\nprint(latex)\n\nLaTeX after filling placeholders:\n--------------------\n\\documentclass{article}\n\n\\author{Author}\n\\title{Title}\n\\date{\\today}\n\n\\begin{document}\n\n\\section{Introduction}\n\nThis is some text.\n\n\\end{document}\n\n\n\nTrouble with standard string formatting\nFinally, here’s a quick demonstration that standard string formatting does not work in this example. The problem is that Python cannot distinguiing the actual placeholders {stuff:s} from the many other things wrapped in curly braces. Every pair {...} looks like a placeholder.\nIn the example below, the interpreter treats {article} as in \\documentclass{article} is a placeholder with key \"article\" and reports a key error.\n\n# Load LaTeX file with placeholders and print\ntemplate = \"./templates/test_format.tex\"\nwith open(template, \"r\") as file:\n    latex_template = file.read()\nprint(\"LaTeX with placeholders:\")\nprint(\"-\"*20)\nprint(latex_template)\nprint(\"\\n\")\n\n# Fill placeholders and print again\nprint(\"LaTeX after filling placeholders:\")\nprint(\"-\"*20)\nlatex = latex_template.format(\n    SECTION=\"Introduction\",\n    TEXT= \"This is some text.\"\n)\nprint(latex)\n\nLaTeX with placeholders:\n--------------------\n\\documentclass{article}\n\n\\author{Author}\n\\title{Title}\n\\date{\\today}\n\n\\begin{document}\n\n\\section{{SECTION:s}}\n\n{TEXT:s}\n\n\\end{document}\n\n\nLaTeX after filling placeholders:\n--------------------\n\n\n\n---------------------------------------------------------------------------\nKeyError                                  Traceback (most recent call last)\n~\\AppData\\Local\\Temp\\ipykernel_8280\\2517583926.py in &lt;cell line: 0&gt;()\n     11 print(\"LaTeX after filling placeholders:\")\n     12 print(\"-\"*20)\n---&gt; 13 latex = latex_template.format(\n     14     SECTION=\"Introduction\",\n     15     TEXT= \"This is some text.\"\n\nKeyError: 'article'"
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html",
+    "href": "posts/drafts/hamonic_analysis.html",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "",
+    "text": "\\(\\providecommand{\\TT}{\\mathbb{T}}\\) \\(\\providecommand{\\wh}[1]{\\widehat{#1}}\\) \\(\\providecommand{\\mc}[1]{\\mathcal{#1}}\\)"
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html#the-classical-examples",
+    "href": "posts/drafts/hamonic_analysis.html#the-classical-examples",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "The Classical Examples",
+    "text": "The Classical Examples\n\\[ \\wh f(x) = \\int_\\R f(y) e^{-2\\pi i\\,xy} \\, dy \\]\n\\[ f*g(x) = \\int_\\R f(y) g(x-y) \\, dy \\]\n\\[ \\wh{f*g}(x) = \\wh f(x)\\cdot \\wh g(x) \\]"
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html#the-abtract-setting",
+    "href": "posts/drafts/hamonic_analysis.html#the-abtract-setting",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "The Abtract Setting",
+    "text": "The Abtract Setting\n\nLCA groups\n\ngroups\nAbelian groups\ntopological groups\n\ntopological spaces\n\nfunction spaces and local compactness\nexamples:\n\n\\(\\R\\) and \\(\\R^n\\)\n\\(\\Z\\) and \\(\\Z^n\\)\n\\(\\TT\\)\n\n\nHaar measures"
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html#prontrjagin-duality",
+    "href": "posts/drafts/hamonic_analysis.html#prontrjagin-duality",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "Prontrjagin Duality",
+    "text": "Prontrjagin Duality\nLet \\(G\\) be a topological groups. A continuous group homomorphisms \\(\\chi\\colon G\\to\\TT\\) is called a character of \\(G\\). The set of all characters is denoted by \\(\\wh G\\). Since \\(\\TT\\) is an Abelian group, so is \\(\\wh G\\) with pointwise multiplication. Moreover, \\(\\wh G\\) is a topological group with respect to the subspace topology inherited from \\(C(G,\\TT)\\).\nTheorem:\nIf \\(G\\) is a locally compact Abelian group, then so is \\(\\wh G\\).\nWhat happens if we apply the character group construction twice? As it turns out, we get the original group back. Indeed, every element \\(g\\in G\\) gives an evaluation map \\(ev_g\\colon \\wh G\\to \\TT\\) which simply evaluated a character \\(\\chi\\colon G\\to\\TT\\) as \\(ev_g(\\xi) = \\chi(g)\\). We can combine all these evaluation maps into a map \\[ ev\\colon G\\to \\wh{\\wh G},\\quad g\\mapsto ev_g = [\\chi\\mapsto \\chi(g)]. \\]\nTheorem (Pontrjagin Duality):\nThe map \\(ev\\colon G\\to \\wh{\\wh G}\\) is an isomorphism for every LCA group \\(G\\)."
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html#fourier-transforms",
+    "href": "posts/drafts/hamonic_analysis.html#fourier-transforms",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "Fourier Transforms",
+    "text": "Fourier Transforms\n\\[ \\mc F\\colon L^2(G) \\to L^2(\\wh G) ,\\quad \\mc F(f)(\\chi) = \\hat f(\\chi)= \\int_G f(g)\\overline{\\chi(g)} \\,d\\mu(g) \\]"
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html#convolution",
+    "href": "posts/drafts/hamonic_analysis.html#convolution",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "Convolution",
+    "text": "Convolution\n\\[ f*g (x) = \\int_G f(y) g(x-y) \\, d\\mu(y) \\]"
+  },
+  {
+    "objectID": "posts/drafts/hamonic_analysis.html#the-convolution-theorem",
+    "href": "posts/drafts/hamonic_analysis.html#the-convolution-theorem",
+    "title": "Stefan Behrens | Mathematician | Deep Learner",
+    "section": "The Convolution Theorem",
+    "text": "The Convolution Theorem"
   }
 ]
