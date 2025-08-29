@@ -7,6 +7,7 @@ project:
 website:
   title: 
     "Stefan Behrens | Mathematician | Deep Learner"
+  favicon: images/favicon2.png
   page-footer:
     center: |
       © 2025 Stefan Behrens | 
