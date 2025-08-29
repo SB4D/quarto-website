@@ -9,10 +9,11 @@ This page is a show case for some of my software projects. Source code is availa
 
 ### `sb4dfritz` — Tools for AVM FRITZ! Home Automation Systems
 
-* **Project on GitHub:** [github.com/SB4D/sb4dfritz](https://github.com/SB4D/sb4dfritz)
+* **GitHub Repository:** [github.com/SB4D/sb4dfritz](https://github.com/SB4D/sb4dfritz)
 <!-- * **Technologies used:** Python 3, key libraries: requests, threading, protocals: HTTP and SOAP  -->
 
 `sb4dfritz` provides specialized functionality to interact with home automation devices connected to AVM FRITZ!Box routers. This is mainly a learning project for object oriented programming in Python and network communication using [HTTP](https://en.wikipedia.org/wiki/HTTP) and [SOAP](https://en.wikipedia.org/wiki/SOAP). Originally, the communication was handled by the  [fritzconnection](https://github.com/kbr/fritzconnection) library, but I have written my own library `sb4dfritzlib` to remove this dependency. As a next step, I'm planning to add a browser-based frontend.
+
 
 ### How did I do? — A MIDI Drum Practice Tool
 
