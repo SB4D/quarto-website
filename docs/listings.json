@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/reloading_packages.html",
       "/posts/placeholders_in_text_files.html",
       "/posts/relative_imports_hack.html",
       "/posts/making_of_homepage.html",

@@ -7,11 +7,7 @@ project:
 website:
   title: 
     "Stefan Behrens | Mathematician | Deep Learner"
-  page-footer:
-    center: |
-      © 2025 Stefan Behrens | 
-      Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
-      Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
+  favicon: images/favicon2.png
   site-url: https://www.sbehrens4d.com
   navbar:
     search: false
@@ -47,6 +43,11 @@ website:
         - text: "**ar$\\chi$iv** — preprints"
           href: https://arxiv.org/a/behrens_s_1.html
           target: _blank
+  page-footer:
+    center: |
+      © 2025 Stefan Behrens | 
+      Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
+      Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
   draft-mode: gone
 
 format:
