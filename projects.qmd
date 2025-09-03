@@ -2,7 +2,7 @@
 title: "Code/Projects"
 ---
 
-This page is a show case for some of my software projects. Source code is availabe on [my GitHub page](https://github.com/SB4D/). My main programming language is Python, but I've also worked with Lua and a bit of C++. 
+This page is a showcase for some of my software projects. Source code is available on [my GitHub page](https://github.com/SB4D/). My main programming language is Python, but I've also worked with Lua and a bit of C++. 
 
 
 
@@ -12,23 +12,23 @@ This page is a show case for some of my software projects. Source code is availa
 * **GitHub Repository:** [github.com/SB4D/sb4dfritz](https://github.com/SB4D/sb4dfritz)
 <!-- * **Technologies used:** Python 3, key libraries: requests, threading, protocals: HTTP and SOAP  -->
 
-`sb4dfritz` provides specialized functionality to interact with home automation devices connected to AVM FRITZ!Box routers. This is mainly a learning project for object oriented programming in Python and network communication using [HTTP](https://en.wikipedia.org/wiki/HTTP) and [SOAP](https://en.wikipedia.org/wiki/SOAP). Originally, the communication was handled by the  [fritzconnection](https://github.com/kbr/fritzconnection) library, but I have written my own library `sb4dfritzlib` to remove this dependency. As a next step, I'm planning to add a browser-based frontend.
-
-
-### How did I do? — A MIDI Drum Practice Tool
-
-While I'm not a drummer myself, I picked up finger drumming for sketching songs. This brought me to [Melodics](https://melodics.com/), which I've briefly used. While I liked its concept, it was too expensive and felt too much like a toy. I wanted a real practice tool that would allow me to evaluate my finger drum performances and help me to improve my sense of rhythm and timing accuracy. As a quick fix, I developed a [rudimentary implementation](https://github.com/SB4D/Reaper/blob/main/ReaScripts/MIDI/Compare%20notes%20in%20active%20take%20of%20selected%20MIDI%20item%20to%20specified%20grid.lua) as an extension for [REAPER](https://www.reaper.fm/) written in Lua using the [ReaScript API](https://www.reaper.fm/sdk/reascript/reascripthelp.html). The goal is to make this a self-contained web application using Python, FastAPI and a bit of JavaScript for the [Web MIDI API](https://www.w3.org/TR/webmidi/).
+`sb4dfritz` provides specialized functionality to interact with home automation devices connected to AVM FRITZ!Box routers. This is mainly a learning project for object oriented programming in Python and network communication using [HTTP](https://en.wikipedia.org/wiki/HTTP) and [SOAP](https://en.wikipedia.org/wiki/SOAP). Originally, the communication was handled by the [fritzconnection](https://github.com/kbr/fritzconnection) library, but I have written my own library `sb4dfritzlib` to remove this dependency. As a next step, I'm planning to add a browser-based frontend.
 
 
 ### `sb4dportfolio` — Python and LaTeX for Job Applications
 
-Let's face it, applying for jobs is not the most fun. Luckily, I'm pretty good at finding enjoyable aspects in almost everything. In this case, I took quite some pleasure in designing my application material whilst honing my computer skills. I was looking for a solution that is visually appealing, especially on computer screens, and easy to use. The latter meant that I wanted to separate design aspects and content as much as possible. This requirement made [LaTeX](https://en.wikipedia.org/wiki/LaTeX) a natural choice. As a bit of eye candy I had enviosioned a subtle watermark image fading into the page, with the added personal touch of transitioning from mathematics into code. 
+I took quite some pleasure in designing my application material whilst honing my computer skills. I was looking for a solution that is visually appealing, especially on computer screens, and easy to use (for me). In particular, I wanted to separate design aspects and content as much as possible. This requirement made [LaTeX](https://en.wikipedia.org/wiki/LaTeX) and Python a natural choice. As a bit of eye candy, I had the idea for a subtle watermark image fading into the page, with the added personal touch of transitioning from mathematics into code. 
 
 * **Watermark Design:** To get the watermark exactly right, I wrote a Python library for image processing (based on PIL and NumPy) which offers blending and fading effects with fully customizable gradients.
 * **LaTeX Template Design:** I then designed LaTeX templates for cover letters and CVs with my watermark embedded. 
 * **Automatic Document Generation:** Having created the CV template, I wrote a Python script that automatically generates a LaTeX CV from data stored in a YAML file. 
 
-Now all I have to do is write cover letters in plain text, keep my CV data up to date in the suitably structured YAML file , and run the scripts. No more fussing around with annyoing table structures and formatting options in Word or LaTeX. 
+Now all I have to do is write cover letters in plain text, keep my CV data up to date in the suitably structured YAML file, and run the scripts. No more fussing around with annoying table structures and formatting options in Word or LaTeX. 
+
+
+### How did I do? — A MIDI Drum Practice Tool
+
+While I'm not a drummer myself, I picked up finger drumming for sketching songs. This brought me to [Melodics](https://melodics.com/), which I've briefly used. While I liked its concept, it was too expensive and felt too much like a toy. I wanted a real practice tool that would allow me to evaluate my finger drum performances and help me to improve my sense of rhythm and timing accuracy. As a quick fix, I developed a [rudimentary implementation](https://github.com/SB4D/Reaper/blob/main/ReaScripts/MIDI/Compare%20notes%20in%20active%20take%20of%20selected%20MIDI%20item%20to%20specified%20grid.lua) as an extension for [REAPER](https://www.reaper.fm/) written in Lua using the [ReaScript API](https://www.reaper.fm/sdk/reascript/reascripthelp.html). The goal is to make this a self-contained web application using Python, FastAPI and a bit of JavaScript for the [Web MIDI API](https://www.w3.org/TR/webmidi/).
 
 
 ### `sbehrens4d.com` — This Website 
