@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stefan Behrens">
+<meta name="dcterms.date" content="2025-09-09">
+
+<title>Fixing My FitNotes Database – Stefan Behrens | Mathematician | Deep Learner</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../images/favicon2.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing-1 .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing-1'] = new List('listing-listing-1', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script src="../_tools/sb4dlatex.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Stefan Behrens | Mathematician | Deep Learner</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../math.html"> 
+<span class="menu-text">Math/Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Code/Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://scholar.google.com/citations?user=qXTl8PEAAAAJ">
+ <span class="dropdown-text"><strong>Google Scholar</strong> — publications and citations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://zbmath.org/authors/behrens.stefan">
+ <span class="dropdown-text"><strong>zbMath</strong> — publications, citations, and reviews</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://arxiv.org/a/behrens_s_1.html">
+ <span class="dropdown-text"><strong>ar<span class="math inline">\(\chi\)</span>iv</strong> — preprints</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/SB4D" target="_blank"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/sbehrens4d" target="_blank"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem-and-the-approach" id="toc-the-problem-and-the-approach" class="nav-link active" data-scroll-target="#the-problem-and-the-approach">The Problem and the Approach</a></li>
+  <li><a href="#step-1-loading-the-data" id="toc-step-1-loading-the-data" class="nav-link" data-scroll-target="#step-1-loading-the-data">Step 1: Loading the Data</a></li>
+  <li><a href="#step-2-exploring-and-preparing-the-data" id="toc-step-2-exploring-and-preparing-the-data" class="nav-link" data-scroll-target="#step-2-exploring-and-preparing-the-data">Step 2: Exploring and Preparing the Data</a></li>
+  <li><a href="#step-3-model-training-and-evaluation" id="toc-step-3-model-training-and-evaluation" class="nav-link" data-scroll-target="#step-3-model-training-and-evaluation">Step 3: Model Training and Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#classical-binary-classifiers" id="toc-classical-binary-classifiers" class="nav-link" data-scroll-target="#classical-binary-classifiers">Classical Binary Classifiers</a></li>
+  <li><a href="#a-deep-learning-approach" id="toc-a-deep-learning-approach" class="nav-link" data-scroll-target="#a-deep-learning-approach">A Deep Learning Approach</a></li>
+  <li><a href="#the-final-implementation" id="toc-the-final-implementation" class="nav-link" data-scroll-target="#the-final-implementation">The Final Implementation</a></li>
+  </ul></li>
+  <li><a href="#step-4-fixing-the-database" id="toc-step-4-fixing-the-database" class="nav-link" data-scroll-target="#step-4-fixing-the-database">Step 4: Fixing the Database</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Fixing My FitNotes Database</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">SQL</div>
+    <div class="quarto-category">Machine Learning</div>
+    <div class="quarto-category">Data Science</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stefan Behrens </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 9, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>I use a combination of SQL, data analysis, and machine learning to fix faulty entries in the database of my workout tracking app.</p>
+<section id="the-problem-and-the-approach" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-and-the-approach">The Problem and the Approach</h2>
+<p>I’ve been using the <a href="http://www.fitnotesapp.com/">FitNotes</a> app to track my workouts since 2018. Among other things, I’ve been doing the bar bell classics: bench press, squat, deadlift, and overhead press. Once I got the hang of the exercises, I started doing a few warm-up sets with lower weights followed by the regular sets. The problem is that I eventually decided to track the warm-up sets separately, but didn’t do so in the beginning. The resulting inconsistency of my work-out log has been bothering me ever since.</p>
+<p>More precisely, in the beginning all deadlift sets were tracked under the exercise label “Deadlift”. After a while I introduced another label “Deadlift (Warm Up)” and the same goes for the other three exercises. Altogether, I have about 5000 tracked sets for the four exercises of which roughly 1000 predate the introduction of the “… (Warm Up)” labels - the precise numbers will be determined later.</p>
+<p>Luckily, FitNotes provides a convenient backup and restore feature. A full backup comes in the form of an <a href="https://en.wikipedia.org/wiki/SQLite">SQLite3</a> file, which is reasonably easy to work with. The task is to find the database entries representing the falsely labeled warm-up sets, and to assign the correct labels.</p>
+<p>While the large number of potentially falsely categorized sets essentially rules out a manual approach, the even larger number of properly categorized sets suggests a machine learning approach: train a suitable classifier model on the good data and use it to identify the bad data.</p>
+<p>A preview of the main function should give a good idea of the things to come:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_db_file(db_file):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the data from the database file</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> load_data(db_file)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prepare the data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    prepared_data <span class="op">=</span> prepare_data(data)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make prediction which early sets are warm-ups</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    predicted_data <span class="op">=</span> predict_warm_ups(prepared_data)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># determine the "bad" set IDs</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    bad_set_ids <span class="op">=</span> get_bad_ids(predicted_data)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update database file</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    update_db_file(db_file, bad_set_ids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The following packages will be used in the implementation:</p>
+<div id="0b3fa7ba" class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># database and data handling</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># classical machine learning</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, cross_val_score, StratifiedKFold</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, ConfusionMatrixDisplay, classification_report</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression, Perceptron</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> LinearSVC</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># deep learning</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># visualization</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># file operations</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-1-loading-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-loading-the-data">Step 1: Loading the Data</h2>
+<p>The FitNotes backups come in the form of files named like <code>FitNotes_Backup_2025_08_19_11_53_20.fitnotes</code>, for example. As mentioned, these are just SQLite3 files which are reasonably easy to work with (arguably as easy as it gets with SQL databases). To get started, I opened the file in <a href="https://sqlitebrowser.org/">DB Browser for SQLite</a> which is great for exploring SQLite databases and drafting queries. In this case, I found that there are 24 tables, but only two of them are relevant:</p>
+<ul>
+<li><code>exercise</code>: contains the information about the different exercises. The relevant columns are
+<ul>
+<li><code>_id</code>: a numerical primary key</li>
+<li><code>name</code>: the exercise names</li>
+</ul></li>
+<li><code>training_log</code>: This contains the training logs with one row for each recorded set. The relevant columns are:
+<ul>
+<li><code>_id</code>: again, a numerical primary key</li>
+<li><code>date</code>: the date in the format YYYY-MM-DD</li>
+<li><code>metric_weight</code>: the weight for the set in kilograms (kg)</li>
+<li><code>reps</code>: the number of repitions in the set</li>
+<li><code>exercise_id</code>: a foreign key referencing the exercise with the corresponding <code>_id</code> in the <code>exercise</code> table</li>
+</ul></li>
+</ul>
+<p>With this understood, it’s time to run some queries. I’m opting for a combination of <code>sqlite3</code> and <code>pandas</code> to have the query results available as dataframes and ready for further processing.</p>
+<div id="75dd4ac3" class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify path of the FitNotes backup file</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>FITNOTES_BACKUP <span class="op">=</span> <span class="st">"FitNotes_Backup_2025_08_19_11_53_20.fitnotes"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the following function to run queries</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_query(query, db<span class="op">=</span>FITNOTES_BACKUP):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Run SQL query and return results as dataframe."""</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> sqlite3.<span class="ex">connect</span>(db) <span class="im">as</span> conn:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        results <span class="op">=</span> pd.read_sql(sql<span class="op">=</span>query, con<span class="op">=</span>conn)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Loading the relevant data from the database file involves a combination of joins and subqueries. First, I have to find the exercise IDs corresponding to the exercises which have a “… (Warm Up)” version, and then I can retrieve the relevant entries from the <code>training_log</code> table. This gives the desired <code>load_data()</code> function.</p>
+<div id="2287c335" class="cell" data-execution_count="84">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>exercise_ids_subquery<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT _id</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM exercise</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE name LIKE '% (Warm Up)'</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">   OR name || ' (Warm Up)' IN (SELECT name FROM exercise)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>all_sets_query <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ss">SELECT</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ss">    T._id as "set_id",</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ss">    T.date as "date",</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    E._id as "exc_id",</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ss">    E.name as "label",</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ss">    T.metric_weight as "weight",</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    T.reps as "reps"</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ss">FROM</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="ss">    training_log T,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="ss">    exercise E</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="ss">WHERE</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="ss">    T.exercise_id = E._id AND</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="ss">    T.exercise_id IN (</span><span class="sc">{</span>exercise_ids_subquery<span class="sc">}</span><span class="ss">) AND</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="ss">    E.name NOT LIKE 'Fake%'</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data(fitnotes_backup<span class="op">=</span>FITNOTES_BACKUP):</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    all_sets <span class="op">=</span> run_query(all_sets_query, db<span class="op">=</span>fitnotes_backup)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> all_sets</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before I take a look at the data, I want to determine the date that I started introducing the warm-up categories. This involves another simple join query.</p>
+<div id="16267225" class="cell" data-execution_count="85">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_split_date(db_file):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    first_warm_up_query <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">        min(T.date) as "date"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">        training_log T, exercise E</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">        T.exercise_id = E._id AND E.name LIKE "% (Warm Up)"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">    """</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> run_query(first_warm_up_query, db_file)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result[<span class="st">'date'</span>][<span class="dv">0</span>]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First appearance of warm-up label:"</span>, get_split_date(FITNOTES_BACKUP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>First appearance of warm-up label: 2020-02-07</code></pre>
+</div>
+</div>
+<p>I will use this date to split the data in two parts: the properly labeled “good data”, and the partially incorrectly labeled “problem data”.</p>
+<div id="182b6845" class="cell" data-execution_count="86">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SPLIT_DATE <span class="op">=</span> get_split_date(FITNOTES_BACKUP)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> good_problem_split(data):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract good data</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    good_mask <span class="op">=</span> data[<span class="st">'date'</span>] <span class="op">&gt;=</span> SPLIT_DATE</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    good_data <span class="op">=</span> data[good_mask]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract problematic data</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    problem_mask <span class="op">=</span> data[<span class="st">'date'</span>] <span class="op">&lt;</span> SPLIT_DATE</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    problem_data <span class="op">=</span> data[problem_mask]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> good_data, problem_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-2-exploring-and-preparing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-exploring-and-preparing-the-data">Step 2: Exploring and Preparing the Data</h2>
+<p>First, it’s good to know how much data there is and how much of it is properly labeled.</p>
+<div id="d791e220" class="cell" data-execution_count="87">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and split the data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>good_sets, problem_sets <span class="op">=</span> good_problem_split(raw_data)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print the counts of elements</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Numbers of tracked sets:"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"----------------------------"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Total sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(raw_data)<span class="sc">:4d}</span><span class="ss">"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Good sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(good_sets)<span class="sc">:4d}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> <span class="bu">len</span>(good_sets) <span class="op">/</span> <span class="bu">len</span>(raw_data)<span class="sc">:0.0f}</span><span class="ss"> %)"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Problem sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(problem_sets)<span class="sc">:4d}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> <span class="bu">len</span>(problem_sets) <span class="op">/</span> <span class="bu">len</span>(raw_data)<span class="sc">:0.0f}</span><span class="ss"> %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Numbers of tracked sets:
+----------------------------
+Total sets:      5091
+Good sets:       4057 (80 %)
+Problem sets:    1034 (20 %)</code></pre>
+</div>
+</div>
+<p>Next up is a look at the good sets, if only to make sure that the split was done correctly. This is indeed so, since all exercises conistently start appearing with separate warm-up categories from <code>SPLIT_DATE</code> onnward:</p>
+<div id="f2dfc272" class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>good_sets.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="88">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">set_id</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">exc_id</th>
+<th data-quarto-table-cell-role="th">label</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">reps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1034</td>
+<td>6832</td>
+<td>2020-02-07</td>
+<td>112</td>
+<td>Flat Barbell Bench Press (Warm Up)</td>
+<td>20.0</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1035</td>
+<td>6836</td>
+<td>2020-02-07</td>
+<td>37</td>
+<td>Flat Barbell Bench Press</td>
+<td>50.0</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1036</td>
+<td>6837</td>
+<td>2020-02-07</td>
+<td>37</td>
+<td>Flat Barbell Bench Press</td>
+<td>50.0</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1037</td>
+<td>6838</td>
+<td>2020-02-07</td>
+<td>37</td>
+<td>Flat Barbell Bench Press</td>
+<td>50.0</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1038</td>
+<td>6839</td>
+<td>2020-02-07</td>
+<td>37</td>
+<td>Flat Barbell Bench Press</td>
+<td>42.0</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1039</td>
+<td>6841</td>
+<td>2020-02-07</td>
+<td>113</td>
+<td>Deadlift (Warm Up)</td>
+<td>60.0</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1040</td>
+<td>6846</td>
+<td>2020-02-07</td>
+<td>48</td>
+<td>Deadlift</td>
+<td>106.0</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1041</td>
+<td>6847</td>
+<td>2020-02-07</td>
+<td>48</td>
+<td>Deadlift</td>
+<td>106.0</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1042</td>
+<td>6848</td>
+<td>2020-02-07</td>
+<td>48</td>
+<td>Deadlift</td>
+<td>104.0</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1043</td>
+<td>6849</td>
+<td>2020-02-07</td>
+<td>48</td>
+<td>Deadlift</td>
+<td>90.0</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1044</td>
+<td>6850</td>
+<td>2020-02-07</td>
+<td>112</td>
+<td>Flat Barbell Bench Press (Warm Up)</td>
+<td>40.0</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1045</td>
+<td>6851</td>
+<td>2020-02-07</td>
+<td>112</td>
+<td>Flat Barbell Bench Press (Warm Up)</td>
+<td>50.0</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1046</td>
+<td>6852</td>
+<td>2020-02-07</td>
+<td>113</td>
+<td>Deadlift (Warm Up)</td>
+<td>90.0</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1047</td>
+<td>6853</td>
+<td>2020-02-07</td>
+<td>113</td>
+<td>Deadlift (Warm Up)</td>
+<td>100.0</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1048</td>
+<td>6858</td>
+<td>2020-02-11</td>
+<td>111</td>
+<td>Overhead Press (Warm Up)</td>
+<td>20.0</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Ultimately, I’m interested in the information whether a given record represents a warm-up or a regular set. Whenever this information is known (i.e.&nbsp;for the good data), it is contained in the <code>'label'</code> column (and implicitly in <code>'exc_id'</code>), which also contains the information about the type of exercise (i.e.&nbsp;bench press, deadlift, overhead press, or squat). As is, the information is not presented in the most useful way. The same can be said about the columns <code>'set_id'</code> and <code>'date'</code>. In fact, the concrete values in these columns do not seem particularly relevant, but they do contain more obviously relevant information: the sets can be grouped by <code>'date'</code> and the exercise type as extracted from <code>'label'</code> and then counted in order of increasing <code>'set_id'</code>. I will thus introduce the following extra columns to represent the relevant information more directly:</p>
+<ul>
+<li><code>'type'</code>: The <strong>exercise type</strong> (i.e.&nbsp;bench press, deadlift, overhead press, or squat)</li>
+<li><code>'BP'</code>, <code>'DL'</code>, <code>'OP'</code>, <code>'SQ'</code>: Binary dummy labels for the categorical values in <code>'type'</code></li>
+<li><code>'warm_up'</code>: The <strong>exercise category</strong> (1: warm-up, 0: regular, <code>&lt;NA&gt;</code>: unknown)</li>
+<li><code>'grp'</code>: A count of <strong>groups</strong> of sets grouped by workout date and exercise type.</li>
+<li><code>'set_count'</code>: The <strong>set number</strong> of each set within its group.</li>
+</ul>
+<div id="10d2478e" class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_labels_etc(data_in):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># copy data</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> data_in.copy()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add column for exercise type</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    EXC_TYPES <span class="op">=</span> {<span class="st">"F"</span>:<span class="st">"Bench Press"</span>, <span class="st">"D"</span>:<span class="st">"Deadlift"</span>, <span class="st">"O"</span>:<span class="st">"Overhead Press"</span>, <span class="st">"L"</span>:<span class="st">"Squat"</span>}</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'type'</span>] <span class="op">=</span> data_out[<span class="st">'label'</span>].<span class="bu">str</span>[<span class="dv">0</span>].<span class="bu">map</span>(EXC_TYPES)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add dummy columns for exercise types</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'BP'</span>] <span class="op">=</span> data_out[<span class="st">'label'</span>].<span class="bu">str</span>.contains(<span class="st">'Bench'</span>).astype(<span class="st">'Int8'</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'DL'</span>] <span class="op">=</span> data_out[<span class="st">'label'</span>].<span class="bu">str</span>.contains(<span class="st">'Deadlift'</span>).astype(<span class="st">'Int8'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'OP'</span>] <span class="op">=</span> data_out[<span class="st">'label'</span>].<span class="bu">str</span>.contains(<span class="st">'Overhead'</span>).astype(<span class="st">'Int8'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'SQ'</span>] <span class="op">=</span> data_out[<span class="st">'label'</span>].<span class="bu">str</span>.contains(<span class="st">'Squat'</span>).astype(<span class="st">'Int8'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add dummy column for warm-up sets (1: warm-up, 0: regular, &lt;NA&gt;: unknown)</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    split_mask <span class="op">=</span> data_out[<span class="st">'date'</span>] <span class="op">&gt;=</span> SPLIT_DATE</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    warm_up_labels <span class="op">=</span> data_out.loc[split_mask, <span class="st">'label'</span>].<span class="bu">str</span>.contains(<span class="st">'Warm Up'</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    data_out.loc[split_mask, <span class="st">'warm_up'</span>] <span class="op">=</span> warm_up_labels</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'warm_up'</span>] <span class="op">=</span> data_out[<span class="st">'warm_up'</span>].astype(<span class="st">'Int8'</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># group the sets by date and exercise type and count the gorups</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'grp'</span>] <span class="op">=</span> data_out.groupby([<span class="st">'date'</span>, <span class="st">'type'</span>]).ngroup() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># also count within each group</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'set_count'</span>] <span class="op">=</span> data_out.groupby([<span class="st">'date'</span>, <span class="st">'type'</span>]).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The main task is then to infer the values in <code>warm_up</code> from the other columns, excluding <code>exc_id</code> and <code>label</code>, because the latter are not reliable for the <code>problem sets</code>. In fact, the equivalent information in <code>label</code> and <code>exc_id</code> literally <em>is</em> the problem for the problem sets.</p>
+<p>Speaking of problems, the numerical column <code>'weight'</code> is also a little flawed, since the values for different exercise types lie in rather different ranges:</p>
+<div id="4a90b586" class="cell" data-execution_count="90">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> process_labels_etc(raw_data)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Average weight by exercise type:"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prepared_data.groupby(<span class="st">'type'</span>)[<span class="st">'weight'</span>].mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Average weight by exercise type:
+type
+Bench Press       45.126016
+Deadlift          90.507648
+Overhead Press    32.532346
+Squat             59.207232
+Name: weight, dtype: float64</code></pre>
+</div>
+</div>
+<p>This can be remedied by suitably normalizing the weight. I find it most reasonable to normalize the weight on a per-group basis and I will do the same for the <code>'reps'</code> column to put the parameter on a comparable scale. While doing so, I will also compute the <strong>set volume</strong> (i.e.&nbsp;weight times reps) and a per-group normalized version thereof.</p>
+<div id="2067ae4c" class="cell" data-execution_count="91">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_normalized_features(data_in):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># copy original dataframe to avoid unwanted changes</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> data_in.copy()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add the set volume (weight * reps) as a column</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'set_vol'</span>] <span class="op">=</span> data_out[<span class="st">'weight'</span>] <span class="op">*</span> data_out[<span class="st">'reps'</span>]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add per-group normalized weight, reps, and set volume columns</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    max_weight <span class="op">=</span> data_out.groupby(<span class="st">'grp'</span>)[<span class="st">'weight'</span>].transform(<span class="st">'max'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    max_reps <span class="op">=</span> data_out.groupby(<span class="st">'grp'</span>)[<span class="st">'reps'</span>].transform(<span class="st">'max'</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    max_set_vol <span class="op">=</span> data_out.groupby(<span class="st">'grp'</span>)[<span class="st">'set_vol'</span>].transform(<span class="st">'max'</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'norm_weight'</span>] <span class="op">=</span> data_out[<span class="st">'weight'</span>] <span class="op">/</span> max_weight</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'norm_reps'</span>] <span class="op">=</span> data_out[<span class="st">'reps'</span>] <span class="op">/</span> max_reps</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'norm_set_vol'</span>] <span class="op">=</span> data_out[<span class="st">'set_vol'</span>] <span class="op">/</span> max_set_vol</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Together, the functions <code>process_labels_etc</code> and <code>add_normalized_features</code> make up the <code>prepare_data</code> function mentioned in the introduction.</p>
+<div id="09d5044e" class="cell" data-execution_count="92">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_data(data_in):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> process_labels_etc(data_in)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> add_normalized_features(data_out)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following plots show the weight (blue) and reps (orange) for randomly chosen examples of set groups, both normalized on a per-group level. The main observation is that, while the per-exercise-routine within the problem data is not as consistent as within the good data, the differences are not too alarming. Chances are that a properly trained prediction model trained on the good data will also perform reasonably well on the problem data.</p>
+<div id="45ee568e" class="cell" data-execution_count="93">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load, prepare, and split all sets</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> prepare_data(raw_data)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>good_data, problems <span class="op">=</span> good_problem_split(prepared_data)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>split_data <span class="op">=</span> {</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Problem Sets"</span>: problems,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Properly Labeled Sets"</span>: good_data</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># get samples</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>EXC_TYPES <span class="op">=</span> prepared_data[<span class="st">'type'</span>].unique()</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> <span class="bu">len</span>(EXC_TYPES)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>group_samples <span class="op">=</span> {}</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> split_data:</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> split_data[category]</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    data_samples <span class="op">=</span> []</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> exc_type <span class="kw">in</span> EXC_TYPES:</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        exc_type_samples <span class="op">=</span> []</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> data[data[<span class="st">'type'</span>] <span class="op">==</span> exc_type]</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        sample_groups <span class="op">=</span> df[<span class="st">'grp'</span>].sample(n<span class="op">=</span>N, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        sample_groups.sort_values(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> grp <span class="kw">in</span> sample_groups:</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>            grp_df <span class="op">=</span> df[df[<span class="st">'grp'</span>]<span class="op">==</span>grp]</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>            exc_type_samples.append(grp_df)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>        data_samples.append(exc_type_samples)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    group_samples[category] <span class="op">=</span> data_samples</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="co"># plot weight and reps for the samples</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>W, H <span class="op">=</span> <span class="dv">3</span>, <span class="dv">2</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> group_samples:</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(N, M, figsize<span class="op">=</span>(M<span class="op">*</span>W, N<span class="op">*</span>H))</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f"Some Groups of </span><span class="sc">{</span>category<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(M):</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> group_samples[category][m][n].copy()</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>            df.set_index(<span class="st">'set_count'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>            date <span class="op">=</span> df[<span class="st">'date'</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>            exc_type <span class="op">=</span> df[<span class="st">'type'</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> df[[<span class="st">'norm_weight'</span>, <span class="st">'norm_reps'</span>]]</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>            axes[n, m] <span class="op">=</span> df.plot.bar(</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>exc_type<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>date<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>                ax<span class="op">=</span>axes[n, m],  </span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>                legend<span class="op">=</span><span class="va">False</span></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fixing_my_fitnotes_db_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fixing_my_fitnotes_db_files/figure-html/cell-13-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Lastly, here are the correlations of the numerical feature columns with the <code>'warm_up'</code>:</p>
+<div id="51ac93e1" class="cell" data-execution_count="94">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reload, prepare, and split the data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> prepare_data(raw_data)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>good_data, problems <span class="op">=</span> good_problem_split(prepared_data)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the numerical column</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>numerical_data <span class="op">=</span> good_data.select_dtypes(include<span class="op">=</span>[<span class="st">'number'</span>])</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute absolute corellations</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>corellations <span class="op">=</span> numerical_data.corr().<span class="bu">abs</span>()</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Restrict to `is_warm_up` colum and sort by descreasing corellation</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>corellations <span class="op">=</span> corellations[<span class="st">'warm_up'</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Correllation of numerical columns with 'warm_up':"</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(corellations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Correllation of numerical columns with 'warm_up':
+warm_up         1.000000
+set_count       0.782057
+exc_id          0.736627
+norm_set_vol    0.722205
+norm_weight     0.610597
+set_vol         0.535162
+norm_reps       0.339426
+reps            0.335302
+weight          0.281679
+grp             0.022953
+BP              0.021510
+set_id          0.020281
+SQ              0.013093
+OP              0.008936
+DL              0.000292
+Name: warm_up, dtype: float64</code></pre>
+</div>
+</div>
+<p>Among other things, this shows that the original columns are not very strongly correlated to <code>warm_up</code>. Some of the new columns, especially <code>'set_count'</code> and <code>'norm_set_vol'</code> look much more promising.</p>
+<p>It remains to explain what the new column are:</p>
+<ul>
+<li><code>'set_vol'</code>: The <strong>set volume</strong>, that is, the set weight times the number of repetitions.</li>
+<li><code>'norm_weight'</code>: The <strong>normalized weight</strong> computed per group.</li>
+<li><code>'norm_vol'</code>: The <strong>normalized set volume</strong> computed per group.</li>
+</ul>
+<p>The high correlation of the set number is not surprising, because the warm-up sets should appear in the beginning of the respective groups - at least if the sets were tracked in order (which is mostly true, but not always). The higher correlation of the set volume then its factors weight and reps also makes sense, given the knowledge how I’ve mostly structured my workouts. The better performance of the normalized columns can be explained by the different weight ranges mentioned above.</p>
+</section>
+<section id="step-3-model-training-and-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-model-training-and-evaluation">Step 3: Model Training and Evaluation</h2>
+<p>With slightly over 5000 samples, the dataset is small enough to test a variety of models. To reiterate, the task is to predict the correct value of <code>'warm_up'</code> from a suitable selection of other columns. This is set up as a binary classification problem, giving a variety of models to choose from.</p>
+<p>I will first try a few of the classics: logistic regression, decision tree, random forest, k-nearest neighbor, and linear SVM. Each of these classifiers will be trained using the same cross validation scheme and evaluated using same metrics.</p>
+<p>Mostly out of curiosity, I will also train a simple neural network to see how it performs. However, since the simple models already perform extremely well, the deep learning approach will eventually be discarded.</p>
+<p>To begin with, I’ll get the data ready. I’ll do a split into training, test, and validation data.</p>
+<div id="3cbe6e9b" class="cell" data-execution_count="95">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and prepare data, split off good data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> prepare_data(raw_data)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>good_data, _ <span class="op">=</span> good_problem_split(prepared_data)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># select features for treaining</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>IGNORE_COLS <span class="op">=</span> [<span class="st">'date'</span>, <span class="st">'label'</span>, <span class="st">'type'</span>, <span class="st">'exc_id'</span>, <span class="st">'set_id'</span>, <span class="st">'grp'</span>, <span class="st">'warm_up'</span>]</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>X_good <span class="op">=</span> good_data.drop(IGNORE_COLS, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>y_good <span class="op">=</span> good_data[<span class="st">'warm_up'</span>]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># split into train/test/validation sets</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>X_train_test, X_val, y_train_test, y_val <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    train_test_split(X_good, y_good, test_size<span class="op">=</span><span class="fl">0.1</span>, stratify<span class="op">=</span>y_good, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> <span class="op">\</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    train_test_split(X_train_test, y_train_test, test_size<span class="op">=</span><span class="fl">0.2</span>, stratify<span class="op">=</span>y_train_test, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="classical-binary-classifiers" class="level3">
+<h3 class="anchored" data-anchor-id="classical-binary-classifiers">Classical Binary Classifiers</h3>
+<p>As mentioned, I want to try out and compare several classical models. For that purpose, I will load them into a dictionary.</p>
+<div id="c96c9278" class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define models</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Logistic Regression"</span>: LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, solver<span class="op">=</span><span class="st">"lbfgs"</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Decision Tree"</span>: DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Random Forest"</span>: RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"KNN"</span>: KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SVM (Linear)"</span>: LinearSVC(max_iter<span class="op">=</span><span class="dv">5000</span>, dual<span class="op">=</span><span class="va">False</span>),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Naive Bayes"</span>: GaussianNB(),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For model selection I will first use a 5-fold cross-validation strategy on the training data.</p>
+<div id="3cfe68f5" class="cell" data-execution_count="97">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_with_cv(models:<span class="bu">dict</span>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cross-validation strategy</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate all models</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> {}</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Cross-validation results:"</span>.upper())</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> models.items():</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        scores <span class="op">=</span> cross_val_score(model, X_train_test, y_train_test, cv<span class="op">=</span>cv, scoring<span class="op">=</span><span class="st">"accuracy"</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        results[name] <span class="op">=</span> (np.mean(scores), np.std(scores))</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">:20s}</span><span class="ss"> | Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span>mean(scores)<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>np<span class="sc">.</span>std(scores)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>evaluate_with_cv(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CROSS-VALIDATION RESULTS:
+Logistic Regression  | Accuracy: 0.987 ± 0.004
+Decision Tree        | Accuracy: 0.985 ± 0.004
+Random Forest        | Accuracy: 0.992 ± 0.005
+KNN                  | Accuracy: 0.972 ± 0.003
+SVM (Linear)         | Accuracy: 0.988 ± 0.006
+Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
+</div>
+</div>
+<p>All models perform rather well, with the random forest classifier in the lead.</p>
+<p>Next I will check the performance on the test data and plot the confusion matrix in each case.</p>
+<div id="d7950a37" class="cell" data-execution_count="98">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_confusion(models):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a 2-by-3 grid for the six models</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pupolate the axes</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    ax_idx<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> models.items():</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># train the model on full training set</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        model.fit(X_train, y_train)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># evaluate on test set</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute accuracy score and confusion matrix</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        accuracy <span class="op">=</span> model.score(X_test, y_test)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>        conf_mat <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        conf_mat_disp <span class="op">=</span> ConfusionMatrixDisplay(conf_mat)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add the results to current subplot</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>        axes[ax_idx].set_title(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ch">\n</span><span class="ss">(Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        conf_mat_disp.plot(ax<span class="op">=</span>axes[ax_idx])</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        ax_idx <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>plot_confusion(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fixing_my_fitnotes_db_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Again, the random forest model performs best with an exceptionally low number of false negatives.</p>
+<div id="48c62b16" class="cell" data-execution_count="99">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select the winning model</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>best_model <span class="op">=</span> models[<span class="st">"Random Forest"</span>]</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_trained_model(model):</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># evaluate on validation set</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_val)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute accuracy score and confusion matrix</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    accuracy <span class="op">=</span> model.score(X_val, y_val)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    conf_mat <span class="op">=</span> confusion_matrix(y_val, y_pred)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    conf_mat_disp <span class="op">=</span> ConfusionMatrixDisplay(conf_mat)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    conf_mat_disp.plot(ax<span class="op">=</span>ax)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plt.show()</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"Results on Validation Set</span><span class="ch">\n</span><span class="sc">{</span>model<span class="sc">}</span><span class="ch">\n</span><span class="ss">(Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>validate_trained_model(best_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fixing_my_fitnotes_db_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="06abfa1a" class="cell" data-execution_count="100">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_groups_with_errors(model):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># evaluate on all good data</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_good)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add results as column in copy of good data</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    good_data_plus <span class="op">=</span> good_data.copy()</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    good_data_plus[<span class="st">'pred'</span>] <span class="op">=</span> y_pred.astype(<span class="st">'int8'</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get exercise groups in good data</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    groups <span class="op">=</span> good_data[<span class="st">'grp'</span>].unique()</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    groups_with_errors <span class="op">=</span> []</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> grp <span class="kw">in</span> groups:</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        view_cols <span class="op">=</span> [<span class="st">'set_count'</span>, <span class="st">'date'</span>, <span class="st">'type'</span>, <span class="st">'weight'</span>, <span class="st">'reps'</span>, <span class="st">'warm_up'</span>, <span class="st">'pred'</span>]</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> good_data_plus[good_data_plus[<span class="st">'grp'</span>] <span class="op">==</span> grp][view_cols]</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        all_pred_correct <span class="op">=</span> (df[<span class="st">'warm_up'</span>] <span class="op">==</span> df[<span class="st">'pred'</span>]).<span class="bu">all</span>()</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> all_pred_correct:</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>            groups_with_errors.append(df)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> groups_with_errors</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>groups_with_errors <span class="op">=</span> get_groups_with_errors(best_model)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of groups with errors:"</span>.upper(), <span class="bu">len</span>(groups_with_errors))</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Groups with errors:</span><span class="ch">\n</span><span class="st">"</span>.upper())</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> group <span class="kw">in</span> groups_with_errors:</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NUMBER OF GROUPS WITH ERRORS: 9
+
+GROUPS WITH ERRORS:
+
+      set_count        date      type  weight  reps  warm_up  pred
+1169          1  2020-06-08  Deadlift    60.0     5        1     1
+1170          2  2020-06-08  Deadlift    70.0     5        1     0
+1171          3  2020-06-08  Deadlift    80.0     5        0     0
+1172          4  2020-06-08  Deadlift    90.0     5        0     0
+1173          5  2020-06-08  Deadlift    90.0     5        0     0
+      set_count        date            type  weight  reps  warm_up  pred
+1374          1  2020-08-04  Overhead Press    20.0     5        1     1
+1375          2  2020-08-04  Overhead Press    35.0     2        1     1
+1376          3  2020-08-04  Overhead Press    40.0     1        0     1
+1383          4  2020-08-04  Overhead Press    38.0     1        1     1
+1384          5  2020-08-04  Overhead Press    42.0     1        0     1
+1385          6  2020-08-04  Overhead Press    45.0     1        0     0
+1386          7  2020-08-04  Overhead Press    35.0     6        0     0
+      set_count        date   type  weight  reps  warm_up  pred
+1377          1  2020-08-04  Squat    20.0     5        1     1
+1378          2  2020-08-04  Squat    50.0     3        1     1
+1379          3  2020-08-04  Squat    70.0     2        0     1
+1380          4  2020-08-04  Squat    71.0     1        0     1
+1381          5  2020-08-04  Squat    72.0     1        0     0
+1382          6  2020-08-04  Squat    73.0     1        0     0
+1387          7  2020-08-04  Squat    70.0     1        1     1
+1388          8  2020-08-04  Squat    74.0     1        0     0
+1389          9  2020-08-04  Squat    75.0     1        0     0
+1390         10  2020-08-04  Squat    65.0     7        0     0
+      set_count        date         type  weight  reps  warm_up  pred
+1391          1  2020-08-06  Bench Press    20.0     5        1     1
+1392          2  2020-08-06  Bench Press    40.0     5        1     1
+1393          3  2020-08-06  Bench Press    50.0     1        0     1
+1394          4  2020-08-06  Bench Press    52.0     1        0     0
+1395          5  2020-08-06  Bench Press    55.0     1        0     0
+1396          6  2020-08-06  Bench Press    57.0     1        0     0
+1397          7  2020-08-06  Bench Press    58.0     1        0     0
+1401          8  2020-08-06  Bench Press    60.0     1        0     0
+1402          9  2020-08-06  Bench Press    62.0     1        0     0
+1403         10  2020-08-06  Bench Press    52.0     5        0     0
+      set_count        date      type  weight  reps  warm_up  pred
+1398          1  2020-08-06  Deadlift    60.0     5        1     1
+1399          2  2020-08-06  Deadlift    90.0     2        1     1
+1400          3  2020-08-06  Deadlift   100.0     1        0     1
+1404          4  2020-08-06  Deadlift   105.0     1        0     0
+1405          5  2020-08-06  Deadlift   108.0     1        0     0
+1406          6  2020-08-06  Deadlift   110.0     1        0     0
+1407          7  2020-08-06  Deadlift   115.0     1        0     0
+1408          8  2020-08-06  Deadlift   118.0     1        0     0
+      set_count        date   type  weight  reps  warm_up  pred
+1655          1  2020-10-30  Squat    30.0     5        1     1
+1656          2  2020-10-30  Squat    60.0     3        1     1
+1657          3  2020-10-30  Squat    71.0     5        0     0
+1658          4  2020-10-30  Squat    71.0     5        0     0
+1659          5  2020-10-30  Squat    71.0     6        0     0
+1660          6  2020-10-30  Squat    60.0    10        0     0
+1662          7  2020-10-30  Squat    68.0     2        1     0
+      set_count        date         type  weight  reps  warm_up  pred
+2176          1  2021-11-16  Bench Press    20.0     7        1     1
+2177          2  2021-11-16  Bench Press    40.0     3        1     1
+2178          3  2021-11-16  Bench Press    50.0     3        0     1
+2179          4  2021-11-16  Bench Press    52.0     3        0     0
+2180          5  2021-11-16  Bench Press    53.0     3        0     0
+2181          6  2021-11-16  Bench Press    54.0     3        0     0
+2182          7  2021-11-16  Bench Press    56.0     3        0     0
+2183          8  2021-11-16  Bench Press    58.0     1        0     0
+2184          9  2021-11-16  Bench Press    60.0     1        0     0
+2185         10  2021-11-16  Bench Press    62.0     1        0     0
+      set_count        date         type  weight  reps  warm_up  pred
+4707          1  2025-02-11  Bench Press    20.0     8        1     1
+4708          2  2025-02-11  Bench Press    40.0     3        1     1
+4709          3  2025-02-11  Bench Press    50.0     1        1     1
+4710          4  2025-02-11  Bench Press    53.0     5        0     0
+4711          5  2025-02-11  Bench Press    53.0     5        0     0
+4712          6  2025-02-11  Bench Press    53.0     5        0     0
+4713          7  2025-02-11  Bench Press    50.0     6        0     0
+4714          8  2025-02-11  Bench Press    50.0     2        0     1
+      set_count        date            type  weight  reps  warm_up  pred
+4784          1  2025-03-21  Overhead Press    20.0    10        1     1
+4785          2  2025-03-21  Overhead Press    30.0     8        1     1
+4786          3  2025-03-21  Overhead Press    35.0     5        1     1
+4787          4  2025-03-21  Overhead Press    38.0     2        0     0
+4788          5  2025-03-21  Overhead Press    42.0     1        0     1
+4789          6  2025-03-21  Overhead Press    45.0     1        0     0
+4790          7  2025-03-21  Overhead Press    47.0     1        0     0
+4791          8  2025-03-21  Overhead Press    30.0    10        0     0</code></pre>
+</div>
+</div>
+<p>Altogether, this is rather satisfactory. The errors are limited to nine exercise groups, six of which were “max out sessions” where I went for new personal bests for single repetitions. These groups are certainly outliers.</p>
+</section>
+<section id="a-deep-learning-approach" class="level3">
+<h3 class="anchored" data-anchor-id="a-deep-learning-approach">A Deep Learning Approach</h3>
+<p>Just out of curiosity, I will try training a neural network. The first task is to convert the data to PyTorch’s very own <code>torch.tensor</code> data type.</p>
+<div id="3948d9bf" class="cell" data-execution_count="101">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to PyTorch tensors</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_pandas_to_torch(panda):</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    by_way_of_numpy <span class="op">=</span> panda.values.astype(np.float64)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    tensor <span class="op">=</span> torch.tensor(by_way_of_numpy, dtype<span class="op">=</span>torch.double)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tensor</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> convert_pandas_to_torch(X_train)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> convert_pandas_to_torch(y_train).unsqueeze(<span class="dv">1</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> convert_pandas_to_torch(X_test)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> convert_pandas_to_torch(y_test).unsqueeze(<span class="dv">1</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>X_val <span class="op">=</span> convert_pandas_to_torch(X_val)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>y_val <span class="op">=</span> convert_pandas_to_torch(y_val).unsqueeze(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As for the neural network model, I will go for three linear layers with sigmoid activation functions. Since I don’t have a ton of training data, I will keep the number of parameters manageable.</p>
+<div id="a5e3595e" class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a simple neural network architecture</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimpleNN(nn.Module):</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_dim):</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.net <span class="op">=</span> nn.Sequential(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>            nn.Linear(input_dim, <span class="dv">16</span>),</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>            nn.Sigmoid(),</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">16</span>, <span class="dv">8</span>),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>            nn.Sigmoid(),</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">8</span>, <span class="dv">1</span>),</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>            nn.Sigmoid()</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(x)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># define model, loss function, and optimizer</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>model_nn <span class="op">=</span> SimpleNN(input_dim<span class="op">=</span>X_train.shape[<span class="dv">1</span>]).double()</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.BCELoss()</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optim.Adam(model_nn.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of parameters:"</span>, <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> model_nn.parameters()))</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neural Network Architecture:"</span>)</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_nn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of parameters: 337
+Neural Network Architecture:
+SimpleNN(
+  (net): Sequential(
+    (0): Linear(in_features=11, out_features=16, bias=True)
+    (1): Sigmoid()
+    (2): Linear(in_features=16, out_features=8, bias=True)
+    (3): Sigmoid()
+    (4): Linear(in_features=8, out_features=1, bias=True)
+    (5): Sigmoid()
+  )
+)</code></pre>
+</div>
+</div>
+<div id="9e55685a" class="cell" data-execution_count="103">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_and_evaluate_nn(model_nn, epochs<span class="op">=</span><span class="dv">10001</span>):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># train the neural network</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        model_nn.train()</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        optimizer.zero_grad()</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        outputs <span class="op">=</span> model_nn(X_train)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> criterion(outputs, y_train)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> epoch <span class="op">%</span> <span class="dv">1000</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss">, Loss: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># evaluate classification results</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    model_nn.<span class="bu">eval</span>()</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>        preds <span class="op">=</span> model_nn(X_test)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>        preds_binary <span class="op">=</span> (preds <span class="op">&gt;</span> <span class="fl">0.5</span>).<span class="bu">int</span>()</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        accuracy <span class="op">=</span> (preds_binary.squeeze() <span class="op">==</span> y_test.squeeze().<span class="bu">int</span>()).<span class="bu">float</span>().mean().item()</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>        conf_mat <span class="op">=</span> confusion_matrix(preds_binary, y_test)</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>        conf_mat_disp <span class="op">=</span> ConfusionMatrixDisplay(conf_mat)</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>        conf_mat_disp.plot()</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="co"># run training and evaluation twice to compare results</span></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"---=== FIRST PASS ===---"</span>)</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>train_and_evaluate_nn(model_nn)</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"---=== SECOND PASS ===---"</span>)</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>train_and_evaluate_nn(model_nn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>---=== FIRST PASS ===---
+Epoch 0, Loss: 0.7396
+Epoch 1000, Loss: 0.0169
+Epoch 2000, Loss: 0.0327
+Epoch 3000, Loss: 0.0265
+Epoch 4000, Loss: 0.0215
+Epoch 5000, Loss: 0.0290
+Epoch 6000, Loss: 0.0259
+Epoch 7000, Loss: 0.0237
+Epoch 8000, Loss: 0.0196
+Epoch 9000, Loss: 0.0176
+Epoch 10000, Loss: 0.0158
+Test Accuracy: 98.63%</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fixing_my_fitnotes_db_files/figure-html/cell-23-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>---=== SECOND PASS ===---
+Epoch 0, Loss: 0.0159
+Epoch 1000, Loss: 0.0146
+Epoch 2000, Loss: 0.0121
+Epoch 3000, Loss: 0.2707
+Epoch 4000, Loss: 0.0256
+Epoch 5000, Loss: 0.0239
+Epoch 6000, Loss: 0.0213
+Epoch 7000, Loss: 0.6787
+Epoch 8000, Loss: 0.6787
+Epoch 9000, Loss: 0.6787
+Epoch 10000, Loss: 0.6787
+Test Accuracy: 58.55%</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fixing_my_fitnotes_db_files/figure-html/cell-23-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The first result is actually quite promising. However, the second attempt clearly shows that things can go wrong when training neural networks. I could go on and investigate what went wrong (most likely a zero-gradient issue), but given the good performance of the much simpler classical models, I will not pursue the matter any further.</p>
+</section>
+<section id="the-final-implementation" class="level3">
+<h3 class="anchored" data-anchor-id="the-final-implementation">The Final Implementation</h3>
+<p>Based on the experiments in the previous sections, I will use a random forest classifier to correct the wrond exercise IDs in the “problem data”.</p>
+<div id="0e770bd4" class="cell" data-execution_count="104">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_warm_ups(prepared_data):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split data</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    good_data, _ <span class="op">=</span> good_problem_split(prepared_data)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract features X and target y</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    IGNORE_COLS <span class="op">=</span> [<span class="st">'date'</span>, <span class="st">'label'</span>, <span class="st">'type'</span>, <span class="st">'exc_id'</span>, <span class="st">'set_id'</span>, <span class="st">'grp'</span>, <span class="st">'warm_up'</span>]</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    X_good <span class="op">=</span> good_data.drop(IGNORE_COLS, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    y_good <span class="op">=</span> good_data[<span class="st">'warm_up'</span>]</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># train random forest model</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    random_forest <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    warm_up_predictor <span class="op">=</span> random_forest.fit(X_good, y_good)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make predictions and add in column 'pred'</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    X_all <span class="op">=</span> prepared_data.drop(IGNORE_COLS, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    y_all_pred <span class="op">=</span> warm_up_predictor.predict(X_all)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add prediction colun to copy of data and return</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    data_pred <span class="op">=</span> prepared_data.copy()</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    data_pred[<span class="st">'pred'</span>] <span class="op">=</span> pd.Series(y_all_pred).astype(<span class="st">'Int8'</span>)</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="step-4-fixing-the-database" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-fixing-the-database">Step 4: Fixing the Database</h2>
+<p>It remains to update the database file using the predicted exercise IDs for the “problem sets” recorded before the <code>SPLIT_DATE</code>. This process is straight forward.</p>
+<p>First, two helper functions are needed: one to obtain IDs of the “bad sets”, that is, those that need to be changed, and another one to determine the new exercise ID from the old one.</p>
+<div id="5236981a" class="cell" data-execution_count="105">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_bad_set_ids(data_pred):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    _, problems <span class="op">=</span> good_problem_split(data_pred)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    bad_set_ids <span class="op">=</span> problems.query(<span class="st">'pred == 1'</span>)[<span class="st">'set_id'</span>]</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> bad_set_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c16844b9" class="cell" data-execution_count="106">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>new_exc_id_query <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">    W._id as "new_id"</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">    exercise E, </span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">    exercise W, </span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">    training_log T</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE </span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="st">    W.name = E.name || ' (Warm Up)' AND</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="st">    E._id = T.exercise_id AND </span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">    T._id = </span><span class="sc">{:s}</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_warm_up_id(set_id:<span class="bu">int</span>)<span class="op">-&gt;</span><span class="bu">int</span>:</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    id_df <span class="op">=</span> run_query(new_exc_id_query.<span class="bu">format</span>(<span class="ss">f"</span><span class="sc">{</span>set_id<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    warm_up_exc_id <span class="op">=</span> id_df[<span class="st">'new_id'</span>][<span class="dv">0</span>]</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> warm_up_exc_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With the bad set IDs and their corresponding new exercise IDs available, the database can be updated. To avoid data loss, I will implement an option that by default creates a new file with the updated IDs, leaving the original file untouched.</p>
+<div id="d14c8e89" class="cell" data-execution_count="107">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_db_file(db_file, bad_ids, inplace<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create copy for update unless 'inplace' options</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> inplace:</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        original_db_file <span class="op">=</span> db_file</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">'%Y%m</span><span class="sc">%d</span><span class="st">-%H%M%S'</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        db_file <span class="op">=</span> original_db_file.replace(</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">'.fitnotes'</span>, </span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'__exc_ids_fixed_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.fitnotes'</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>        shutil.copyfile(original_db_file, db_file)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the db entries</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    update_query_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="st">    UPDATE training_log</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="st">    SET exercise_id = </span><span class="sc">{exc_id:s}</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE _id = </span><span class="sc">{set_id}</span><span class="st">;</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="st">    """</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> sqlite3.<span class="ex">connect</span>(db_file) <span class="im">as</span> conn:</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>        cur <span class="op">=</span> conn.cursor()</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> set_id <span class="kw">in</span> bad_ids:</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>            new_exc_id <span class="op">=</span> get_warm_up_id(set_id)</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>            update_query <span class="op">=</span> update_query_template.<span class="bu">format</span>(</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>                set_id<span class="op">=</span><span class="bu">str</span>(set_id),</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>                exc_id<span class="op">=</span><span class="bu">str</span>(new_exc_id),</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>            cur.execute(update_query)</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now everything needed for the main function <code>fix_db_file</code> is ready for assembly.</p>
+<div id="94fe0b2b" class="cell" data-execution_count="113">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_db_file(db_file<span class="op">=</span>FITNOTES_BACKUP, inplace<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># data gathering</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> load_data(db_file)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prepare data</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    prepared_data <span class="op">=</span> prepare_data(data)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make prediction</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    predicted_data <span class="op">=</span> predict_warm_ups(prepared_data)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    bad_set_ids <span class="op">=</span> get_bad_set_ids(predicted_data)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update database file</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    update_db_file(db_file, bad_set_ids, inplace<span class="op">=</span>inplace)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predicted_data</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>final_data <span class="op">=</span> fix_db_file()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, here’s how the model performed on the last 25 “problem sets”. All in all, rather satisfactory.</p>
+<div id="eaba247a" class="cell" data-execution_count="116">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>_, problem_data <span class="op">=</span> good_problem_split(final_data)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>view_cols <span class="op">=</span> [<span class="st">'date'</span>,<span class="st">'type'</span>,<span class="st">'set_count'</span>,<span class="st">'weight'</span>,<span class="st">'reps'</span>,<span class="st">'pred'</span>]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>problem_data[view_cols].tail(<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="116">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">type</th>
+<th data-quarto-table-cell-role="th">set_count</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">reps</th>
+<th data-quarto-table-cell-role="th">pred</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1009</td>
+<td>2020-01-31</td>
+<td>Deadlift</td>
+<td>7</td>
+<td>105.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1010</td>
+<td>2020-01-31</td>
+<td>Deadlift</td>
+<td>8</td>
+<td>90.0</td>
+<td>10</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1011</td>
+<td>2020-01-31</td>
+<td>Bench Press</td>
+<td>4</td>
+<td>52.0</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1012</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>1</td>
+<td>20.0</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1013</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>2</td>
+<td>40.0</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1014</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>3</td>
+<td>50.0</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1015</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>4</td>
+<td>50.0</td>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1016</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>5</td>
+<td>50.0</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1017</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>6</td>
+<td>47.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1018</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>7</td>
+<td>47.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1019</td>
+<td>2020-02-02</td>
+<td>Bench Press</td>
+<td>8</td>
+<td>42.0</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1020</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>1</td>
+<td>20.0</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1021</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>2</td>
+<td>30.0</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1022</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>3</td>
+<td>35.0</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1023</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>4</td>
+<td>38.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1024</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>5</td>
+<td>38.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1025</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>6</td>
+<td>38.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1026</td>
+<td>2020-02-04</td>
+<td>Overhead Press</td>
+<td>7</td>
+<td>28.0</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1027</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>1</td>
+<td>28.0</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1028</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>2</td>
+<td>50.0</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1029</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>3</td>
+<td>65.0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1030</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>4</td>
+<td>65.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1031</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>5</td>
+<td>65.0</td>
+<td>5</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1032</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>6</td>
+<td>65.0</td>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1033</td>
+<td>2020-02-04</td>
+<td>Squat</td>
+<td>7</td>
+<td>55.0</td>
+<td>12</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing-1">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="UHl0aG9uJTJDbWF0cGxvdGxpYiUyQ0xpdHRsZSUyMFRyaWNrcw==" data-listing-date-sort="1753999200000" data-listing-file-modified-sort="1755888334268" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
+<div class="thumbnail"><a href="../posts/pyplot_figsize_default.html" class="no-external">
+
+<p class="card-img-top"><img src="pyplot_figsize_default_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/pyplot_figsize_default.html" class="no-external">Changing the default figure size in matplotlib Pyplot</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/pyplot_figsize_default.html" class="no-external">
+I often use <code>matplotlib</code>’s <code>pyplot</code> for quick plots while I’m trying things out in Jupyter Notebooks. I’m rarely ever happy with the default size of the plots and it gets…
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/pyplot_figsize_default.html" class="no-external">
+<div class="listing-date">
+Aug 1, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="SnVweXRlciUyQ0xhVGVY" data-listing-date-sort="1754344800000" data-listing-file-modified-sort="1755275979667" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="667">
+<div class="thumbnail"><a href="../posts/latex_in_jupyter_notebooks.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/latex_in_jupyter_notebooks.html" class="no-external">Custom LaTeX Commands in Jupyter Notebooks</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/latex_in_jupyter_notebooks.html" class="no-external">
+As a mathematician I’ve been using LaTeX for a very long time. Over the years I’ve gotten used to a number of custom macros. Now that I’m using Jupyter Notebooks more and…<em></em>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/latex_in_jupyter_notebooks.html" class="no-external">
+<div class="listing-date">
+Aug 5, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="UXVhcnRvJTJDTGFUZVglMkNKYXZhU2NyaXB0" data-listing-date-sort="1754690400000" data-listing-file-modified-sort="1755162119758" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1239">
+<div class="thumbnail"><a href="../posts/latex_macros_in_quarto_pages.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/latex_macros_in_quarto_pages.html" class="no-external">Custom LaTeX Commands in Quarto Pages</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/latex_macros_in_quarto_pages.html" class="no-external">
+This is companion post to this one where I wrote about using custom LaTeX commands in Jupyter notebooks.
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/latex_macros_in_quarto_pages.html" class="no-external">
+<div class="listing-date">
+Aug 9, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="TGl0dGxlJTIwVHJpY2tzJTJDUHl0aG9u" data-listing-date-sort="1755813600000" data-listing-file-modified-sort="1755931065667" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="242">
+<div class="thumbnail"><a href="../posts/placeholders_in_text_files.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/placeholders_in_text_files.html" class="no-external">Loading “formattble” strings from plain text files</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/placeholders_in_text_files.html" class="no-external">
+I was recently playing around with generating HTML or LaTeX files using Python. For that purpose, it’s often conventient to use “formattable” strings with placeholders (eg. <code>{…</code><code></code><code></code>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/placeholders_in_text_files.html" class="no-external">
+<div class="listing-date">
+Aug 22, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="V2ViZGVzaWduJTJDUXVhcnRv" data-listing-date-sort="1755208800000" data-listing-file-modified-sort="1755353588793" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2355">
+<div class="thumbnail"><a href="../posts/making_of_homepage.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/making_of_homepage.html" class="no-external">Made a website using Quarto</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/making_of_homepage.html" class="no-external">
+Well, I made another website. You’re looking at it right now. While I’ve fumbled around with the good old HTML/CSS/JavaScript combo before, I’ll openly admit that I’m no…
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/making_of_homepage.html" class="no-external">
+<div class="listing-date">
+Aug 15, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="UHl0aG9uJTJDSnVweXRlciUyQ0xpdHRsZSUyMFRyaWNrcw==" data-listing-date-sort="1756677600000" data-listing-file-modified-sort="1756737899778" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="148">
+<div class="thumbnail"><a href="../posts/reloading_packages.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/reloading_packages.html" class="no-external">Reloading imports in Jupyter Notebooks</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/reloading_packages.html" class="no-external">
+This is another short post mostly written for me to remember something. When working on a Python library, I like to have a Jupyter Notebook for testing. However, by default…
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/reloading_packages.html" class="no-external">
+<div class="listing-date">
+Sep 1, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="UHl0aG9uJTJDTGl0dGxlJTIwVHJpY2tz" data-listing-date-sort="1755813600000" data-listing-file-modified-sort="1755931065669" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="406">
+<div class="thumbnail"><a href="../posts/relative_imports_hack.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/relative_imports_hack.html" class="no-external">That relative imports hack for Python scripts</a>
+</h3>
+<div class="delink listing-description"><a href="../posts/relative_imports_hack.html" class="no-external">
+I need to write this down so I don’t forget it again. I’ve been struggling with “relative imports” in Python projects in VS Code. Here’s the problem.
+</a></div>
+</div>
+<div class="metadata">
+<a href="../posts/relative_imports_hack.html" class="no-external">
+<div class="listing-date">
+Aug 22, 2025
+</div>
+<div class="listing-author">
+Stefan Behrens
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.sbehrens4d\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2025 Stefan Behrens | Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><br>
+Code licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

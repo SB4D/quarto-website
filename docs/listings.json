@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/fixing_my_fitnotes_db.html",
       "/posts/reloading_packages.html",
       "/posts/placeholders_in_text_files.html",
       "/posts/relative_imports_hack.html",
@@ -9,6 +10,18 @@
       "/posts/latex_macros_in_quarto_pages.html",
       "/posts/latex_in_jupyter_notebooks.html",
       "/posts/pyplot_figsize_default.html"
+    ]
+  },
+  {
+    "listing": "/posts/fixing_my_fitnotes_db.html",
+    "items": [
+      "/posts/pyplot_figsize_default.html",
+      "/posts/latex_in_jupyter_notebooks.html",
+      "/posts/latex_macros_in_quarto_pages.html",
+      "/posts/placeholders_in_text_files.html",
+      "/posts/making_of_homepage.html",
+      "/posts/reloading_packages.html",
+      "/posts/relative_imports_hack.html"
     ]
   }
 ]

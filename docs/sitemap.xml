@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.sbehrens4d.com/projects.html</loc>
-    <lastmod>2025-09-03T09:11:09.471Z</lastmod>
+    <lastmod>2025-09-03T09:13:56.664Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/index.html</loc>
-    <lastmod>2025-09-01T14:38:18.658Z</lastmod>
+    <lastmod>2025-09-09T13:34:59.614Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/math.html</loc>
@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/blog.html</loc>
-    <lastmod>2025-08-22T18:45:34.261Z</lastmod>
+    <lastmod>2025-09-09T13:41:13.340Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/cv.html</loc>
@@ -23,5 +23,13 @@
   <url>
     <loc>https://www.sbehrens4d.com/posts/reloading_packages.html</loc>
     <lastmod>2025-09-01T14:44:59.778Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/fixing_my_fitnotes_db.html</loc>
+    <lastmod>2025-09-09T13:41:09.821Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/latex_in_jupyter_notebooks.html</loc>
+    <lastmod>2025-08-15T16:39:39.667Z</lastmod>
   </url>
 </urlset>
