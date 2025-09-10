@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/talking_to_fritz.html",
       "/posts/fixing_my_fitnotes_db.html",
       "/posts/reloading_packages.html",
       "/posts/placeholders_in_text_files.html",
@@ -21,6 +22,7 @@
       "/posts/placeholders_in_text_files.html",
       "/posts/making_of_homepage.html",
       "/posts/reloading_packages.html",
+      "/posts/talking_to_fritz.html",
       "/posts/relative_imports_hack.html"
     ]
   }
