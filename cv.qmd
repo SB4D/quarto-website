@@ -132,15 +132,20 @@ format: html
 <li>DevOps and Agile Methods</li>
 <li>Version Management with Git and GitHub</li>
 <li>Shell scripting in Linux</li>
-<li>Cotainerization and Cloud Deployment</li>
+<li>Cotainerization</li>
+<li>Microservices and Cloud Deployment</li>
+<li>Test and Behavior Driven Development</li>
 </ul></li>
 <li><b>Technologies Used: </b><ul>
 <li>Git</li>
 <li>GitHub</li>
 <li>Linux</li>
 <li>Bash</li>
+<li>Python</li>
+<li>Flask</li>
 <li>Docker</li>
 <li>Kubernetes</li>
+<li>OpenShift</li>
 </ul></li>
 </ul>
 </div>
@@ -315,4 +320,40 @@ format: html
 </details>
 </div>
 ```
+
+## Tech Skills
+
+**Operating Systems:**
+
+* I prefer to use **Windows**, but I'm also familiar with **Linux** sytems.
+* I have some experience in **shell scripting** using **Power Shell** and **bash**.
+
+**Programming:**
+
+* I mainly write in **Python** using an object oriented approach. I frequently use the libraries **NumPy**, **SciPy**, **matplotlib**, **pandas**, **scikit-learn**, **PyTorch**, **librosa**, and various packages from the standard library.
+* I have some experience with **Lua** in the context of the digital audio workstation Reaper.
+* I know a bit of **C++** and I'd like to learn more, eventually.
+
+**Databases:**
+
+* I'm proficient in writing **SQL** queries. I have worked with **SQLite3** and **PostgreSQL**.
+* I'm familiar with **relational database design** and **normalization** to 3rd normal form.
+* I have a general understanding of **Data Warehousing** and **NoSQL solutions** and I plan to expand my knowlegde.
+
+**Software Engineering:**
+
+* I've been using **Git** and **GitHub** for version control.
+* I've started to integrate systematic **unit testing** using the **pytest** framework into my work flow.
+* I have learned about **Scrum** and **DevOps principles** and I'm looking forward to practice them professionally.
+
+**Cloud Services:**
+
+* I'm currently familiarizing myself with the **Amazon/AWS** ecosystem. I eventually plan to use it to host this website and to add interactive features.
+
+**Others:**
+
+* I have been using **LaTeX** for many years to produce scientific texts, presentations, and other documents.
+* If need be, I know how to push **Microsoft Word** and **Excel** quite far, but I prefer to use other tools.
+
+
 
