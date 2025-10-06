@@ -49,6 +49,7 @@ website:
       Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)  
       Code licensed under the [MIT License](https://opensource.org/licenses/MIT)
   draft-mode: gone
+  
 
 format:
   html:

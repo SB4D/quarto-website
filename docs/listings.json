@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/python_dsp_1_panning.html",
       "/posts/talking_to_fritz.html",
       "/posts/fixing_my_fitnotes_db.html",
       "/posts/reloading_packages.html",
@@ -16,6 +17,7 @@
   {
     "listing": "/posts/fixing_my_fitnotes_db.html",
     "items": [
+      "/posts/drafts/python_dsp_1_panning.html",
       "/posts/pyplot_figsize_default.html",
       "/posts/latex_in_jupyter_notebooks.html",
       "/posts/latex_macros_in_quarto_pages.html",

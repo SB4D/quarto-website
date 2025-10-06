@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/index.html</loc>
-    <lastmod>2025-09-12T12:34:58.723Z</lastmod>
+    <lastmod>2025-10-06T12:16:38.843Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/math.html</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/posts/fixing_my_fitnotes_db.html</loc>
-    <lastmod>2025-09-10T14:19:25.137Z</lastmod>
+    <lastmod>2025-10-06T12:26:29.407Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/posts/latex_in_jupyter_notebooks.html</loc>
@@ -35,5 +35,9 @@
   <url>
     <loc>https://www.sbehrens4d.com/posts/talking_to_fritz.html</loc>
     <lastmod>2025-09-10T14:19:25.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/drafts/python_dsp_1_panning.html</loc>
+    <lastmod>2025-10-06T12:22:47.816Z</lastmod>
   </url>
 </urlset>
