@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stefan Behrens">
+<meta name="dcterms.date" content="2025-10-06">
+<meta name="description" content="In this post I’ll go into the math of panning mono audio signals and stereo width adjustment. Then I’ll demonstrate test driven development by implementing the mathematical aspects in Python. This is also the first part of a series of posts which I like to call “Annoying Precision” where I will go into abstract mathematical underpinnings of common techniques used in applied fields such as digital signal processing or deep learning.">
+
+<title>Audio Signal Processing in Python: Panning and Stereo Width – Stefan Behrens | Mathematician | Deep Learner</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../images/favicon2.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../_tools/sb4dlatex.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Stefan Behrens | Mathematician | Deep Learner</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../math.html"> 
+<span class="menu-text">Math/Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Code/Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Links</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://scholar.google.com/citations?user=qXTl8PEAAAAJ">
+ <span class="dropdown-text"><strong>Google Scholar</strong> — publications and citations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://zbmath.org/authors/behrens.stefan">
+ <span class="dropdown-text"><strong>zbMath</strong> — publications, citations, and reviews</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://arxiv.org/a/behrens_s_1.html">
+ <span class="dropdown-text"><strong>ar<span class="math inline">\(\chi\)</span>iv</strong> — preprints</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/SB4D" target="_blank"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/sbehrens4d" target="_blank"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tools-and-conventions" id="toc-tools-and-conventions" class="nav-link active" data-scroll-target="#tools-and-conventions">Tools and Conventions</a></li>
+  <li><a href="#the-math-of-panning-and-stereo-width" id="toc-the-math-of-panning-and-stereo-width" class="nav-link" data-scroll-target="#the-math-of-panning-and-stereo-width">The Math of Panning and Stereo Width</a>
+  <ul class="collapse">
+  <li><a href="#equal-power-panning-of-mono-signals" id="toc-equal-power-panning-of-mono-signals" class="nav-link" data-scroll-target="#equal-power-panning-of-mono-signals">Equal Power Panning of Mono Signals</a></li>
+  <li><a href="#adjusting-stereo-width" id="toc-adjusting-stereo-width" class="nav-link" data-scroll-target="#adjusting-stereo-width">Adjusting Stereo Width</a></li>
+  </ul></li>
+  <li><a href="#a-python-implementation" id="toc-a-python-implementation" class="nav-link" data-scroll-target="#a-python-implementation">A Python Implementation</a>
+  <ul class="collapse">
+  <li><a href="#equal-power-panning" id="toc-equal-power-panning" class="nav-link" data-scroll-target="#equal-power-panning">Equal Power Panning</a></li>
+  <li><a href="#stereo-width-adjustment" id="toc-stereo-width-adjustment" class="nav-link" data-scroll-target="#stereo-width-adjustment">Stereo Width Adjustment</a></li>
+  <li><a href="#refactoring-and-optimizing-the-code" id="toc-refactoring-and-optimizing-the-code" class="nav-link" data-scroll-target="#refactoring-and-optimizing-the-code">Refactoring and Optimizing the Code</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Audio Signal Processing in Python: Panning and Stereo Width</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Math</div>
+    <div class="quarto-category">DSP</div>
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">TDD</div>
+    <div class="quarto-category">Annoying Precision</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    <p>In this post I’ll go into the math of panning mono audio signals and stereo width adjustment. Then I’ll demonstrate test driven development by implementing the mathematical aspects in Python. This is also the first part of a series of posts which I like to call <em>“Annoying Precision”</em> where I will go into abstract mathematical underpinnings of common techniques used in applied fields such as digital signal processing or deep learning.</p>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stefan Behrens </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 6, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="tools-and-conventions" class="level2">
+<h2 class="anchored" data-anchor-id="tools-and-conventions">Tools and Conventions</h2>
+<p>Before I get started, I’ll mention my go to libraries and conventions for working with audio in Python.</p>
+<p><strong>Libraries:</strong></p>
+<ul>
+<li>As most people, I use <a href="https://numpy.org/">NumPy</a> and <a href="https://scipy.org/">SciPy</a> for low-level processing and analysis.</li>
+<li>I like to use <a href="https://librosa.org/">librosa</a> for reading audio and high-level analysis.</li>
+<li>I’ve been using <a href="https://python-sounddevice.readthedocs.io/"><code>sounddevice</code></a> for playback.</li>
+</ul>
+<p><strong>Data Conventions:</strong></p>
+<ul>
+<li><strong>Mono</strong> audio is modeled by 1d NumPy Arrays.</li>
+<li><strong>Stereo</strong> (or multi-channel) audio is modeled by 2d NumPy arrays of shape <code>(num_channels, num_samples)</code>.</li>
+<li>In both cases, the sample values are <strong>32-bit floating point</strong> numbers <strong>between -1 and 1</strong>.</li>
+</ul>
+<p>I’ve adopted these conventions from librosa.</p>
+<p><em><strong>Caution:</strong> Other audio library might deviates from these conventions. For example, <code>sounddevice</code> requires the multi-channel arrays to have shape <code>(num_samples, num_channels)</code>. This necessitates an occasional transposition.</em></p>
+</section>
+<section id="the-math-of-panning-and-stereo-width" class="level2">
+<h2 class="anchored" data-anchor-id="the-math-of-panning-and-stereo-width">The Math of Panning and Stereo Width</h2>
+<p>Before going into code, I like to be clear about the math that runs the show. Let’s start with a sampled audio signal in mono. There are at least three common ways to model this mathematically:</p>
+<ul>
+<li>A finite sequence of real numbers <span class="math inline">\(x_0, x_1, \dots, x_{N-1}\in\R\)</span> of length <span class="math inline">\(N\ge0\)</span>.</li>
+<li>A vector <span class="math inline">\(x = (x_0,x_1,\dots,x_{N-1})\in\R^N\)</span></li>
+<li>A function <span class="math inline">\(x\colon \Z\to\R\)</span> with values <span class="math inline">\(x[n] = x_n\)</span> for <span class="math inline">\(0\le n &lt;N\)</span> and <span class="math inline">\(x[n]=0\)</span> otherwise.</li>
+</ul>
+<p>I prefer the last option, because in my mind a signal is a function of time - in this case modeled by the integers <span class="math inline">\(\Z\)</span> - and the notation <span class="math inline">\(x[n]\)</span> for the sample values is the same in Python code. This also frees up the subscript notation and allows me to write stereo signals as tuples <span class="math inline">\(x = (x_L, x_R)\)</span> of functions <span class="math inline">\(x_L, x_R\colon \Z\to\R\)</span>, each of which can be viewed as a mono signal.</p>
+<p>In my mathematically wired brain, I also like to think of operations that transform a given signal into another one (e.g.&nbsp;filtering, panning, etc.) as a map between sets of signals. I’ll use the notation <span class="math inline">\(\mathcal S_1\)</span> and <span class="math inline">\(\mathcal S_2\)</span> for the sets of mono and stereo signals, respectively. Here’s a formal definition: <span class="math display">\[\begin{align*}
+\mathcal{S}_1 &amp;= \{x\colon \Z\to\R \mid \text{$x[n] = 0$ for $n&lt;0$ and $n\gg 0$} \} \\
+\mathcal{S}_2 &amp;= \{x = (x_L,x_R) \mid x_L, x_R\in\mathcal{S_1} \}.
+\end{align*}\]</span> Just to give an example of an operation, the process of extracting only the left channel from a stereo signal is formally given by the map <span class="math display">\[ T\colon \mathcal S_2 \to \mathcal S_1,\quad x = (x_L, x_R) \mapsto x_L = T(x). \]</span></p>
+<section id="equal-power-panning-of-mono-signals" class="level3">
+<h3 class="anchored" data-anchor-id="equal-power-panning-of-mono-signals">Equal Power Panning of Mono Signals</h3>
+<p>Say I have a mono signal <span class="math inline">\(x_0\)</span> and I want to play it back on my stereo system. How can I do that? There are at three obvious ways:</p>
+<ul>
+<li><strong>Hard Left Panning:</strong> I could only use the left speaker and play back the stereo signal (x_0, 0)$.</li>
+<li><strong>Hard Right Panning:</strong> I could only use the right speaker and play back the stereo signal <span class="math inline">\((0, x_0)\)</span>.</li>
+<li><strong>Naive Center Panning:</strong> I could use both speaker to play back the stereo signal <span class="math inline">\((x_0, x_0)\)</span>.</li>
+</ul>
+<p>Unfortunately, neither of them is perfect. Obviously, the stereo system is designed to have equal amounts of sound coming out of both speaker, which is just not happening for the hard panned signals. On the plus side, the hard panned signals have the advantage that they are guaranteed to be played back at the correct loudness, as they are equivalent to playing back the mono signal <span class="math inline">\(x_0\)</span> on a mono system. In contrast, the naive center panning turns out to be a little too loud.</p>
+<p>This is actually a somewhat subtle point, since the <strong>perceived loudness</strong> depends on many unknown factors (e.g.&nbsp;speaker placement, room acoustics, listener position, etc) and the dependence is a lot more complicated for stereo systems due to interferences between the left and right speakers. As it turns out, the perceived loudness of a signal is proportional to the signal’s power, which is, in turn, <strong>proportional to the point-wise square norm of the signal</strong>. This goes for mono <em>and</em> stereo signals under a <strong>diffuse sound field</strong> assumption which is reasonably well justified for realistic stereo playback scenarios.</p>
+<p>Coming back to the three obvious panning options for the mono signal <span class="math inline">\(x_0\)</span>, we find that the signal power is proportional to <span class="math display">\[ \|(x_0, 0)\|^2 = \|(0, x_0)\|^2 = x_0^2 \quad\text{while}\quad \|(x_0, x_0)\|^2 = x_0^2+x_0^2 = 2 x_0^2. \]</span> On the one hand, this quantifies how much too loud the naive center panning is. On the other hand, it suggests a way out of this problem:</p>
+<ul>
+<li>The <strong>(equal power) center panning</strong> of a mono signal <span class="math inline">\(x_0\)</span> is the stereo signal <span class="math inline">\((x_0/\sqrt2, x_0/\sqrt2)\)</span>.</li>
+</ul>
+<p>As a side note, multiplication with <span class="math inline">\(1/\sqrt2 = 0.707\dots\)</span> corresponds to a decrease in level by roughly 3 dB, and the equal power condition is sometimes also called the <a href="https://en.wikipedia.org/wiki/Panning_law">3 dB panning law</a>. Another fun fact is the observation that <span class="math inline">\(1/\sqrt2 = \cos(\pi/4) = \sin(\pi/4)\)</span>, which can be seen geometrically by viewing the line from the origin in <span class="math inline">\(\R^2\)</span> to the unit circle at a 45° angle as the diagonal in a square whose side length are given by the sine and cosine values at <span class="math inline">\(\pi/4\)</span>.</p>
+<p>The geometry also helps to find more ways to distribute the mono signal <span class="math inline">\(x_0\)</span> between the left and right channels of a stereo system:</p>
+<ul>
+<li>An <strong>equal power panning</strong> of a mono signal <span class="math inline">\(x_0\)</span> has the form <span class="math inline">\((\lambda x_0, \rho x_0)\)</span> with <span class="math inline">\(\lambda,\rho\ge0\)</span> satisfying <span class="math inline">\(\lambda^2 + \rho^2 = 1\)</span>.</li>
+</ul>
+<p>Geometrically, the pairs <span class="math inline">\((\lambda, \rho)\)</span> above are precisely the points on the unit circle in the first quadrant of <span class="math inline">\(\R^2\)</span>. Hence, for each such pair <span class="math inline">\((\lambda, \rho)\)</span> there is exactly one angle <span class="math inline">\(\alpha\in [0,\pi/2]\)</span> such that <span class="math display">\[ \lambda = \cos(\alpha) \quad\text{and}\quad \rho = \sin(\alpha). \]</span> For $= 0 $ and <span class="math inline">\(\alpha = \pi/2\)</span> this gives back the hard left and right pannings, and the above detour about <span class="math inline">\(1/\sqrt2\)</span> shows that the center panning arises for <span class="math inline">\(\alpha = \pi/4\)</span>.</p>
+<p>The equal power pannings can be parameterized by an interval and continuously interpolate between the hard left and right pannings. In practice, it is more convenient to re-parameterize the interval <span class="math inline">\([0,\pi/2]\)</span> to the unit interval <span class="math inline">\([-1,1]\)</span> using the affine rescaling function <span class="math display">\[ [-1,1] \to [0,\pi/2],\quad p \mapsto \frac\pi4 (p + 1) =: \alpha_p. \]</span> In terms of the <strong>position parameter</strong> <span class="math inline">\(p\)</span>, the hard left, center, and hard right pannings correspond to <span class="math inline">\(p=-1\)</span>, <span class="math inline">\(p=0\)</span>, and <span class="math inline">\(p=1\)</span>, respectively.</p>
+<p>In summary, the the family of equal power pannings of <span class="math inline">\(x_0\)</span> can be written as follows: <span class="math display">\[ P_p\colon \mathcal S_1 \to\mathcal S_2, \quad
+P_p(x_0) = x_0\cdot \big( \cos(\alpha_p), \sin(\alpha_p) \big),
+\quad p \in[-1,1]. \]</span></p>
+<!-- Lastly, there is yet another way to look at this. For $p\in[-1,1]$ consider the matrix
+$$ R_p = \begin{pmatrix} \cos(p\pi/4) & -\sin(p\pi/4) \\ \sin(p\pi/4) & \cos(p\pi/4) \end{pmatrix}. $$
+Multiplication by $R_p$ represents a counterclockwise rotation in $\R^2$ by the angel $p\pi/4$. Writing $x_{cen} = (x_0/\sqrt2, x_0/\sqrt2)$ for the center panning, all other equal power pannings are obtained by $R_px_{cen}$. -->
+</section>
+<section id="adjusting-stereo-width" class="level3">
+<h3 class="anchored" data-anchor-id="adjusting-stereo-width">Adjusting Stereo Width</h3>
+<p>Now let <span class="math inline">\(x=(x_L,x_R)\)</span> be a stereo signal. Mathematically, the mono signals <span class="math inline">\(x_L\)</span> and <span class="math inline">\(x_R\)</span> in the left and right channels are the point-wise coordinates with respect to the canonical basis of <span class="math inline">\(\R^2\)</span> given by <span class="math inline">\(e_L=(1,0)\)</span> and <span class="math inline">\(e_R=(0,1)\)</span>. This happens to be an orthonormal basis. Another orthonormal basis is given by <span class="math inline">\(e_M=\frac1{\sqrt2}(1, 1)\)</span> and <span class="math inline">\(e_S=\frac1{\sqrt2}(-1, 1)\)</span>, and the corresponding coordinates of <span class="math inline">\(x\)</span> are the <strong>mid channel</strong> <span class="math inline">\(x_M\)</span> and the <strong>side channels</strong> <span class="math inline">\(x_S\)</span> given by <span class="math display">\[x_M = \frac{x_L + x_R}{\sqrt 2} \quad\text{and}\quad x_S = \frac{x_L - x_R}{\sqrt 2}.\]</span> Formally, we can write the entire stereo signal as <span class="math display">\[\begin{align*}
+x %&amp;= x_L\cdot e_L + x_R\cdot e_R = (x_L, 0) + (0, x_R) \\
+&amp;= x_M\cdot e_M + x_S\cdot e_S = \underbrace{\tfrac12(x_L+x_R,x_L+x_R)}_{\text{mid signal}} + \underbrace{\tfrac12(x_L-x_R,x_R-x_L)}_{\text{side signal}}
+\end{align*}\]</span> The <strong>mid signal</strong> is nothing but the center panning of the mid channel <span class="math inline">\(x_M\)</span>, which is also called the <strong>mixdown</strong> of the stereo signal. The <strong>side signal</strong> is the part that make the signal truly stereo.</p>
+<p>As far as I can tell, the concept of “stereo width” used in most digital audio workstatsions (DAWs) is largely based on the level of the side signal. More precisely, the stereo width adjustment appears to be modeled by introducing <strong>width parameter</strong> <span class="math inline">\(w\in[0,1]\)</span> used to linearly scale the side signal: <span class="math display">\[ W_w(x) = x_M\cdot e_M + w\cdot (x_S\cdot e_S),\quad w\in[0,1]. \]</span> For <span class="math inline">\(w=1\)</span> this recovers the original signal, while for <span class="math inline">\(w=0\)</span> only the mid signal is returned: <span class="math display">\[ W_1(x) = x_M\cdot e_M + x_S\cdot e_S = x,\quad
+W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, the signal sounds narrower and narrower until it becomes a center panned mono signal. Typically, the perceived loudness decreases along with the width. Indeed, the power decreases: <span class="math display">\[ \|W_w(x)\|^2 = x_M^2 + w^2x_S^2 \le x_M^2 + x_S^2 = \|x\|^2 \]</span> Equality holds if and only <span class="math inline">\(x_S=0\)</span>, meaning that <span class="math inline">\(x\)</span> was a center panned mono signal..</p>
+</section>
+</section>
+<section id="a-python-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="a-python-implementation">A Python Implementation</h2>
+<p>I’ll begin by loading the libraries and defining some constants that popped up in the mathematical discussion.</p>
+<div id="b86f040a" class="cell" data-execution_count="101">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sample rate</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>SR <span class="op">=</span> <span class="dv">44100</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># some pre-computed constants</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>PI <span class="op">=</span> np.pi</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>SQRT12 <span class="op">=</span> np.sqrt(<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For reasons that I won’t get into here, I want to define the panning and stereo width adjustment within a class <code>StereoControl</code>. Here’s a template:</p>
+<div id="aead3988" class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Provides various audio effects related to the stereo field."""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, position<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.position <span class="op">=</span> position </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.width <span class="op">=</span> width </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mono_pan(<span class="va">self</span>, mono_audio:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Pans a mono signal according to the position attribute"""</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"mono_pan is missing"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> adjust_width(<span class="va">self</span>, stereo_audio:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Adjusts the width of a stereo signal according to the </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        width attribute"""</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While working on the code, I’ll try out of few things that I’ve learned:</p>
+<ul>
+<li>First, I’ll taks a <strong>test driven approach</strong> and begin by translating the insights and requirements from the mathematical discussion into test cases.</li>
+<li>Second, to run the test cases without nasty error messages in this notebook, I’ll use a <strong>decorator</strong> for <strong>error handling</strong>.</li>
+</ul>
+<p>Here’s the decorator which just print a short message when a <code>NotImplementedError</code>:</p>
+<div id="9d2c7a34" class="cell" data-execution_count="103">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handle_errors(func):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(<span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            func(<span class="op">*</span>args,<span class="op">**</span>kwargs)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">AssertionError</span> <span class="im">as</span> e:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"❌ AssertionError:"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"-"</span><span class="op">*</span><span class="dv">80</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(e)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">NotImplementedError</span>:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"❌ Something is missing!"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"✅ All tests passed!"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="equal-power-panning" class="level3">
+<h3 class="anchored" data-anchor-id="equal-power-panning">Equal Power Panning</h3>
+<p>The upshot of the mathematical discussion is that the equal power pannings with position parameter <span class="math inline">\(p\in[1,1]\)</span> interpolate between the hard left and right pannings of a mono signal according to the formula <span class="math inline">\(P_p(x_0) = (\lambda x_0, \rho x_0)\)</span> where <span class="math inline">\(\lambda,\rho\ge0\)</span> are determined from <span class="math inline">\(p\)</span> and satisfy <span class="math inline">\(\lambda^2 + \rho^2=1\)</span>. For <span class="math inline">\(p=0\)</span> we find <span class="math inline">\(\lambda = \rho = 1 /\sqrt2\)</span>. These conditions are easily translated into code for test cases. I’ll use NumPy’s internal testing features from the <code>np.testing</code> module.</p>
+<div id="9a4c165a" class="cell" data-execution_count="104">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">@handle_errors</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mono_pan():</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test cases for mono panning."""</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load StereoControl instance</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    sc <span class="op">=</span> StereoControl()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># one second of mono white noise</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    x_0 <span class="op">=</span> np.random.sample(SR) <span class="op">*</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># one second of silence</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> np.zeros(SR)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: hard left panning should be all left, no right</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    sc.position <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(sc.mono_pan(x_0)[<span class="dv">0</span>], x_0,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hard left panning fails in left channel"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(sc.mono_pan(x_0)[<span class="dv">1</span>], z,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hard left panning fails in right channel"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: hard left panning should be all left, no right</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    sc.position <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(sc.mono_pan(x_0)[<span class="dv">0</span>], z, </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hard right panning fails in left channel"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(sc.mono_pan(x_0)[<span class="dv">1</span>], x_0, </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Hard right panning fails in right channel"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: Center panning should be equal on both sides</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    sc.position <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(sc.mono_pan(x_0)[<span class="dv">0</span>], sc.mono_pan(x_0)[<span class="dv">1</span>], </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Center panning fails"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: Equal power condition should be satisfied</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> pos <span class="kw">in</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1000</span>):</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># update the positon attribute</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        sc.position <span class="op">=</span> pos</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get the panning coefficients</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        lam, rho <span class="op">=</span> sc.mono_pan(x_0)[:, <span class="dv">0</span>] <span class="op">/</span> x_0[<span class="dv">0</span>]</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># test positivity</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> lam <span class="op">&gt;=</span> <span class="dv">0</span>, <span class="st">"Positivity fails for left channel"</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> rho <span class="op">&gt;=</span> <span class="dv">0</span>, <span class="st">"Positivity fails for right channel"</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># test equal intensity</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        np.testing.assert_almost_equal(lam<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> rho<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>), <span class="op">\</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Equal intensity fails for pos=</span><span class="sc">{</span>sc<span class="sc">.</span>position<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># run the test just for fun</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>❌ Something is missing!</code></pre>
+</div>
+</div>
+<p>With the tests cases in place, I can now start implementing the <code>mono_pan</code> method in <code>StereoControl</code>. Normally, the code for the test cases and the implementation would be in different Python modules and the tests would be run with <code>pytest</code>. Here I’ll take a different approach for demonstrational purposes. I will iteratively update <code>StereoControl</code> by defining panning functions <code>mono_pan_v1(self, x_0)</code> and dynamically replacing the previous implementation using <code>StereoControl.mono_pan = mono_pan_v1</code>.</p>
+<p>In the first iteration, I will simply translate the mathematical formulas for the panning coefficients $$ and <span class="math inline">\(\rho\)</span> into code. However, this direct implementation does not pass the rather strict tests:</p>
+<div id="9894a832" class="cell" data-execution_count="105">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a new mono_pan function</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mono_pan_v1(<span class="va">self</span>:StereoControl, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute angle from position</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> (<span class="va">self</span>.position <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">4</span> <span class="op">*</span> PI</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># infer coefficients</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> np.cos(alpha)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">=</span> np.sin(alpha)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute panned signal (using NumPy's broadcasting)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    x_panned <span class="op">=</span> np.array([[lam],[rho]]) <span class="op">*</span> x_0</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_panned</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># update the corresponding method in StereoControl</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>StereoControl.mono_pan <span class="op">=</span> mono_pan_v1</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>❌ AssertionError:
+--------------------------------------------------------------------------------
+
+Arrays are not equal
+Hard right panning fails in left channel
+Mismatched elements: 44100 / 44100 (100%)
+Max absolute difference: 6.12317517e-17
+Max relative difference: inf
+ x: array([ 3.256694e-17, -5.332062e-17,  4.840199e-17, ..., -1.997129e-17,
+        4.517397e-17, -4.837799e-17])
+ y: array([0., 0., 0., ..., 0., 0., 0.])</code></pre>
+</div>
+</div>
+<p>As it turns out, the hard right panning is not quite hard enough. The reason is that <code>np.cos(np.pi / 2)</code> is not exactly <span class="math inline">\(\cos(\pi/2)=0\)</span>, but only approximately. While this will not make an audible difference, it’s easy to better by adding a case distinction. Here’s another version which passes all the tests:</p>
+<div id="9bf94c64" class="cell" data-execution_count="106">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mono_pan_v2(<span class="va">self</span>:StereoControl, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Places a mono audio signal in the stereo field. The </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    position is encoded as a floating point number between</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    -1 and 1. </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - x_m: Mono audio signal modeled as a 1d NumPy array"""</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make sure x_m is a mono signal</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> (<span class="bu">type</span>(x_0) <span class="op">==</span> np.ndarray <span class="kw">and</span> x_0.ndim <span class="op">==</span> <span class="dv">1</span>):</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Input must be a 1d NumPy array."</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> <span class="va">self</span>.position</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute coefficients</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pos <span class="op">==</span> <span class="dv">0</span>:        <span class="co"># center panning</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        rho <span class="op">=</span> lam <span class="op">=</span> SQRT12</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> pos <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:     <span class="co"># hard left panning</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        lam, rho <span class="op">=</span> <span class="dv">1</span>, <span class="dv">0</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> pos <span class="op">==</span> <span class="dv">1</span>:      <span class="co"># hard left panning</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        lam, rho <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:               <span class="co"># intermediate panning</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute angle</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        alpha <span class="op">=</span> (pos <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">4</span> <span class="op">*</span> PI</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># infer coefficients</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        lam <span class="op">=</span> np.cos(alpha)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        rho <span class="op">=</span> np.sin(alpha)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute panned signal (using NumPy's broadcasting)</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    x_panned <span class="op">=</span> np.array([[lam],[rho]]) <span class="op">*</span> x_0</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_panned</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># update `StereoControl.mono_pan` and run tests </span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>StereoControl.mono_pan <span class="op">=</span> mono_pan_v2</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ All tests passed!</code></pre>
+</div>
+</div>
+</section>
+<section id="stereo-width-adjustment" class="level3">
+<h3 class="anchored" data-anchor-id="stereo-width-adjustment">Stereo Width Adjustment</h3>
+<p>Next up is stereo width adjustment. Again, I’ll first write some test cases relying on white noise. I’ll check the following expected properties:</p>
+<ul>
+<li>For width 1 the original signal should be returned, that is, <span class="math inline">\(W_1(x)=x\)</span>.</li>
+<li>For width 0 the signal should be centered, that is, the left and right channel contain the same information.</li>
+<li>For width <span class="math inline">\(0 &lt; w &lt; 1\)</span> the signal power satisfies <span class="math inline">\(\|W_w(x)\|^2 \le \|x\|^2\)</span> with a strict inequality if the side channel is non-zero.</li>
+</ul>
+<div id="bf7cd902" class="cell" data-execution_count="107">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="at">@handle_errors</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_adjust_width():</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test cases for mono panning."""</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load StereoControl instance</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    sc <span class="op">=</span> StereoControl()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mono white noise for mid/side-channels (~6 dB headroom)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    x_M <span class="op">=</span> np.random.sample(SR) <span class="op">*</span> <span class="op">-</span> <span class="fl">0.5</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    x_S <span class="op">=</span> np.random.sample(SR) <span class="op">*</span> <span class="op">-</span> <span class="fl">0.5</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># left and right channels</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    x_L <span class="op">=</span> x_M <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> x_S</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    x_R <span class="op">=</span> x_M <span class="op">-</span> <span class="fl">0.1</span> <span class="op">*</span> x_S</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># combine to stereo signal</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.stack([x_L, x_R], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: width 1 gives the original signal</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    sc.width  <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    y_1 <span class="op">=</span> sc.adjust_width(x)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(y_1,x,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Width 1 does not give the original signal"</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: width 0 has no side signal</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    sc.width  <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    y_0 <span class="op">=</span> sc.adjust_width(x)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_equal(y_0[<span class="dv">0</span>], y_0[<span class="dv">1</span>],</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Side signal is non-zero for width 0"</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TEST</span><span class="co">: power descreases with width</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    intermediate_widths <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    x_pow <span class="op">=</span> np.<span class="bu">sum</span>(x <span class="op">**</span> <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> intermediate_widths:</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        sc.width <span class="op">=</span> w</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        y_w <span class="op">=</span> sc.adjust_width(x)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        y_pow <span class="op">=</span> np.<span class="bu">sum</span>(y_w, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> (y_pow <span class="op">&lt;=</span> x_pow).<span class="bu">all</span>(),<span class="op">\</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Signal power does not decrease for width </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># run the test just for fun</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>❌ Something is missing!</code></pre>
+</div>
+</div>
+<p>The direct implementation is again straight forward, but fails the tests due to a computation error:</p>
+<div id="855e03d3" class="cell" data-execution_count="108">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adjust_width_v1(<span class="va">self</span>:StereoControl, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get width</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="va">self</span>.width</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get left and right channels</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    x_L, x_R <span class="op">=</span> x[<span class="dv">0</span>], x[<span class="dv">1</span>]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute mid and side channels</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    x_M <span class="op">=</span> (x_L <span class="op">+</span> x_R) <span class="op">*</span> SQRT12</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    x_S <span class="op">=</span> (x_L <span class="op">-</span> x_R) <span class="op">*</span> SQRT12</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute mid-side orthonormal bases</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    e_M <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">1</span>]]) <span class="op">*</span> SQRT12</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    e_S <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>]]) <span class="op">*</span> SQRT12</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute mid and side signals</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    x_mid <span class="op">=</span> x_M <span class="op">*</span> e_M </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    x_side <span class="op">=</span> x_S <span class="op">*</span> e_S </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute adjusted signal</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    x_adjusted <span class="op">=</span> x_mid <span class="op">+</span> width <span class="op">*</span> x_side</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_adjusted</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the method in StereoControl</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>StereoControl.adjust_width <span class="op">=</span> adjust_width_v1</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>❌ AssertionError:
+--------------------------------------------------------------------------------
+
+Arrays are not equal
+Width 1 does not give the original signal
+Mismatched elements: 73641 / 88200 (83.5%)
+Max absolute difference: 1.66533454e-16
+Max relative difference: 4.28501513e-13
+ x: array([[-0.349459, -0.18888 , -0.375362, ..., -0.400089, -0.450615,
+        -0.177556],
+       [-0.285409, -0.157688, -0.290068, ..., -0.313816, -0.363305,
+        -0.170586]])
+ y: array([[-0.349459, -0.18888 , -0.375362, ..., -0.400089, -0.450615,
+        -0.177556],
+       [-0.285409, -0.157688, -0.290068, ..., -0.313816, -0.363305,
+        -0.170586]])</code></pre>
+</div>
+</div>
+<p>At first glance, the error might be caused by the fact that <code>np.sqrt(0.5)</code> is not exactly <span class="math inline">\(1/\sqrt2\)</span>. This is easily removed by rescanling the mid-side basis to <span class="math inline">\((1,1)\)</span> and <span class="math inline">\((1,-1)\)</span>.</p>
+<div id="f0c4d2b8" class="cell" data-execution_count="109">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adjust_width_v2(<span class="va">self</span>:StereoControl, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get width</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="va">self</span>.width</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get left and right channels</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    x_L, x_R <span class="op">=</span> x[<span class="dv">0</span>], x[<span class="dv">1</span>]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute rescaled mid and side channels</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    x_M <span class="op">=</span> (x_L <span class="op">+</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    x_S <span class="op">=</span> (x_L <span class="op">-</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute rescaled mid-side basis</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    e_M <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">1</span>]])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    e_S <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>]])</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute mid and side signals</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    x_mid <span class="op">=</span> x_M <span class="op">*</span> e_M </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    x_side <span class="op">=</span> x_S <span class="op">*</span> e_S </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute adjusted signal</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    x_adjusted <span class="op">=</span> x_mid <span class="op">+</span> width <span class="op">*</span> x_side</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_adjusted</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the method in StereoControl</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>StereoControl.adjust_width <span class="op">=</span> adjust_width_v2</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>❌ AssertionError:
+--------------------------------------------------------------------------------
+
+Arrays are not equal
+Width 1 does not give the original signal
+Mismatched elements: 6379 / 88200 (7.23%)
+Max absolute difference: 5.55111512e-17
+Max relative difference: 2.35077547e-11
+ x: array([[-0.249163, -0.05575 , -0.106219, ..., -0.228352, -0.039073,
+        -0.102983],
+       [-0.224188, -0.002711, -0.084127, ..., -0.173466,  0.01435 ,
+        -0.031522]])
+ y: array([[-0.249163, -0.05575 , -0.106219, ..., -0.228352, -0.039073,
+        -0.102983],
+       [-0.224188, -0.002711, -0.084127, ..., -0.173466,  0.01435 ,
+        -0.031522]])</code></pre>
+</div>
+</div>
+<p>Unfortunately, this did not resolve the issue entirely, although there are significantly fewer “mismatched elements”. In addition, the math got simpler which may have improved the performance efficiency. But given the white noise test input, even simple linear operations are not perfectly precise. The way out is another case distinction to bypass the computations for width 1 - which will also improve performance.</p>
+<div id="f3eceef6" class="cell" data-execution_count="110">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adjust_width_v3(<span class="va">self</span>:StereoControl, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get width</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="va">self</span>.width</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># bypass for width 1</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> width <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get left and right channels</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    x_L, x_R <span class="op">=</span> x[<span class="dv">0</span>], x[<span class="dv">1</span>]</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute rescaled mid and side channels</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    x_M <span class="op">=</span> (x_L <span class="op">+</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    x_S <span class="op">=</span> (x_L <span class="op">-</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute rescaled mid-side basis</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    e_M <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">1</span>]])</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    e_S <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>]])</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute mid and side signals</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    x_mid <span class="op">=</span> x_M <span class="op">*</span> e_M </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    x_side <span class="op">=</span> x_S <span class="op">*</span> e_S </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute adjusted signal</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    x_adjusted <span class="op">=</span> x_mid <span class="op">+</span> width <span class="op">*</span> x_side</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_adjusted</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the method in StereoControl</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>StereoControl.adjust_width <span class="op">=</span> adjust_width_v3</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ All tests passed!</code></pre>
+</div>
+</div>
+<p>Alright, this did it.</p>
+</section>
+<section id="refactoring-and-optimizing-the-code" class="level3">
+<h3 class="anchored" data-anchor-id="refactoring-and-optimizing-the-code">Refactoring and Optimizing the Code</h3>
+<p>Now that all functions are there, I’ll refactor the code. First, let’s get the complete definition of <code>StereoControl</code> in one place.</p>
+<div id="2d3a9e3b" class="cell" data-execution_count="111">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Provides various audio effects related to the stereo field."""</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, position<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.position <span class="op">=</span> position </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.width <span class="op">=</span> width </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mono_pan(<span class="va">self</span>, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Places a mono audio signal in the stereo field. The </span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">        position is encoded as a floating point number between</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">        -1 and 1. </span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments:</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">        - x_m: Mono audio signal modeled as a 1d NumPy array"""</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make sure x_m is a mono signal</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> (<span class="bu">type</span>(x_0) <span class="op">==</span> np.ndarray <span class="kw">and</span> x_0.ndim <span class="op">==</span> <span class="dv">1</span>):</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Input must be a 1d NumPy array."</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        pos <span class="op">=</span> <span class="va">self</span>.position</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute coefficients</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pos <span class="op">==</span> <span class="dv">0</span>:        <span class="co"># center panning</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>            rho <span class="op">=</span> lam <span class="op">=</span> SQRT12</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> pos <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:     <span class="co"># hard left panning</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>            lam, rho <span class="op">=</span> <span class="dv">1</span>, <span class="dv">0</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> pos <span class="op">==</span> <span class="dv">1</span>:      <span class="co"># hard left panning</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>            lam, rho <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:               <span class="co"># intermediate panning</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>            <span class="co"># compute angle</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>            alpha <span class="op">=</span> (pos <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">4</span> <span class="op">*</span> PI</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># infer coefficients</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>            lam <span class="op">=</span> np.cos(alpha)</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>            rho <span class="op">=</span> np.sin(alpha)</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute panned signal (using NumPy's broadcasting)</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>        x_panned <span class="op">=</span> np.array([[lam],[rho]]) <span class="op">*</span> x_0</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_panned</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> adjust_width(<span class="va">self</span>, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get width</span></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>        width <span class="op">=</span> <span class="va">self</span>.width</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># bypass for width 1</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> width <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> x</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get left and right channels</span></span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>        x_L, x_R <span class="op">=</span> x[<span class="dv">0</span>], x[<span class="dv">1</span>]</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute rescaled mid and side channels</span></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>        x_M <span class="op">=</span> (x_L <span class="op">+</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>        x_S <span class="op">=</span> (x_L <span class="op">-</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute rescaled mid-side basis</span></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>        e_M <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">1</span>]])</span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>        e_S <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>]])</span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute mid and side signals</span></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>        x_mid <span class="op">=</span> x_M <span class="op">*</span> e_M </span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>        x_side <span class="op">=</span> x_S <span class="op">*</span> e_S </span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute adjusted signal</span></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>        x_adjusted <span class="op">=</span> x_mid <span class="op">+</span> width <span class="op">*</span> x_side</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_adjusted</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ All tests passed!
+✅ All tests passed!</code></pre>
+</div>
+</div>
+<p>There is one thing I’d like to do to improve performance for real-time applications. In an audio stream the data is not read in full, but rather in small blocks (e.g.&nbsp;1024 samples at a time). If <code>mono_pan</code> is called, then the coefficients <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\rho\)</span> are computed again for every block. This creates unnecessary overhead, since the coefficients don’t change unless the position parameter is changed. So it would be much more efficient to store the coefficients as attributes.</p>
+<p>Here’s an implementation of this idea using private attributes <code>_position</code> and <code>_panning_coefficients</code>, along with a property attribute <code>position</code> whose setter updates both <code>_position</code> and <code>_panning_coefficients</code>. At this point, it pays off to have the test cases in place. While they don’t guarantee that everything is perfect, they can help expose sloppy refactoring error.</p>
+<div id="fe15ed4c" class="cell" data-execution_count="112">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Provides various audio effects related to the stereo field."""</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, position<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._position <span class="op">=</span> position </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.width <span class="op">=</span> width </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._panning_coeffs <span class="op">=</span> <span class="va">self</span>._compute_panning_coeffs()</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> position(<span class="va">self</span>):</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._position</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">@position.setter</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> position(<span class="va">self</span>, new_pos):</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._position <span class="op">=</span> new_pos</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._panning_coeffs <span class="op">=</span> <span class="va">self</span>._compute_panning_coeffs()</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _compute_panning_coeffs(<span class="va">self</span>):</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get position parameter</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        pos <span class="op">=</span> <span class="va">self</span>.position</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute coefficients</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pos <span class="op">==</span> <span class="dv">0</span>:        <span class="co"># center panning</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>            rho <span class="op">=</span> lam <span class="op">=</span> SQRT12</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> pos <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:     <span class="co"># hard left panning</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>            lam, rho <span class="op">=</span> <span class="dv">1</span>, <span class="dv">0</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> pos <span class="op">==</span> <span class="dv">1</span>:      <span class="co"># hard left panning</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>            lam, rho <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:               <span class="co"># intermediate panning</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># compute angle</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>            alpha <span class="op">=</span> (pos <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">4</span> <span class="op">*</span> PI</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># infer coefficients</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>            lam <span class="op">=</span> np.cos(alpha)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>            rho <span class="op">=</span> np.sin(alpha)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> lam, rho</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mono_pan(<span class="va">self</span>, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Places a mono audio signal in the stereo field. The </span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="co">        position is encoded as a floating point number between</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="co">        -1 and 1. </span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="co">        Arguments:</span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="co">        - x_m: Mono audio signal modeled as a 1d NumPy array"""</span></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make sure x_m is a mono signal</span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> (<span class="bu">type</span>(x_0) <span class="op">==</span> np.ndarray <span class="kw">and</span> x_0.ndim <span class="op">==</span> <span class="dv">1</span>):</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Input must be a 1d NumPy array."</span>)</span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get panning coefficients</span></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>        lam, rho <span class="op">=</span> <span class="va">self</span>._panning_coeffs</span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute panned signal (using NumPy's broadcasting)</span></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>        x_panned <span class="op">=</span> np.array([[lam],[rho]]) <span class="op">*</span> x_0</span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_panned</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> adjust_width(<span class="va">self</span>, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get width</span></span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>        width <span class="op">=</span> <span class="va">self</span>.width</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>        <span class="co"># bypass for width 1</span></span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> width <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> x</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get left and right channels</span></span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>        x_L, x_R <span class="op">=</span> x[<span class="dv">0</span>], x[<span class="dv">1</span>]</span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute rescaled mid and side channels</span></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>        x_M <span class="op">=</span> (x_L <span class="op">+</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>        x_S <span class="op">=</span> (x_L <span class="op">-</span> x_R) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute rescaled mid-side basis</span></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>        e_M <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">1</span>]])</span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>        e_S <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>]])</span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute mid and side signals</span></span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>        x_mid <span class="op">=</span> x_M <span class="op">*</span> e_M </span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>        x_side <span class="op">=</span> x_S <span class="op">*</span> e_S </span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>        <span class="co"># compute adjusted signal</span></span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>        x_adjusted <span class="op">=</span> x_mid <span class="op">+</span> width <span class="op">*</span> x_side</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x_adjusted</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ All tests passed!
+✅ All tests passed!</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.sbehrens4d\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2025 Stefan Behrens | Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><br>
+Code licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
