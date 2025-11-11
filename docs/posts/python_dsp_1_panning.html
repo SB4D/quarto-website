@@ -318,11 +318,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="equal-power-panning-of-mono-signals">Equal Power Panning of Mono Signals</h3>
 <p>Say I have a mono signal <span class="math inline">\(x_0\)</span> and I want to play it back on my stereo system. How can I do that? There are at three obvious ways:</p>
 <ul>
-<<<<<<< HEAD
-<li><strong>Hard Left Panning:</strong> I could only use the left speaker and play back the stereo signal (x_0, 0)$.</li>
-=======
 <li><strong>Hard Left Panning:</strong> I could only use the left speaker and play back the stereo signal <span class="math inline">\((x_0, 0)\)</span>.</li>
->>>>>>> maintenance
 <li><strong>Hard Right Panning:</strong> I could only use the right speaker and play back the stereo signal <span class="math inline">\((0, x_0)\)</span>.</li>
 <li><strong>Naive Center Panning:</strong> I could use both speaker to play back the stereo signal <span class="math inline">\((x_0, x_0)\)</span>.</li>
 </ul>
@@ -337,12 +333,8 @@ window.Quarto = {
 <ul>
 <li>An <strong>equal power panning</strong> of a mono signal <span class="math inline">\(x_0\)</span> has the form <span class="math inline">\((\lambda x_0, \rho x_0)\)</span> with <span class="math inline">\(\lambda,\rho\ge0\)</span> satisfying <span class="math inline">\(\lambda^2 + \rho^2 = 1\)</span>.</li>
 </ul>
-<<<<<<< HEAD
-<p>Geometrically, the pairs <span class="math inline">\((\lambda, \rho)\)</span> above are precisely the points on the unit circle in the first quadrant of <span class="math inline">\(\R^2\)</span>. Hence, for each such pair <span class="math inline">\((\lambda, \rho)\)</span> there is exactly one angle <span class="math inline">\(\alpha\in [0,\pi/2]\)</span> such that <span class="math display">\[ \lambda = \cos(\alpha) \quad\text{and}\quad \rho = \sin(\alpha). \]</span> For $= 0 $ and <span class="math inline">\(\alpha = \pi/2\)</span> this gives back the hard left and right pannings, and the above detour about <span class="math inline">\(1/\sqrt2\)</span> shows that the center panning arises for <span class="math inline">\(\alpha = \pi/4\)</span>.</p>
-=======
 <p>Geometrically, the pairs <span class="math inline">\((\lambda, \rho)\)</span> above are precisely the points on the unit circle in the first quadrant of <span class="math inline">\(\R^2\)</span>. Hence, for each such pair <span class="math inline">\((\lambda, \rho)\)</span> there is exactly one angle <span class="math inline">\(\alpha\in [0,\pi/2]\)</span> such that <span class="math display">\[ \lambda = \cos(\alpha) \quad\text{and}\quad \rho = \sin(\alpha). \]</span></p>
 <p>For <span class="math inline">\(\alpha = 0\)</span> and <span class="math inline">\(\alpha = \pi/2\)</span> this gives back the hard left and right pannings, and the above detour about <span class="math inline">\(1/\sqrt2\)</span> shows that the center panning arises for <span class="math inline">\(\alpha = \pi/4\)</span>.</p>
->>>>>>> maintenance
 <p>The equal power pannings can be parameterized by an interval and continuously interpolate between the hard left and right pannings. In practice, it is more convenient to re-parameterize the interval <span class="math inline">\([0,\pi/2]\)</span> to the unit interval <span class="math inline">\([-1,1]\)</span> using the affine rescaling function <span class="math display">\[ [-1,1] \to [0,\pi/2],\quad p \mapsto \frac\pi4 (p + 1) =: \alpha_p. \]</span> In terms of the <strong>position parameter</strong> <span class="math inline">\(p\)</span>, the hard left, center, and hard right pannings correspond to <span class="math inline">\(p=-1\)</span>, <span class="math inline">\(p=0\)</span>, and <span class="math inline">\(p=1\)</span>, respectively.</p>
 <p>In summary, the the family of equal power pannings of <span class="math inline">\(x_0\)</span> can be written as follows: <span class="math display">\[ P_p\colon \mathcal S_1 \to\mathcal S_2, \quad
 P_p(x_0) = x_0\cdot \big( \cos(\alpha_p), \sin(\alpha_p) \big),
