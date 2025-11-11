@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/sllac_00_lossless_audio_coding_introduction.html",
       "/posts/python_dsp_1_panning.html",
       "/posts/talking_to_fritz.html",
       "/posts/fixing_my_fitnotes_db.html",
@@ -17,8 +18,9 @@
   {
     "listing": "/posts/fixing_my_fitnotes_db.html",
     "items": [
-      "/posts/drafts/python_dsp_1_panning.html",
+      "/posts/python_dsp_1_panning.html",
       "/posts/pyplot_figsize_default.html",
+      "/posts/sllac_00_lossless_audio_coding_introduction.html",
       "/posts/latex_in_jupyter_notebooks.html",
       "/posts/latex_macros_in_quarto_pages.html",
       "/posts/placeholders_in_text_files.html",

@@ -2,42 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.sbehrens4d.com/projects.html</loc>
-    <lastmod>2025-09-03T09:13:56.664Z</lastmod>
+    <lastmod>2025-09-03T09:13:56.000Z</lastmod>
   </url>
   <url>
-    <loc>https://www.sbehrens4d.com/index.html</loc>
-    <lastmod>2025-10-06T12:16:38.843Z</lastmod>
+    <loc>https://www.sbehrens4d.com/posts/sllac_00_lossless_audio_coding_introduction.html</loc>
+    <lastmod>2025-11-11T11:51:11.550Z</lastmod>
   </url>
   <url>
-    <loc>https://www.sbehrens4d.com/math.html</loc>
-    <lastmod>2025-08-27T08:05:50.686Z</lastmod>
+    <loc>https://www.sbehrens4d.com/posts/relative_imports_hack.html</loc>
+    <lastmod>2025-08-23T06:37:45.000Z</lastmod>
   </url>
   <url>
-    <loc>https://www.sbehrens4d.com/blog.html</loc>
-    <lastmod>2025-09-09T13:41:13.340Z</lastmod>
+    <loc>https://www.sbehrens4d.com/posts/pyplot_figsize_default.html</loc>
+    <lastmod>2025-08-22T18:45:34.000Z</lastmod>
   </url>
   <url>
-    <loc>https://www.sbehrens4d.com/cv.html</loc>
-    <lastmod>2025-09-21T15:34:46.591Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.sbehrens4d.com/posts/reloading_packages.html</loc>
-    <lastmod>2025-09-01T14:44:59.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.sbehrens4d.com/posts/fixing_my_fitnotes_db.html</loc>
-    <lastmod>2025-10-06T12:26:29.407Z</lastmod>
+    <loc>https://www.sbehrens4d.com/posts/making_of_homepage.html</loc>
+    <lastmod>2025-08-16T14:13:08.000Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/posts/latex_in_jupyter_notebooks.html</loc>
-    <lastmod>2025-08-15T16:39:39.667Z</lastmod>
+    <lastmod>2025-08-15T16:39:39.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/LICENSE.html</loc>
+    <lastmod>2025-08-21T18:10:06.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/cv.html</loc>
+    <lastmod>2025-09-21T15:36:21.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/blog.html</loc>
+    <lastmod>2025-09-09T13:41:13.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/index.html</loc>
+    <lastmod>2025-11-11T11:21:20.521Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/math.html</loc>
+    <lastmod>2025-08-27T08:05:50.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/fixing_my_fitnotes_db.html</loc>
+    <lastmod>2025-10-06T12:26:29.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/latex_macros_in_quarto_pages.html</loc>
+    <lastmod>2025-08-14T09:01:59.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/placeholders_in_text_files.html</loc>
+    <lastmod>2025-08-23T06:37:45.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/python_dsp_1_panning.html</loc>
+    <lastmod>2025-11-11T11:46:03.296Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.sbehrens4d.com/posts/reloading_packages.html</loc>
+    <lastmod>2025-09-01T14:44:59.000Z</lastmod>
   </url>
   <url>
     <loc>https://www.sbehrens4d.com/posts/talking_to_fritz.html</loc>
-    <lastmod>2025-09-10T14:19:25.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.sbehrens4d.com/posts/drafts/python_dsp_1_panning.html</loc>
-    <lastmod>2025-10-06T12:22:47.816Z</lastmod>
+    <lastmod>2025-09-10T14:19:25.000Z</lastmod>
   </url>
 </urlset>
