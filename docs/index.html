@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="./images/favicon2.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-795e9e8eca1e12b12abcb09a27409631.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9eaa9f0f1f526475e33e730106ede3ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -84,7 +85,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -184,8 +185,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#math" id="toc-math" class="nav-link active" data-scroll-target="#math">Math</a></li>
-  <li><a href="#computers" id="toc-computers" class="nav-link" data-scroll-target="#computers">Computers</a></li>
+  <li><a href="#computers" id="toc-computers" class="nav-link active" data-scroll-target="#computers">Computers</a></li>
+  <li><a href="#math" id="toc-math" class="nav-link" data-scroll-target="#math">Math</a></li>
   <li><a href="#music" id="toc-music" class="nav-link" data-scroll-target="#music">Music</a></li>
   </ul>
 </nav>
@@ -212,18 +213,18 @@ window.Quarto = {
 </header>
 
 
-<p>I’m a mathematician with roughly a decade of university level research and teaching under my belt. I also like computers and I’ve decided that this is what I want to do now.</p>
-<section id="math" class="level3">
-<h3 class="anchored" data-anchor-id="math">Math</h3>
-<p>My research area is the topology of <a href="https://en.wikipedia.org/wiki/4-manifold">4-dimensional manifolds</a> within the broader field of geometry and topology. If you’re also interested in these things, you may have seen <a href="https://academic.oup.com/book/43693">my name on the cover of a book</a>. You can find more about my research in the <a href="./math.html">math section</a>.</p>
-</section>
+<p>I’m a mathematician by trade, with roughly a decade of university level research and teaching under my belt. I also like computers, and I’ve decided that this is what I want to do now.</p>
 <section id="computers" class="level3">
 <h3 class="anchored" data-anchor-id="computers">Computers</h3>
-<p>Since I’ve left academia, I’ve been on a deep dive into <a href="https://en.wikipedia.org/wiki/Data_science">data science</a>, <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a>, and related areas of software development. I’ve been working on a few projects and I will describe them in more detail in the <a href="./projects.html">projects section</a> and <a href="./blog.html">blog</a>.</p>
+<p>After I left academia, I went on a deep dive into <a href="https://en.wikipedia.org/wiki/Data_science">data science</a>, <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a>, and related areas of <a href="https://en.wikipedia.org/wiki/Software_development">software development</a>. You can read about some of my personal projects in the <a href="./projects.html">projects section</a> and <a href="./blog.html">blog</a>. Since February 2026, I’ve been working professionally as a software developer in the context of solar power forecasting.</p>
+</section>
+<section id="math" class="level3">
+<h3 class="anchored" data-anchor-id="math">Math</h3>
+<p>My mathematical research was focused on the topology of <a href="https://en.wikipedia.org/wiki/4-manifold">4-dimensional manifolds</a>, which belongs to the broader field of geometry and topology. If you’re also interested in these things, you may have seen <a href="https://academic.oup.com/book/43693">my name on the cover of a book</a>. You can find more about my research in the <a href="./math.html">math section</a>.</p>
 </section>
 <section id="music" class="level3">
 <h3 class="anchored" data-anchor-id="music">Music</h3>
-<p>Music has always been my hobby but lately it has also served as an inspiration for coding projects. <!-- The computer aided analysis of music and audio signals is a reliable source of problems. --> I’m currently exploring various concepts of deep learning in the context of computer aided analysis of music and audio signals. I’ve also been getting more into <a href="https://en.wikipedia.org/wiki/Digital_signal_processing">digital signal processing (DSP)</a> and <a href="https://en.wikipedia.org/wiki/Music_information_retrieval">music information retrieval (MIR)</a> and this will be reflected in various posts in <a href="./blog.html">my blog</a>.</p>
+<p>Music has always been my hobby. In addition to countless hours of listening, playing, and recording, it has also been a reliable source of inspiration for coding projects. <!-- The computer aided analysis of music and audio signals is a reliable source of problems. --> I’m currently exploring various concepts of deep learning in the context of computer aided analysis of music and audio signals. I’ve also been getting more into <a href="https://en.wikipedia.org/wiki/Digital_signal_processing">digital signal processing (DSP)</a> and <a href="https://en.wikipedia.org/wiki/Music_information_retrieval">music information retrieval (MIR)</a>.</p>
 
 
 </section>
@@ -280,13 +281,14 @@ window.Quarto = {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

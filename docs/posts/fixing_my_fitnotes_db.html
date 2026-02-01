@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,14 +72,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-795e9e8eca1e12b12abcb09a27409631.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9eaa9f0f1f526475e33e730106ede3ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -137,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   })
   </script>
 <script src="../_tools/sb4dlatex.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -155,7 +156,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -316,7 +317,7 @@ window.Quarto = {
 <p>Luckily, FitNotes provides a convenient backup and restore feature. A full backup comes in the form of an <a href="https://en.wikipedia.org/wiki/SQLite">SQLite3</a> file, which is reasonably easy to work with. The task is to find the database entries representing the falsely labeled warm-up sets, and to assign the correct labels.</p>
 <p>While the large number of potentially falsely categorized sets essentially rules out a manual approach, the even larger number of properly categorized sets suggests a machine learning approach: train a suitable classifier model on the good data and use it to identify the bad data.</p>
 <p>A preview of the main function should give a good idea of the things to come:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_db_file(db_file):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_db_file(db_file):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the data from the database file</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> load_data(db_file)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prepare the data</span></span>
@@ -326,10 +327,10 @@ window.Quarto = {
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># determine the "bad" set IDs</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    bad_set_ids <span class="op">=</span> get_bad_ids(predicted_data)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update database file</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    update_db_file(db_file, bad_set_ids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    update_db_file(db_file, bad_set_ids)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The following packages will be used in the implementation:</p>
 <div id="0b3fa7ba" class="cell" data-execution_count="82">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># database and data handling</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># database and data handling</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -350,7 +351,7 @@ window.Quarto = {
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># file operations</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="step-1-loading-the-data" class="level2">
@@ -373,7 +374,7 @@ window.Quarto = {
 </ul>
 <p>With this understood, it’s time to run some queries. I’m opting for a combination of <code>sqlite3</code> and <code>pandas</code> to have the query results available as dataframes and ready for further processing.</p>
 <div id="75dd4ac3" class="cell" data-execution_count="83">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify path of the FitNotes backup file</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify path of the FitNotes backup file</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>FITNOTES_BACKUP <span class="op">=</span> <span class="st">"FitNotes_Backup_2025_08_19_11_53_20.fitnotes"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the following function to run queries</span></span>
@@ -381,11 +382,11 @@ window.Quarto = {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Run SQL query and return results as dataframe."""</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> sqlite3.<span class="ex">connect</span>(db) <span class="im">as</span> conn:</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        results <span class="op">=</span> pd.read_sql(sql<span class="op">=</span>query, con<span class="op">=</span>conn)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Loading the relevant data from the database file involves a combination of joins and subqueries. First, I have to find the exercise IDs corresponding to the exercises which have a “… (Warm Up)” version, and then I can retrieve the relevant entries from the <code>training_log</code> table. This gives the desired <code>load_data()</code> function.</p>
 <div id="2287c335" class="cell" data-execution_count="84">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>exercise_ids_subquery<span class="op">=</span><span class="st">"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT _id</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM exercise</span></span>
@@ -412,11 +413,11 @@ window.Quarto = {
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data(fitnotes_backup<span class="op">=</span>FITNOTES_BACKUP):</span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    all_sets <span class="op">=</span> run_query(all_sets_query, db<span class="op">=</span>fitnotes_backup)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> all_sets</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> all_sets</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Before I take a look at the data, I want to determine the date that I started introducing the warm-up categories. This involves another simple join query.</p>
 <div id="16267225" class="cell" data-execution_count="85">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_split_date(db_file):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_split_date(db_file):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    first_warm_up_query <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">        min(T.date) as "date"</span></span>
@@ -428,14 +429,14 @@ window.Quarto = {
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> run_query(first_warm_up_query, db_file)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result[<span class="st">'date'</span>][<span class="dv">0</span>]</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First appearance of warm-up label:"</span>, get_split_date(FITNOTES_BACKUP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First appearance of warm-up label:"</span>, get_split_date(FITNOTES_BACKUP))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>First appearance of warm-up label: 2020-02-07</code></pre>
 </div>
 </div>
 <p>I will use this date to split the data in two parts: the properly labeled “good data”, and the partially incorrectly labeled “problem data”.</p>
 <div id="182b6845" class="cell" data-execution_count="86">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SPLIT_DATE <span class="op">=</span> get_split_date(FITNOTES_BACKUP)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SPLIT_DATE <span class="op">=</span> get_split_date(FITNOTES_BACKUP)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> good_problem_split(data):</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract good data</span></span>
@@ -444,14 +445,14 @@ window.Quarto = {
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract problematic data</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    problem_mask <span class="op">=</span> data[<span class="st">'date'</span>] <span class="op">&lt;</span> SPLIT_DATE</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    problem_data <span class="op">=</span> data[problem_mask]</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> good_data, problem_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> good_data, problem_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="step-2-exploring-and-preparing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-exploring-and-preparing-the-data">Step 2: Exploring and Preparing the Data</h2>
 <p>First, it’s good to know how much data there is and how much of it is properly labeled.</p>
 <div id="d791e220" class="cell" data-execution_count="87">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and split the data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and split the data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>good_sets, problem_sets <span class="op">=</span> good_problem_split(raw_data)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print the counts of elements</span></span>
@@ -459,7 +460,7 @@ window.Quarto = {
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"----------------------------"</span>)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Total sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(raw_data)<span class="sc">:4d}</span><span class="ss">"</span>)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Good sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(good_sets)<span class="sc">:4d}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> <span class="bu">len</span>(good_sets) <span class="op">/</span> <span class="bu">len</span>(raw_data)<span class="sc">:0.0f}</span><span class="ss"> %)"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Problem sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(problem_sets)<span class="sc">:4d}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> <span class="bu">len</span>(problem_sets) <span class="op">/</span> <span class="bu">len</span>(raw_data)<span class="sc">:0.0f}</span><span class="ss"> %)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Problem sets:'</span><span class="sc">:17}{</span><span class="bu">len</span>(problem_sets)<span class="sc">:4d}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> <span class="bu">len</span>(problem_sets) <span class="op">/</span> <span class="bu">len</span>(raw_data)<span class="sc">:0.0f}</span><span class="ss"> %)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Numbers of tracked sets:
 ----------------------------
@@ -470,12 +471,12 @@ Problem sets:    1034 (20 %)</code></pre>
 </div>
 <p>Next up is a look at the good sets, if only to make sure that the split was done correctly. This is indeed so, since all exercises conistently start appearing with separate warm-up categories from <code>SPLIT_DATE</code> onnward:</p>
 <div id="f2dfc272" class="cell" data-execution_count="88">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>good_sets.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>good_sets.head(<span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="88">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -489,7 +490,7 @@ Problem sets:    1034 (20 %)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1034</td>
+<th data-quarto-table-cell-role="th">1034</th>
 <td>6832</td>
 <td>2020-02-07</td>
 <td>112</td>
@@ -498,7 +499,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>6</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1035</td>
+<th data-quarto-table-cell-role="th">1035</th>
 <td>6836</td>
 <td>2020-02-07</td>
 <td>37</td>
@@ -507,7 +508,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>5</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1036</td>
+<th data-quarto-table-cell-role="th">1036</th>
 <td>6837</td>
 <td>2020-02-07</td>
 <td>37</td>
@@ -516,7 +517,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>5</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1037</td>
+<th data-quarto-table-cell-role="th">1037</th>
 <td>6838</td>
 <td>2020-02-07</td>
 <td>37</td>
@@ -525,7 +526,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>5</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1038</td>
+<th data-quarto-table-cell-role="th">1038</th>
 <td>6839</td>
 <td>2020-02-07</td>
 <td>37</td>
@@ -534,7 +535,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>9</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1039</td>
+<th data-quarto-table-cell-role="th">1039</th>
 <td>6841</td>
 <td>2020-02-07</td>
 <td>113</td>
@@ -543,7 +544,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>5</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1040</td>
+<th data-quarto-table-cell-role="th">1040</th>
 <td>6846</td>
 <td>2020-02-07</td>
 <td>48</td>
@@ -552,7 +553,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1041</td>
+<th data-quarto-table-cell-role="th">1041</th>
 <td>6847</td>
 <td>2020-02-07</td>
 <td>48</td>
@@ -561,7 +562,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>4</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1042</td>
+<th data-quarto-table-cell-role="th">1042</th>
 <td>6848</td>
 <td>2020-02-07</td>
 <td>48</td>
@@ -570,7 +571,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>5</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1043</td>
+<th data-quarto-table-cell-role="th">1043</th>
 <td>6849</td>
 <td>2020-02-07</td>
 <td>48</td>
@@ -579,7 +580,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>6</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1044</td>
+<th data-quarto-table-cell-role="th">1044</th>
 <td>6850</td>
 <td>2020-02-07</td>
 <td>112</td>
@@ -588,7 +589,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1045</td>
+<th data-quarto-table-cell-role="th">1045</th>
 <td>6851</td>
 <td>2020-02-07</td>
 <td>112</td>
@@ -597,7 +598,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1046</td>
+<th data-quarto-table-cell-role="th">1046</th>
 <td>6852</td>
 <td>2020-02-07</td>
 <td>113</td>
@@ -606,7 +607,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>2</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1047</td>
+<th data-quarto-table-cell-role="th">1047</th>
 <td>6853</td>
 <td>2020-02-07</td>
 <td>113</td>
@@ -615,7 +616,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1048</td>
+<th data-quarto-table-cell-role="th">1048</th>
 <td>6858</td>
 <td>2020-02-11</td>
 <td>111</td>
@@ -638,7 +639,7 @@ Problem sets:    1034 (20 %)</code></pre>
 <li><code>'set_count'</code>: The <strong>set number</strong> of each set within its group.</li>
 </ul>
 <div id="10d2478e" class="cell" data-execution_count="89">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_labels_etc(data_in):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_labels_etc(data_in):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># copy data</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> data_in.copy()</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add column for exercise type</span></span>
@@ -658,16 +659,16 @@ Problem sets:    1034 (20 %)</code></pre>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'grp'</span>] <span class="op">=</span> data_out.groupby([<span class="st">'date'</span>, <span class="st">'type'</span>]).ngroup() <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># also count within each group</span></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'set_count'</span>] <span class="op">=</span> data_out.groupby([<span class="st">'date'</span>, <span class="st">'type'</span>]).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The main task is then to infer the values in <code>warm_up</code> from the other columns, excluding <code>exc_id</code> and <code>label</code>, because the latter are not reliable for the <code>problem sets</code>. In fact, the equivalent information in <code>label</code> and <code>exc_id</code> literally <em>is</em> the problem for the problem sets.</p>
 <p>Speaking of problems, the numerical column <code>'weight'</code> is also a little flawed, since the values for different exercise types lie in rather different ranges:</p>
 <div id="4a90b586" class="cell" data-execution_count="90">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> process_labels_etc(raw_data)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Average weight by exercise type:"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prepared_data.groupby(<span class="st">'type'</span>)[<span class="st">'weight'</span>].mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prepared_data.groupby(<span class="st">'type'</span>)[<span class="st">'weight'</span>].mean())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Average weight by exercise type:
 type
@@ -680,7 +681,7 @@ Name: weight, dtype: float64</code></pre>
 </div>
 <p>This can be remedied by suitably normalizing the weight. I find it most reasonable to normalize the weight on a per-group basis and I will do the same for the <code>'reps'</code> column to put the parameter on a comparable scale. While doing so, I will also compute the <strong>set volume</strong> (i.e.&nbsp;weight times reps) and a per-group normalized version thereof.</p>
 <div id="2067ae4c" class="cell" data-execution_count="91">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_normalized_features(data_in):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_normalized_features(data_in):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># copy original dataframe to avoid unwanted changes</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> data_in.copy()</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add the set volume (weight * reps) as a column</span></span>
@@ -692,18 +693,18 @@ Name: weight, dtype: float64</code></pre>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'norm_weight'</span>] <span class="op">=</span> data_out[<span class="st">'weight'</span>] <span class="op">/</span> max_weight</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'norm_reps'</span>] <span class="op">=</span> data_out[<span class="st">'reps'</span>] <span class="op">/</span> max_reps</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    data_out[<span class="st">'norm_set_vol'</span>] <span class="op">=</span> data_out[<span class="st">'set_vol'</span>] <span class="op">/</span> max_set_vol</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Together, the functions <code>process_labels_etc</code> and <code>add_normalized_features</code> make up the <code>prepare_data</code> function mentioned in the introduction.</p>
 <div id="09d5044e" class="cell" data-execution_count="92">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_data(data_in):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_data(data_in):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> process_labels_etc(data_in)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    data_out <span class="op">=</span> add_normalized_features(data_out)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The following plots show the weight (blue) and reps (orange) for randomly chosen examples of set groups, both normalized on a per-group level. The main observation is that, while the per-exercise-routine within the problem data is not as consistent as within the good data, the differences are not too alarming. Chances are that a properly trained prediction model trained on the good data will also perform reasonably well on the problem data.</p>
 <div id="45ee568e" class="cell" data-execution_count="93">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load, prepare, and split all sets</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
@@ -751,7 +752,7 @@ Name: weight, dtype: float64</code></pre>
 <span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>            )</span>
 <span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
 <span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -769,7 +770,7 @@ Name: weight, dtype: float64</code></pre>
 </div>
 <p>Lastly, here are the correlations of the numerical feature columns with the <code>'warm_up'</code>:</p>
 <div id="51ac93e1" class="cell" data-execution_count="94">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reload, prepare, and split the data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reload, prepare, and split the data</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> prepare_data(raw_data)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>good_data, problems <span class="op">=</span> good_problem_split(prepared_data)</span>
@@ -784,7 +785,7 @@ Name: weight, dtype: float64</code></pre>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Correllation of numerical columns with 'warm_up':"</span>)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(corellations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(corellations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Correllation of numerical columns with 'warm_up':
 warm_up         1.000000
@@ -821,7 +822,7 @@ Name: warm_up, dtype: float64</code></pre>
 <p>Mostly out of curiosity, I will also train a simple neural network to see how it performs. However, since the simple models already perform extremely well, the deep learning approach will eventually be discarded.</p>
 <p>To begin with, I’ll get the data ready. I’ll do a split into training, test, and validation data.</p>
 <div id="3cbe6e9b" class="cell" data-execution_count="95">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and prepare data, split off good data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and prepare data, split off good data</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> load_data()</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>prepared_data <span class="op">=</span> prepare_data(raw_data)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>good_data, _ <span class="op">=</span> good_problem_split(prepared_data)</span>
@@ -835,13 +836,13 @@ Name: warm_up, dtype: float64</code></pre>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>X_train_test, X_val, y_train_test, y_val <span class="op">=</span> <span class="op">\</span></span>
 <span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    train_test_split(X_good, y_good, test_size<span class="op">=</span><span class="fl">0.1</span>, stratify<span class="op">=</span>y_good, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> <span class="op">\</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    train_test_split(X_train_test, y_train_test, test_size<span class="op">=</span><span class="fl">0.2</span>, stratify<span class="op">=</span>y_train_test, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    train_test_split(X_train_test, y_train_test, test_size<span class="op">=</span><span class="fl">0.2</span>, stratify<span class="op">=</span>y_train_test, random_state<span class="op">=</span><span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="classical-binary-classifiers" class="level3">
 <h3 class="anchored" data-anchor-id="classical-binary-classifiers">Classical Binary Classifiers</h3>
 <p>As mentioned, I want to try out and compare several classical models. For that purpose, I will load them into a dictionary.</p>
 <div id="c96c9278" class="cell" data-execution_count="96">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define models</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define models</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Logistic Regression"</span>: LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, solver<span class="op">=</span><span class="st">"lbfgs"</span>),</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Decision Tree"</span>: DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
@@ -849,11 +850,11 @@ Name: warm_up, dtype: float64</code></pre>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"KNN"</span>: KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>),</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SVM (Linear)"</span>: LinearSVC(max_iter<span class="op">=</span><span class="dv">5000</span>, dual<span class="op">=</span><span class="va">False</span>),</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Naive Bayes"</span>: GaussianNB(),</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For model selection I will first use a 5-fold cross-validation strategy on the training data.</p>
 <div id="3cfe68f5" class="cell" data-execution_count="97">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_with_cv(models:<span class="bu">dict</span>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_with_cv(models:<span class="bu">dict</span>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cross-validation strategy</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate all models</span></span>
@@ -864,7 +865,7 @@ Name: warm_up, dtype: float64</code></pre>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        results[name] <span class="op">=</span> (np.mean(scores), np.std(scores))</span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">:20s}</span><span class="ss"> | Accuracy: </span><span class="sc">{</span>np<span class="sc">.</span>mean(scores)<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>np<span class="sc">.</span>std(scores)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>evaluate_with_cv(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>evaluate_with_cv(models)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>CROSS-VALIDATION RESULTS:
 Logistic Regression  | Accuracy: 0.987 ± 0.004
@@ -878,7 +879,7 @@ Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
 <p>All models perform rather well, with the random forest classifier in the lead.</p>
 <p>Next I will check the performance on the test data and plot the confusion matrix in each case.</p>
 <div id="d7950a37" class="cell" data-execution_count="98">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_confusion(models):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_confusion(models):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a 2-by-3 grid for the six models</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>), constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    axes <span class="op">=</span> axes.flatten()</span>
@@ -899,7 +900,7 @@ Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        ax_idx <span class="op">+=</span> <span class="dv">1</span></span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
 <span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>plot_confusion(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>plot_confusion(models)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -910,7 +911,7 @@ Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
 </div>
 <p>Again, the random forest model performs best with an exceptionally low number of false negatives.</p>
 <div id="48c62b16" class="cell" data-execution_count="99">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select the winning model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select the winning model</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>best_model <span class="op">=</span> models[<span class="st">"Random Forest"</span>]</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_trained_model(model):</span>
@@ -925,7 +926,7 @@ Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plt.show()</span></span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"Results on Validation Set</span><span class="ch">\n</span><span class="sc">{</span>model<span class="sc">}</span><span class="ch">\n</span><span class="ss">(Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>validate_trained_model(best_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>validate_trained_model(best_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -935,7 +936,7 @@ Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
 </div>
 </div>
 <div id="06abfa1a" class="cell" data-execution_count="100">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_groups_with_errors(model):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_groups_with_errors(model):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># evaluate on all good data</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_good)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add results as column in copy of good data</span></span>
@@ -956,7 +957,7 @@ Naive Bayes          | Accuracy: 0.980 ± 0.004</code></pre>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of groups with errors:"</span>.upper(), <span class="bu">len</span>(groups_with_errors))</span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Groups with errors:</span><span class="ch">\n</span><span class="st">"</span>.upper())</span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> group <span class="kw">in</span> groups_with_errors:</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NUMBER OF GROUPS WITH ERRORS: 9
 
@@ -1052,7 +1053,7 @@ GROUPS WITH ERRORS:
 <h3 class="anchored" data-anchor-id="a-deep-learning-approach">A Deep Learning Approach</h3>
 <p>Just out of curiosity, I will try training a neural network. The first task is to convert the data to PyTorch’s very own <code>torch.tensor</code> data type.</p>
 <div id="3948d9bf" class="cell" data-execution_count="101">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to PyTorch tensors</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to PyTorch tensors</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_pandas_to_torch(panda):</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    by_way_of_numpy <span class="op">=</span> panda.values.astype(np.float64)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    tensor <span class="op">=</span> torch.tensor(by_way_of_numpy, dtype<span class="op">=</span>torch.double)</span>
@@ -1062,11 +1063,11 @@ GROUPS WITH ERRORS:
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> convert_pandas_to_torch(X_test)</span>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> convert_pandas_to_torch(y_test).unsqueeze(<span class="dv">1</span>)</span>
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>X_val <span class="op">=</span> convert_pandas_to_torch(X_val)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>y_val <span class="op">=</span> convert_pandas_to_torch(y_val).unsqueeze(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>y_val <span class="op">=</span> convert_pandas_to_torch(y_val).unsqueeze(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As for the neural network model, I will go for three linear layers with sigmoid activation functions. Since I don’t have a ton of training data, I will keep the number of parameters manageable.</p>
 <div id="a5e3595e" class="cell" data-execution_count="102">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a simple neural network architecture</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a simple neural network architecture</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimpleNN(nn.Module):</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, input_dim):</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -1088,7 +1089,7 @@ GROUPS WITH ERRORS:
 <span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of parameters:"</span>, <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> model_nn.parameters()))</span>
 <span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Neural Network Architecture:"</span>)</span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_nn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_nn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of parameters: 337
 Neural Network Architecture:
@@ -1105,7 +1106,7 @@ SimpleNN(
 </div>
 </div>
 <div id="9e55685a" class="cell" data-execution_count="103">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_and_evaluate_nn(model_nn, epochs<span class="op">=</span><span class="dv">10001</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_and_evaluate_nn(model_nn, epochs<span class="op">=</span><span class="dv">10001</span>):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># train the neural network</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        model_nn.train()</span>
@@ -1133,7 +1134,7 @@ SimpleNN(
 <span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"---=== FIRST PASS ===---"</span>)</span>
 <span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>train_and_evaluate_nn(model_nn)</span>
 <span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"---=== SECOND PASS ===---"</span>)</span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>train_and_evaluate_nn(model_nn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>train_and_evaluate_nn(model_nn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>---=== FIRST PASS ===---
 Epoch 0, Loss: 0.7396
@@ -1185,7 +1186,7 @@ Test Accuracy: 58.55%</code></pre>
 <h3 class="anchored" data-anchor-id="the-final-implementation">The Final Implementation</h3>
 <p>Based on the experiments in the previous sections, I will use a random forest classifier to correct the wrond exercise IDs in the “problem data”.</p>
 <div id="0e770bd4" class="cell" data-execution_count="104">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_warm_ups(prepared_data):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_warm_ups(prepared_data):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split data</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    good_data, _ <span class="op">=</span> good_problem_split(prepared_data)</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract features X and target y</span></span>
@@ -1201,7 +1202,7 @@ Test Accuracy: 58.55%</code></pre>
 <span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add prediction colun to copy of data and return</span></span>
 <span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    data_pred <span class="op">=</span> prepared_data.copy()</span>
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    data_pred[<span class="st">'pred'</span>] <span class="op">=</span> pd.Series(y_all_pred).astype(<span class="st">'Int8'</span>)</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_pred</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -1210,13 +1211,13 @@ Test Accuracy: 58.55%</code></pre>
 <p>It remains to update the database file using the predicted exercise IDs for the “problem sets” recorded before the <code>SPLIT_DATE</code>. This process is straight forward.</p>
 <p>First, two helper functions are needed: one to obtain IDs of the “bad sets”, that is, those that need to be changed, and another one to determine the new exercise ID from the old one.</p>
 <div id="5236981a" class="cell" data-execution_count="105">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_bad_set_ids(data_pred):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_bad_set_ids(data_pred):</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    _, problems <span class="op">=</span> good_problem_split(data_pred)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    bad_set_ids <span class="op">=</span> problems.query(<span class="st">'pred == 1'</span>)[<span class="st">'set_id'</span>]</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> bad_set_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> bad_set_ids</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="c16844b9" class="cell" data-execution_count="106">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>new_exc_id_query <span class="op">=</span> <span class="st">"""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>new_exc_id_query <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT </span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">    W._id as "new_id"</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
@@ -1232,11 +1233,11 @@ Test Accuracy: 58.55%</code></pre>
 <span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_warm_up_id(set_id:<span class="bu">int</span>)<span class="op">-&gt;</span><span class="bu">int</span>:</span>
 <span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    id_df <span class="op">=</span> run_query(new_exc_id_query.<span class="bu">format</span>(<span class="ss">f"</span><span class="sc">{</span>set_id<span class="sc">}</span><span class="ss">"</span>))</span>
 <span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    warm_up_exc_id <span class="op">=</span> id_df[<span class="st">'new_id'</span>][<span class="dv">0</span>]</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> warm_up_exc_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> warm_up_exc_id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>With the bad set IDs and their corresponding new exercise IDs available, the database can be updated. To avoid data loss, I will implement an option that by default creates a new file with the updated IDs, leaving the original file untouched.</p>
 <div id="d14c8e89" class="cell" data-execution_count="107">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_db_file(db_file, bad_ids, inplace<span class="op">=</span><span class="va">False</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_db_file(db_file, bad_ids, inplace<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create copy for update unless 'inplace' options</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> inplace:</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        original_db_file <span class="op">=</span> db_file</span>
@@ -1261,11 +1262,11 @@ Test Accuracy: 58.55%</code></pre>
 <span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>                exc_id<span class="op">=</span><span class="bu">str</span>(new_exc_id),</span>
 <span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>            )</span>
 <span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>            cur.execute(update_query)</span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>        conn.commit()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now everything needed for the main function <code>fix_db_file</code> is ready for assembly.</p>
 <div id="94fe0b2b" class="cell" data-execution_count="113">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_db_file(db_file<span class="op">=</span>FITNOTES_BACKUP, inplace<span class="op">=</span><span class="va">False</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_db_file(db_file<span class="op">=</span>FITNOTES_BACKUP, inplace<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># data gathering</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> load_data(db_file)</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prepare data</span></span>
@@ -1277,18 +1278,18 @@ Test Accuracy: 58.55%</code></pre>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    update_db_file(db_file, bad_set_ids, inplace<span class="op">=</span>inplace)</span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predicted_data</span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>final_data <span class="op">=</span> fix_db_file()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>final_data <span class="op">=</span> fix_db_file()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, here’s how the model performed on the last 25 “problem sets”.</p>
 <div id="eaba247a" class="cell" data-execution_count="116">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>_, problem_data <span class="op">=</span> good_problem_split(final_data)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>_, problem_data <span class="op">=</span> good_problem_split(final_data)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>view_cols <span class="op">=</span> [<span class="st">'date'</span>,<span class="st">'type'</span>,<span class="st">'set_count'</span>,<span class="st">'weight'</span>,<span class="st">'reps'</span>,<span class="st">'pred'</span>]</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>problem_data[view_cols].tail(<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>problem_data[view_cols].tail(<span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="116">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1302,7 +1303,7 @@ Test Accuracy: 58.55%</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1009</td>
+<th data-quarto-table-cell-role="th">1009</th>
 <td>2020-01-31</td>
 <td>Deadlift</td>
 <td>7</td>
@@ -1311,7 +1312,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1010</td>
+<th data-quarto-table-cell-role="th">1010</th>
 <td>2020-01-31</td>
 <td>Deadlift</td>
 <td>8</td>
@@ -1320,7 +1321,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1011</td>
+<th data-quarto-table-cell-role="th">1011</th>
 <td>2020-01-31</td>
 <td>Bench Press</td>
 <td>4</td>
@@ -1329,7 +1330,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1012</td>
+<th data-quarto-table-cell-role="th">1012</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>1</td>
@@ -1338,7 +1339,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1013</td>
+<th data-quarto-table-cell-role="th">1013</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>2</td>
@@ -1347,7 +1348,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1014</td>
+<th data-quarto-table-cell-role="th">1014</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>3</td>
@@ -1356,7 +1357,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1015</td>
+<th data-quarto-table-cell-role="th">1015</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>4</td>
@@ -1365,7 +1366,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1016</td>
+<th data-quarto-table-cell-role="th">1016</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>5</td>
@@ -1374,7 +1375,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1017</td>
+<th data-quarto-table-cell-role="th">1017</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>6</td>
@@ -1383,7 +1384,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1018</td>
+<th data-quarto-table-cell-role="th">1018</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>7</td>
@@ -1392,7 +1393,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1019</td>
+<th data-quarto-table-cell-role="th">1019</th>
 <td>2020-02-02</td>
 <td>Bench Press</td>
 <td>8</td>
@@ -1401,7 +1402,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1020</td>
+<th data-quarto-table-cell-role="th">1020</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>1</td>
@@ -1410,7 +1411,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1021</td>
+<th data-quarto-table-cell-role="th">1021</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>2</td>
@@ -1419,7 +1420,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1022</td>
+<th data-quarto-table-cell-role="th">1022</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>3</td>
@@ -1428,7 +1429,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1023</td>
+<th data-quarto-table-cell-role="th">1023</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>4</td>
@@ -1437,7 +1438,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1024</td>
+<th data-quarto-table-cell-role="th">1024</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>5</td>
@@ -1446,7 +1447,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1025</td>
+<th data-quarto-table-cell-role="th">1025</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>6</td>
@@ -1455,7 +1456,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1026</td>
+<th data-quarto-table-cell-role="th">1026</th>
 <td>2020-02-04</td>
 <td>Overhead Press</td>
 <td>7</td>
@@ -1464,7 +1465,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1027</td>
+<th data-quarto-table-cell-role="th">1027</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>1</td>
@@ -1473,7 +1474,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1028</td>
+<th data-quarto-table-cell-role="th">1028</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>2</td>
@@ -1482,7 +1483,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1029</td>
+<th data-quarto-table-cell-role="th">1029</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>3</td>
@@ -1491,7 +1492,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1030</td>
+<th data-quarto-table-cell-role="th">1030</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>4</td>
@@ -1500,7 +1501,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1031</td>
+<th data-quarto-table-cell-role="th">1031</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>5</td>
@@ -1509,7 +1510,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1032</td>
+<th data-quarto-table-cell-role="th">1032</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>6</td>
@@ -1518,7 +1519,7 @@ Test Accuracy: 58.55%</code></pre>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1033</td>
+<th data-quarto-table-cell-role="th">1033</th>
 <td>2020-02-04</td>
 <td>Squat</td>
 <td>7</td>
@@ -1540,7 +1541,7 @@ Test Accuracy: 58.55%</code></pre>
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing-1">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TWF0aCUyQ0RTUCUyQ1B5dGhvbiUyQ1RERCUyQ0Fubm95aW5nJTIwUHJlY2lzaW9u" data-listing-date-sort="1759701600000" data-listing-file-modified-sort="1762862389583" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2088">
+<div class="quarto-post image-right" data-index="0" data-categories="TWF0aCUyQ0RTUCUyQ1B5dGhvbiUyQ1RERCUyQ0Fubm95aW5nJTIwUHJlY2lzaW9u" data-listing-date-sort="1759701600000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2088">
 <div class="thumbnail"><a href="../posts/python_dsp_1_panning.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1565,7 +1566,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="UHl0aG9uJTJDbWF0cGxvdGxpYiUyQ0xpdHRsZSUyMFRyaWNrcw==" data-listing-date-sort="1753999200000" data-listing-file-modified-sort="1755888334000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
+<div class="quarto-post image-right" data-index="1" data-categories="UHl0aG9uJTJDbWF0cGxvdGxpYiUyQ0xpdHRsZSUyMFRyaWNrcw==" data-listing-date-sort="1753999200000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
 <div class="thumbnail"><a href="../posts/pyplot_figsize_default.html" class="no-external">
 
 <p class="card-img-top"><img src="pyplot_figsize_default_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1590,7 +1591,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="UHl0aG9uJTJDQXVkaW8lMjBDb2Rpbmc=" data-listing-date-sort="1762815600000" data-listing-file-modified-sort="1762862389584" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1698">
+<div class="quarto-post image-right" data-index="2" data-categories="UHl0aG9uJTJDQXVkaW8lMjBDb2Rpbmc=" data-listing-date-sort="1762815600000" data-listing-file-modified-sort="1763128270000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1698">
 <div class="thumbnail"><a href="../posts/sllac_00_lossless_audio_coding_introduction.html" class="no-external">
 
 <p class="card-img-top"><img src="sllac_00_lossless_audio_coding_introduction_files\figure-html\cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1615,7 +1616,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="SnVweXRlciUyQ0xhVGVY" data-listing-date-sort="1754344800000" data-listing-file-modified-sort="1755275979000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="667">
+<div class="quarto-post image-right" data-index="3" data-categories="SnVweXRlciUyQ0xhVGVY" data-listing-date-sort="1754344800000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="667">
 <div class="thumbnail"><a href="../posts/latex_in_jupyter_notebooks.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1640,7 +1641,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="UXVhcnRvJTJDTGFUZVglMkNKYXZhU2NyaXB0" data-listing-date-sort="1754690400000" data-listing-file-modified-sort="1755162119000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1239">
+<div class="quarto-post image-right" data-index="4" data-categories="UXVhcnRvJTJDTGFUZVglMkNKYXZhU2NyaXB0" data-listing-date-sort="1754690400000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1239">
 <div class="thumbnail"><a href="../posts/latex_macros_in_quarto_pages.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1665,7 +1666,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="TGl0dGxlJTIwVHJpY2tzJTJDUHl0aG9u" data-listing-date-sort="1755813600000" data-listing-file-modified-sort="1755931065000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="242">
+<div class="quarto-post image-right" data-index="5" data-categories="TGl0dGxlJTIwVHJpY2tzJTJDUHl0aG9u" data-listing-date-sort="1755813600000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="242">
 <div class="thumbnail"><a href="../posts/placeholders_in_text_files.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1690,7 +1691,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="V2ViZGVzaWduJTJDUXVhcnRv" data-listing-date-sort="1755208800000" data-listing-file-modified-sort="1755353588000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2355">
+<div class="quarto-post image-right" data-index="6" data-categories="V2ViZGVzaWduJTJDUXVhcnRv" data-listing-date-sort="1755208800000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2355">
 <div class="thumbnail"><a href="../posts/making_of_homepage.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1715,7 +1716,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="UHl0aG9uJTJDSnVweXRlciUyQ0xpdHRsZSUyMFRyaWNrcw==" data-listing-date-sort="1756677600000" data-listing-file-modified-sort="1756737899000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="148">
+<div class="quarto-post image-right" data-index="7" data-categories="UHl0aG9uJTJDSnVweXRlciUyQ0xpdHRsZSUyMFRyaWNrcw==" data-listing-date-sort="1756677600000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="148">
 <div class="thumbnail"><a href="../posts/reloading_packages.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1740,7 +1741,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="UHl0aG9uJTJDc2I0ZGZyaXR6" data-listing-date-sort="1757455200000" data-listing-file-modified-sort="1757513965000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="862">
+<div class="quarto-post image-right" data-index="8" data-categories="UHl0aG9uJTJDc2I0ZGZyaXR6" data-listing-date-sort="1757455200000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="862">
 <div class="thumbnail"><a href="../posts/talking_to_fritz.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1765,7 +1766,7 @@ Stefan Behrens
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="UHl0aG9uJTJDTGl0dGxlJTIwVHJpY2tz" data-listing-date-sort="1755813600000" data-listing-file-modified-sort="1755931065000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="406">
+<div class="quarto-post image-right" data-index="9" data-categories="UHl0aG9uJTJDTGl0dGxlJTIwVHJpY2tz" data-listing-date-sort="1755813600000" data-listing-file-modified-sort="1762886703000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="406">
 <div class="thumbnail"><a href="../posts/relative_imports_hack.html" class="no-external">
 
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1844,13 +1845,14 @@ Stefan Behrens
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

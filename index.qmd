@@ -2,21 +2,21 @@
 title: "Welcome!"
 ---
 
-I'm a mathematician with roughly a decade of university level research and teaching under my belt. 
-I also like computers and I've decided that this is what I want to do now. 
+I'm a mathematician by trade, with roughly a decade of university level research and teaching under my belt. 
+I also like computers, and I've decided that this is what I want to do now. 
+
+### Computers
+After I left academia, I went on a deep dive into [data science](https://en.wikipedia.org/wiki/Data_science), [machine learning](https://en.wikipedia.org/wiki/Machine_learning), and related areas of [software development](https://en.wikipedia.org/wiki/Software_development). You can read about some of my personal projects in the [projects section](projects.qmd) and [blog](blog.qmd). Since February 2026, I've been working professionally as a software developer in the context of solar power forecasting.
 
 ### Math
-My research area is the topology of [4-dimensional manifolds](https://en.wikipedia.org/wiki/4-manifold) within the broader field of geometry and topology. 
+My mathematical research was focused on the topology of [4-dimensional manifolds](https://en.wikipedia.org/wiki/4-manifold), which belongs to the broader field of geometry and topology. 
 If you're also interested in these things, you may have seen [my name on the cover of a book](https://academic.oup.com/book/43693). 
 You can find more about my research in the [math section](math.qmd).
 
-### Computers
-Since I've left academia, I've been on a deep dive into [data science](https://en.wikipedia.org/wiki/Data_science), [machine learning](https://en.wikipedia.org/wiki/Machine_learning), and related areas of software development. I've been working on a few projects and I will describe them in more detail in the [projects section](projects.qmd) and [blog](blog.qmd).
-
 ### Music
-Music has always been my hobby but lately it has also served as an inspiration for coding projects. 
+Music has always been my hobby. In addition to countless hours of listening, playing, and recording, it has also been a reliable source of inspiration for coding projects. 
 <!-- The computer aided analysis of music and audio signals is a reliable source of problems. -->
 I'm currently exploring various concepts of deep learning in the context of computer aided analysis of music and audio signals.
-I've also been getting more into [digital signal processing (DSP)](https://en.wikipedia.org/wiki/Digital_signal_processing) and [music information retrieval (MIR)](https://en.wikipedia.org/wiki/Music_information_retrieval) and this will be reflected in various posts in [my blog](blog.qmd).
+I've also been getting more into [digital signal processing (DSP)](https://en.wikipedia.org/wiki/Digital_signal_processing) and [music information retrieval (MIR)](https://en.wikipedia.org/wiki/Music_information_retrieval).
 
 

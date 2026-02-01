@@ -26,3 +26,5 @@ posts/drafts/
 docs/posts/drafts/
 
 /.quarto/
+
+**/*.quarto_ipynb

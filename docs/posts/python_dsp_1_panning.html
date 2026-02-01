@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../images/favicon2.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-795e9e8eca1e12b12abcb09a27409631.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9eaa9f0f1f526475e33e730106ede3ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -122,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -357,17 +358,17 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 <h2 class="anchored" data-anchor-id="a-python-implementation">A Python Implementation</h2>
 <p>I’ll begin by loading the libraries and defining some constants that popped up in the mathematical discussion.</p>
 <div id="b86f040a" class="cell" data-execution_count="101">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sample rate</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>SR <span class="op">=</span> <span class="dv">44100</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># some pre-computed constants</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>PI <span class="op">=</span> np.pi</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>SQRT12 <span class="op">=</span> np.sqrt(<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>SQRT12 <span class="op">=</span> np.sqrt(<span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For reasons that I won’t get into here, I want to define the panning and stereo width adjustment within a class <code>StereoControl</code>. Here’s a template:</p>
 <div id="aead3988" class="cell" data-execution_count="102">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Provides various audio effects related to the stereo field."""</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, position<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">1</span>):</span>
@@ -381,7 +382,7 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> adjust_width(<span class="va">self</span>, stereo_audio:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Adjusts the width of a stereo signal according to the </span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        width attribute"""</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>While working on the code, I’ll try out of few things that I’ve learned:</p>
 <ul>
@@ -390,7 +391,7 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 </ul>
 <p>Here’s the decorator which just print a short message when a <code>NotImplementedError</code>:</p>
 <div id="9d2c7a34" class="cell" data-execution_count="103">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handle_errors(func):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handle_errors(func):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrapper(<span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            func(<span class="op">*</span>args,<span class="op">**</span>kwargs)</span>
@@ -402,13 +403,13 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"❌ Something is missing!"</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"✅ All tests passed!"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapper</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="equal-power-panning" class="level3">
 <h3 class="anchored" data-anchor-id="equal-power-panning">Equal Power Panning</h3>
 <p>The upshot of the mathematical discussion is that the equal power pannings with position parameter <span class="math inline">\(p\in[1,1]\)</span> interpolate between the hard left and right pannings of a mono signal according to the formula <span class="math inline">\(P_p(x_0) = (\lambda x_0, \rho x_0)\)</span> where <span class="math inline">\(\lambda,\rho\ge0\)</span> are determined from <span class="math inline">\(p\)</span> and satisfy <span class="math inline">\(\lambda^2 + \rho^2=1\)</span>. For <span class="math inline">\(p=0\)</span> we find <span class="math inline">\(\lambda = \rho = 1 /\sqrt2\)</span>. These conditions are easily translated into code for test cases. I’ll use NumPy’s internal testing features from the <code>np.testing</code> module.</p>
 <div id="9a4c165a" class="cell" data-execution_count="104">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">@handle_errors</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="at">@handle_errors</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mono_pan():</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test cases for mono panning."""</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load StereoControl instance</span></span>
@@ -447,7 +448,7 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 <span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Equal intensity fails for pos=</span><span class="sc">{</span>sc<span class="sc">.</span>position<span class="sc">}</span><span class="ss">"</span></span>
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># run the test just for fun</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>❌ Something is missing!</code></pre>
 </div>
@@ -455,7 +456,7 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 <p>With the tests cases in place, I can now start implementing the <code>mono_pan</code> method in <code>StereoControl</code>. Normally, the code for the test cases and the implementation would be in different Python modules and the tests would be run with <code>pytest</code>. Here I’ll take a different approach for demonstrational purposes. I will iteratively update <code>StereoControl</code> by defining panning functions <code>mono_pan_v1(self, x_0)</code> and dynamically replacing the previous implementation using <code>StereoControl.mono_pan = mono_pan_v1</code>.</p>
 <p>In the first iteration, I will simply translate the mathematical formulas for the panning coefficients $$ and <span class="math inline">\(\rho\)</span> into code. However, this direct implementation does not pass the rather strict tests:</p>
 <div id="9894a832" class="cell" data-execution_count="105">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a new mono_pan function</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a new mono_pan function</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mono_pan_v1(<span class="va">self</span>:StereoControl, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute angle from position</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> (<span class="va">self</span>.position <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">4</span> <span class="op">*</span> PI</span>
@@ -470,7 +471,7 @@ W_0(x) = x_M\cdot e_M. \]</span> As the width parameter decreases from 1 to 0, t
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>StereoControl.mono_pan <span class="op">=</span> mono_pan_v1</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>❌ AssertionError:
 --------------------------------------------------------------------------------
@@ -487,7 +488,7 @@ Max relative difference: inf
 </div>
 <p>As it turns out, the hard right panning is not quite hard enough. The reason is that <code>np.cos(np.pi / 2)</code> is not exactly <span class="math inline">\(\cos(\pi/2)=0\)</span>, but only approximately. While this will not make an audible difference, it’s easy to better by adding a case distinction. Here’s another version which passes all the tests:</p>
 <div id="9bf94c64" class="cell" data-execution_count="106">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mono_pan_v2(<span class="va">self</span>:StereoControl, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mono_pan_v2(<span class="va">self</span>:StereoControl, x_0:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Places a mono audio signal in the stereo field. The </span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    position is encoded as a floating point number between</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    -1 and 1. </span></span>
@@ -517,7 +518,7 @@ Max relative difference: inf
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># update `StereoControl.mono_pan` and run tests </span></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>StereoControl.mono_pan <span class="op">=</span> mono_pan_v2</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ All tests passed!</code></pre>
 </div>
@@ -532,7 +533,7 @@ Max relative difference: inf
 <li>For width <span class="math inline">\(0 &lt; w &lt; 1\)</span> the signal power satisfies <span class="math inline">\(\|W_w(x)\|^2 \le \|x\|^2\)</span> with a strict inequality if the side channel is non-zero.</li>
 </ul>
 <div id="bf7cd902" class="cell" data-execution_count="107">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="at">@handle_errors</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="at">@handle_errors</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_adjust_width():</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test cases for mono panning."""</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load StereoControl instance</span></span>
@@ -566,14 +567,14 @@ Max relative difference: inf
 <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Signal power does not decrease for width </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">"</span></span>
 <span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># run the test just for fun</span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>❌ Something is missing!</code></pre>
 </div>
 </div>
 <p>The direct implementation is again straight forward, but fails the tests due to a computation error:</p>
 <div id="855e03d3" class="cell" data-execution_count="108">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adjust_width_v1(<span class="va">self</span>:StereoControl, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get width</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="va">self</span>.width</span>
@@ -596,7 +597,7 @@ Max relative difference: inf
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>StereoControl.adjust_width <span class="op">=</span> adjust_width_v1</span>
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>❌ AssertionError:
 --------------------------------------------------------------------------------
@@ -618,7 +619,7 @@ Max relative difference: 4.28501513e-13
 </div>
 <p>At first glance, the error might be caused by the fact that <code>np.sqrt(0.5)</code> is not exactly <span class="math inline">\(1/\sqrt2\)</span>. This is easily removed by rescanling the mid-side basis to <span class="math inline">\((1,1)\)</span> and <span class="math inline">\((1,-1)\)</span>.</p>
 <div id="f0c4d2b8" class="cell" data-execution_count="109">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adjust_width_v2(<span class="va">self</span>:StereoControl, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get width</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="va">self</span>.width</span>
@@ -641,7 +642,7 @@ Max relative difference: 4.28501513e-13
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>StereoControl.adjust_width <span class="op">=</span> adjust_width_v2</span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>❌ AssertionError:
 --------------------------------------------------------------------------------
@@ -663,7 +664,7 @@ Max relative difference: 2.35077547e-11
 </div>
 <p>Unfortunately, this did not resolve the issue entirely, although there are significantly fewer “mismatched elements”. In addition, the math got simpler which may have improved the performance efficiency. But given the white noise test input, even simple linear operations are not perfectly precise. The way out is another case distinction to bypass the computations for width 1 - which will also improve performance.</p>
 <div id="f3eceef6" class="cell" data-execution_count="110">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define new stereo width adjustment function</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adjust_width_v3(<span class="va">self</span>:StereoControl, x:np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get width</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> <span class="va">self</span>.width</span>
@@ -689,7 +690,7 @@ Max relative difference: 2.35077547e-11
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>StereoControl.adjust_width <span class="op">=</span> adjust_width_v3</span>
 <span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ All tests passed!</code></pre>
 </div>
@@ -700,7 +701,7 @@ Max relative difference: 2.35077547e-11
 <h3 class="anchored" data-anchor-id="refactoring-and-optimizing-the-code">Refactoring and Optimizing the Code</h3>
 <p>Now that all functions are there, I’ll refactor the code. First, let’s get the complete definition of <code>StereoControl</code> in one place.</p>
 <div id="2d3a9e3b" class="cell" data-execution_count="111">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Provides various audio effects related to the stereo field."""</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, position<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">1</span>):</span>
@@ -758,7 +759,7 @@ Max relative difference: 2.35077547e-11
 <span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
 <span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ All tests passed!
 ✅ All tests passed!</code></pre>
@@ -767,7 +768,7 @@ Max relative difference: 2.35077547e-11
 <p>There is one thing I’d like to do to improve performance for real-time applications. In an audio stream the data is not read in full, but rather in small blocks (e.g.&nbsp;1024 samples at a time). If <code>mono_pan</code> is called, then the coefficients <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\rho\)</span> are computed again for every block. This creates unnecessary overhead, since the coefficients don’t change unless the position parameter is changed. So it would be much more efficient to store the coefficients as attributes.</p>
 <p>Here’s an implementation of this idea using private attributes <code>_position</code> and <code>_panning_coefficients</code>, along with a property attribute <code>position</code> whose setter updates both <code>_position</code> and <code>_panning_coefficients</code>. At this point, it pays off to have the test cases in place. While they don’t guarantee that everything is perfect, they can help expose sloppy refactoring error.</p>
 <div id="fe15ed4c" class="cell" data-execution_count="112">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StereoControl:</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Provides various audio effects related to the stereo field."""</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, position<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">1</span>):</span>
@@ -840,7 +841,7 @@ Max relative difference: 2.35077547e-11
 <span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a><span class="co"># run the tests</span></span>
 <span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>test_mono_pan()</span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>test_adjust_width()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ All tests passed!
 ✅ All tests passed!</code></pre>
@@ -903,13 +904,14 @@ Max relative difference: 2.35077547e-11
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

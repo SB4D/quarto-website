@@ -6,9 +6,9 @@ format: html
 ## Summary
 
 * Mathematician (Ph.D.) with 5+ years of unversity level research and teaching
-* Skilled in Python, SQL and cloud technologies
-* Passionate about math, coding, data and deep learning
-* Knowledgable about digital signal processing, acoustics, and music
+* Software developer with experience in Python, SQL, and C++
+* Passionate about math, coding, data, deep learning, and learning, in general
+* Knowledgeable about digital signal processing, acoustics, and music
 
 
 ## Research & Work Experience
@@ -17,9 +17,28 @@ format: html
 <div class="cv-entry">
 <details>
     <summary>
+        <span class="title">Software Developer in Solar Power Forecasting</span>
+        <!-- <span class="title">Software Developer</span>
+        <span class="titleinfo">in Solar Power Forecasting</span> -->
+        <span class="date">since 02/2026</span>
+        <p class="subtitle">Next Kraftwerke GmbH — Cologne, Germany</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Part of Unit Software and Data Services</li>
+<li>Maintaining and developing software for solar power forecasting</li>
+<li>Main tools: Python, MySQL, Apache Airflow, RabbitMQ</li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
         <span class="title">Assistant Professor</span>
         <span class="titleinfo">(Akademischer Rat auf Zeit)</span>
-        <span class="date">2017 — 2024</span>
+        <span class="date">10/2017 — 09/2024</span>
         <p class="subtitle">Bielefeld University — Bielefeld, Germany</p>
     </summary>
 <div class="details">
@@ -39,7 +58,7 @@ format: html
     <summary>
         <span class="title">Postdoctoral Researcher</span>
         <span class="titleinfo"></span>
-        <span class="date">2015 — 2017</span>
+        <span class="date">09/2015 — 08/2017</span>
         <p class="subtitle">Utrecht University — Utrecht, Netherlands</p>
     </summary>
 <div class="details">
@@ -58,7 +77,7 @@ format: html
     <summary>
         <span class="title">ERC Postdoctoral Fellow</span>
         <span class="titleinfo"></span>
-        <span class="date">2013 — 2015</span>
+        <span class="date">10/2013 — 08/2015</span>
         <p class="subtitle">Alfréd Rényi Institute of Mathamtics — Budapest, Hungary</p>
     </summary>
 <div class="details">
@@ -321,7 +340,7 @@ format: html
 </div>
 ```
 
-## Tech Skills
+<!-- ## Tech Skills
 
 **Operating Systems:**
 
@@ -356,4 +375,4 @@ format: html
 * If need be, I know how to push **Microsoft Word** and **Excel** quite far, but I prefer to use other tools.
 
 
-
+ -->

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../images/favicon2.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-795e9e8eca1e12b12abcb09a27409631.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9eaa9f0f1f526475e33e730106ede3ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -121,7 +122,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -272,7 +273,7 @@ window.Quarto = {
 <div class="code-with-filename-file">
 <pre><strong>mycommands.sty</strong></pre>
 </div>
-<div class="sourceCode" id="cb1" data-filename="mycommands.sty"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Numbers</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="mycommands.sty"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Numbers</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\N</span>}{<span class="fu">\mathbb</span>{N}} <span class="co">% natural numbers</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\Z</span>}{<span class="fu">\mathbb</span>{Z}} <span class="co">% integers</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\Q</span>}{<span class="fu">\mathbb</span>{Q}} <span class="co">% rational numbers</span></span>
@@ -297,7 +298,7 @@ window.Quarto = {
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\del</span>}{<span class="fu">\partial</span>} <span class="co">% partial derivatives</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">% Special notation</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\TT</span>}{<span class="fu">\mathbb</span>{T}} <span class="co">% circle group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\TT</span>}{<span class="fu">\mathbb</span>{T}} <span class="co">% circle group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>By the way, I’m using <code>\providecommand</code> instead of <code>\newcommand</code> to avoid conflicts.</p>
 <p>Like LaTeX, Quarto pages are plain text files and only the extension <code>.qmd</code> makes them recognizable as Quarto files. Quarto has its own markup syntax and, while LaTeX support is built in, the LaTeX code is generally not handled by a full LaTeX distribution. Instead it is rendered uning engines such as MathJax or KaTeX which only provide a limited set of commands. Luckily, it is possible to define custom commands in a Quarto page.</p>
@@ -334,22 +335,22 @@ $$
 <li>Create a one-line HTML file <code>/_tools/sb4dlatex.html</code> referencing the script file (code below).</li>
 <li>Add the following line to <code>_quarto.yml</code>:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">include-in-header</span><span class="kw">:</span><span class="at"> _tools/sb4dlatex.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">include-in-header</span><span class="kw">:</span><span class="at"> _tools/sb4dlatex.html</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now the promised code followed by further explanation. First, the HTML bit:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>/_tools/sb4dlatex.html</strong></pre>
 </div>
-<div class="sourceCode" id="cb5" data-filename="/_tools/sb4dlatex.html"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"/_tools/sb4dlatex.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="/_tools/sb4dlatex.html"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"/_tools/sb4dlatex.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The line <code>include-in-header: _tools/sb4dlatex.html</code> in <code>_quarto.yml</code> makes sure that the line above gets included in every page header. Finally, the JavaScript bit:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>/_tools/sb4dlatex.js</strong></pre>
 </div>
-<div class="sourceCode" id="cb6" data-filename="/_tools/sb4dlatex.js"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Define custom LaTeX commands</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-filename="/_tools/sb4dlatex.js"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Define custom LaTeX commands</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> custom_latex_commands <span class="op">=</span> {</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Numbers</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">N</span><span class="op">:</span> <span class="st">"</span><span class="sc">\\</span><span class="st">mathbb{N}"</span><span class="op">,</span>  <span class="co">// natural numbers</span></span>
@@ -380,18 +381,18 @@ $$
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
 <span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Make custom LaTeX commands available for KaTeX</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">katexMacros</span> <span class="op">=</span> custom_latex_commands<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">katexMacros</span> <span class="op">=</span> custom_latex_commands<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Not too bad, right? While the syntax is not entirely self-explanatory, comparing it with the LaTeX code in <code>mycommands.sty</code> should give you an idea how it works. Let’s look at two commands in detail.</p>
 <p>LaTex:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\HH</span>}{<span class="fu">\mathbb</span>{H}} <span class="co">% quaternions</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\mc</span>}[1]{<span class="fu">\mathcal</span>{#1}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode latex code-with-copy"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\HH</span>}{<span class="fu">\mathbb</span>{H}} <span class="co">% quaternions</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\providecommand</span>{<span class="ex">\mc</span>}[1]{<span class="fu">\mathcal</span>{#1}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>JavaScript (in combination with KaTeX for brevity):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> latex_commands <span class="op">=</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> latex_commands <span class="op">=</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">HH</span><span class="op">:</span> <span class="st">"</span><span class="sc">\\</span><span class="st">mathbb{H}"</span><span class="op">,</span> <span class="co">// quaternions</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">mc</span><span class="op">:</span> [<span class="st">"</span><span class="sc">\\</span><span class="st">mathcal{#1}"</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">katexMacros</span> <span class="op">=</span> latex_commands<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">katexMacros</span> <span class="op">=</span> latex_commands<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>First, let’s think about what’s happening here. <code>\providecommand{\HH}{\mathbb{H}}</code> tells your LaTeX compiler to treat the string <code>\HH</code> as <code>\mathbb{H}</code>. Abstractly, we can think of these two strings as a key-value pair. Observe that <code>\providecommand{&lt;key&gt;}{&lt;value&gt;}</code> is called individually for every key-value pair. In contrast, the Javascript solution records <em>all</em> key-value pairs in a dictionary (aka JavaScript object) and then passes that dictionary to the LaTeX interpreter (using <code>window.katexMacros = latex_commands;</code> for KaTeX).</p>
 <p>Second, the syntactic differences are mainly the backslashes, the double quotes, and the handling of arguments for <code>\mc{&lt;arg&gt;}</code>. Note that the dictionary values (i.e.&nbsp;the LaTeX commands to be replaced) are written as strings in double quotes and the single backslash <code>\</code> needs to be escaped as <code>\\</code>. The dictioary keys (i.e.&nbsp;the designated LaTeX shortuts), however, are written in plain without quotes or backslashes. Lastly, the add-arguments syntax should be reasonably self-explanatory. The number of arguments needs to be specified, albeit in a slightly different place as in LaTeX, and the arguments are called as <code>#1</code>, <code>#2</code>, … inside the LaTeX string.</p>
 <p>I’ll leave it at that for the moment. You may rightfully ask: <em>“But what about optional arguments, possibly with default values?”</em> I’m aware of the omission. I’ll get back to this later when I actually need such a construct. For now, I’ll keep things simple.</p>
@@ -451,13 +452,14 @@ $$
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

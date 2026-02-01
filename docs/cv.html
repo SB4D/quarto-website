@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="./images/favicon2.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1b3e43c72e8be34557c75123b0b69e0d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-795e9e8eca1e12b12abcb09a27409631.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7bd5fb0592658753322d7afe8919acde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-9eaa9f0f1f526475e33e730106ede3ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -84,7 +85,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -188,7 +189,6 @@ window.Quarto = {
   <li><a href="#research-work-experience" id="toc-research-work-experience" class="nav-link" data-scroll-target="#research-work-experience">Research &amp; Work Experience</a></li>
   <li><a href="#education" id="toc-education" class="nav-link" data-scroll-target="#education">Education</a></li>
   <li><a href="#certificates" id="toc-certificates" class="nav-link" data-scroll-target="#certificates">Certificates</a></li>
-  <li><a href="#tech-skills" id="toc-tech-skills" class="nav-link" data-scroll-target="#tech-skills">Tech Skills</a></li>
   </ul>
 </nav>
     </div>
@@ -218,9 +218,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <ul>
 <li>Mathematician (Ph.D.) with 5+ years of unversity level research and teaching</li>
-<li>Skilled in Python, SQL and cloud technologies</li>
-<li>Passionate about math, coding, data and deep learning</li>
-<li>Knowledgable about digital signal processing, acoustics, and music</li>
+<li>Software developer with experience in Python, SQL, and C++</li>
+<li>Passionate about math, coding, data, deep learning, and learning, in general</li>
+<li>Knowledgeable about digital signal processing, acoustics, and music</li>
 </ul>
 </section>
 <section id="research-work-experience" class="level2">
@@ -228,9 +228,28 @@ window.Quarto = {
 <div class="cv-entry">
 <details>
     <summary>
+        <span class="title">Software Developer in Solar Power Forecasting</span>
+        <!-- <span class="title">Software Developer</span>
+        <span class="titleinfo">in Solar Power Forecasting</span> -->
+        <span class="date">since 02/2026</span>
+        <p class="subtitle">Next Kraftwerke GmbH — Cologne, Germany</p>
+    </summary>
+<div class="details">
+<ul>
+<li>Part of Unit Software and Data Services</li>
+<li>Maintaining and developing software for solar power forecasting</li>
+<li>Main tools: Python, MySQL, Apache Airflow, RabbitMQ</li>
+</ul>
+</div>
+</details>
+</div>
+
+<div class="cv-entry">
+<details>
+    <summary>
         <span class="title">Assistant Professor</span>
         <span class="titleinfo">(Akademischer Rat auf Zeit)</span>
-        <span class="date">2017 — 2024</span>
+        <span class="date">10/2017 — 09/2024</span>
         <p class="subtitle">Bielefeld University — Bielefeld, Germany</p>
     </summary>
 <div class="details">
@@ -250,7 +269,7 @@ window.Quarto = {
     <summary>
         <span class="title">Postdoctoral Researcher</span>
         <span class="titleinfo"></span>
-        <span class="date">2015 — 2017</span>
+        <span class="date">09/2015 — 08/2017</span>
         <p class="subtitle">Utrecht University — Utrecht, Netherlands</p>
     </summary>
 <div class="details">
@@ -269,7 +288,7 @@ window.Quarto = {
     <summary>
         <span class="title">ERC Postdoctoral Fellow</span>
         <span class="titleinfo"></span>
-        <span class="date">2013 — 2015</span>
+        <span class="date">10/2013 — 08/2015</span>
         <p class="subtitle">Alfréd Rényi Institute of Mathamtics — Budapest, Hungary</p>
     </summary>
 <div class="details">
@@ -526,41 +545,42 @@ window.Quarto = {
 </div>
 </details>
 </div>
-</section>
-<section id="tech-skills" class="level2">
-<h2 class="anchored" data-anchor-id="tech-skills">Tech Skills</h2>
-<p><strong>Operating Systems:</strong></p>
-<ul>
-<li>I prefer to use <strong>Windows</strong>, but I’m also familiar with <strong>Linux</strong> sytems.</li>
-<li>I have some experience in <strong>shell scripting</strong> using <strong>Power Shell</strong> and <strong>bash</strong>.</li>
-</ul>
-<p><strong>Programming:</strong></p>
-<ul>
-<li>I mainly write in <strong>Python</strong> using an object oriented approach. I frequently use the libraries <strong>NumPy</strong>, <strong>SciPy</strong>, <strong>matplotlib</strong>, <strong>pandas</strong>, <strong>scikit-learn</strong>, <strong>PyTorch</strong>, <strong>librosa</strong>, and various packages from the standard library.</li>
-<li>I have some experience with <strong>Lua</strong> in the context of the digital audio workstation Reaper.</li>
-<li>I know a bit of <strong>C++</strong> and I’d like to learn more, eventually.</li>
-</ul>
-<p><strong>Databases:</strong></p>
-<ul>
-<li>I’m proficient in writing <strong>SQL</strong> queries. I have worked with <strong>SQLite3</strong> and <strong>PostgreSQL</strong>.</li>
-<li>I’m familiar with <strong>relational database design</strong> and <strong>normalization</strong> to 3rd normal form.</li>
-<li>I have a general understanding of <strong>Data Warehousing</strong> and <strong>NoSQL solutions</strong> and I plan to expand my knowlegde.</li>
-</ul>
-<p><strong>Software Engineering:</strong></p>
-<ul>
-<li>I’ve been using <strong>Git</strong> and <strong>GitHub</strong> for version control.</li>
-<li>I’ve started to integrate systematic <strong>unit testing</strong> using the <strong>pytest</strong> framework into my work flow.</li>
-<li>I have learned about <strong>Scrum</strong> and <strong>DevOps principles</strong> and I’m looking forward to practice them professionally.</li>
-</ul>
-<p><strong>Cloud Services:</strong></p>
-<ul>
-<li>I’m currently familiarizing myself with the <strong>Amazon/AWS</strong> ecosystem. I eventually plan to use it to host this website and to add interactive features.</li>
-</ul>
-<p><strong>Others:</strong></p>
-<ul>
-<li>I have been using <strong>LaTeX</strong> for many years to produce scientific texts, presentations, and other documents.</li>
-<li>If need be, I know how to push <strong>Microsoft Word</strong> and <strong>Excel</strong> quite far, but I prefer to use other tools.</li>
-</ul>
+<!-- ## Tech Skills
+
+**Operating Systems:**
+
+* I prefer to use **Windows**, but I'm also familiar with **Linux** sytems.
+* I have some experience in **shell scripting** using **Power Shell** and **bash**.
+
+**Programming:**
+
+* I mainly write in **Python** using an object oriented approach. I frequently use the libraries **NumPy**, **SciPy**, **matplotlib**, **pandas**, **scikit-learn**, **PyTorch**, **librosa**, and various packages from the standard library.
+* I have some experience with **Lua** in the context of the digital audio workstation Reaper.
+* I know a bit of **C++** and I'd like to learn more, eventually.
+
+**Databases:**
+
+* I'm proficient in writing **SQL** queries. I have worked with **SQLite3** and **PostgreSQL**.
+* I'm familiar with **relational database design** and **normalization** to 3rd normal form.
+* I have a general understanding of **Data Warehousing** and **NoSQL solutions** and I plan to expand my knowlegde.
+
+**Software Engineering:**
+
+* I've been using **Git** and **GitHub** for version control.
+* I've started to integrate systematic **unit testing** using the **pytest** framework into my work flow.
+* I have learned about **Scrum** and **DevOps principles** and I'm looking forward to practice them professionally.
+
+**Cloud Services:**
+
+* I'm currently familiarizing myself with the **Amazon/AWS** ecosystem. I eventually plan to use it to host this website and to add interactive features.
+
+**Others:**
+
+* I have been using **LaTeX** for many years to produce scientific texts, presentations, and other documents.
+* If need be, I know how to push **Microsoft Word** and **Excel** quite far, but I prefer to use other tools.
+
+
+ -->
 
 
 </section>
@@ -617,13 +637,14 @@ window.Quarto = {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
